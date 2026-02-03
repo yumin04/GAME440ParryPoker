@@ -1,0 +1,16 @@
+﻿
+using UnityEngine;
+
+public class FullViewCameraPosition : MonoBehaviour
+{
+    private void Awake()
+    {
+        GameParameters.FullViewCameraPoint = transform;
+    }
+
+    private void OnDestroy()
+    {
+        if (GameParameters.FullViewCameraPoint == transform)
+            GameParameters.FullViewCameraPoint = null;
+    }
+}

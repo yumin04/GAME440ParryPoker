@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee257f56f5484838ac3a98f0436a194a, type: 3}
+  m_Name: PlayerHandSO
+  m_EditorClassIdentifier: Assembly-CSharp::SOFile.UserDataSO
+  cards:
+  - {fileID: 11400000, guid: c456327a5f7d5224497c0589965b56ad, type: 2}
+  - {fileID: 11400000, guid: f47f9a78a6f014f4698527081a80d766, type: 2}
+  - {fileID: 11400000, guid: e5bfab5f45860114c84c32e06ff934e2, type: 2}
+  - {fileID: 11400000, guid: 663e5cda288fe104f97b5bf4b891c213, type: 2}
+  - {fileID: 11400000, guid: 90f9daf046f38e943848dd1451503d47, type: 2}
+  - {fileID: 11400000, guid: 57b01bf77f2e6e6478dfc7866fb9e4dc, type: 2}
+  - {fileID: 11400000, guid: 22788ef1ce6f36f49a70cfbe32a91597, type: 2}
+  - {fileID: 11400000, guid: c6d6c1999fba28c479259bf3dcc02cba, type: 2}
+  - {fileID: 11400000, guid: 51e7765aa98da6048b793bce641d5f07, type: 2}
+  - {fileID: 11400000, guid: 4b2594e2bcaf61c44954b9b25c103f1f, type: 2}
+  - {fileID: 11400000, guid: afdfef6471519cb4dab02908ba9e1556, type: 2}
+  - {fileID: 11400000, guid: deab07a4daed8e0428aead3cf5be94b2, type: 2}
+  - {fileID: 11400000, guid: 6de71a75fc28d444a8c352d1780da8e1, type: 2}
+  myHandRank: 0
