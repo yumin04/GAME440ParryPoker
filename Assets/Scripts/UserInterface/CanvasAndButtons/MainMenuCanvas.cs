@@ -1,4 +1,5 @@
-﻿using Unity.Netcode;
+﻿using Managers;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace UserInterface.CanvasAndButtons {
@@ -22,7 +23,7 @@ namespace UserInterface.CanvasAndButtons {
 
 		public void OnExitClicked() {
 			Debug.Log("OnExitClicked");
-			ApplicationManager.Instance.QuitApplication();
+			ApplicationManager.QuitApplication();
 		}
 
 		// HostClientPanel Interactions
