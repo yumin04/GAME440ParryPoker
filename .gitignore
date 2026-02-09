@@ -100,3 +100,6 @@ InitTestScene*.unity*
 
 # rider being a pain in the ass as always
 /.idea/
+
+# macOS metadata crap
+.DS_Store
