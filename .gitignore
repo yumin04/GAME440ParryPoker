@@ -98,8 +98,5 @@ InitTestScene*.unity*
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
 
-# rider being a pain in the ass as always
-/.idea/
-
 # macOS metadata crap
 .DS_Store
