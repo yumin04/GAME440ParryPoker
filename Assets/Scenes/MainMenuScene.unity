@@ -280,7 +280,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 97674675}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 538017247}
+        m_TargetAssemblyTypeName: UserInterface.CanvasAndButtons.MainMenuCanvas,
+          Assembly-CSharp
+        m_MethodName: OnStartClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &97674675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -472,7 +485,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &160058857
 RectTransform:
   m_ObjectHideFlags: 0
@@ -489,10 +502,10 @@ RectTransform:
   - {fileID: 950638358}
   m_Father: {fileID: 538017246}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &160058860
 MonoBehaviour:
@@ -925,7 +938,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 346308298}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 538017247}
+        m_TargetAssemblyTypeName: UserInterface.CanvasAndButtons.MainMenuCanvas,
+          Assembly-CSharp
+        m_MethodName: OnBackClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &354726186
 GameObject:
   m_ObjectHideFlags: 0
@@ -1351,12 +1377,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MainMenuCanvas
   mainMenuPanel: {fileID: 1679384290}
   hostClientPanel: {fileID: 160058856}
-  startButton: {fileID: 97674674}
-  tutorialButton: {fileID: 1680970356}
-  exitButton: {fileID: 1385425380}
-  backButton: {fileID: 346308300}
-  hostButton: {fileID: 1735080260}
-  clientButton: {fileID: 2092377817}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -2019,7 +2039,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1385425381}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 538017247}
+        m_TargetAssemblyTypeName: UserInterface.CanvasAndButtons.MainMenuCanvas,
+          Assembly-CSharp
+        m_MethodName: OnExitClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1385425381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2349,7 +2382,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1680970357}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 538017247}
+        m_TargetAssemblyTypeName: UserInterface.CanvasAndButtons.MainMenuCanvas,
+          Assembly-CSharp
+        m_MethodName: OnTutorialClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1680970357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2422,10 +2468,10 @@ RectTransform:
   - {fileID: 405508285}
   m_Father: {fileID: 950638358}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 300, y: -110}
+  m_SizeDelta: {x: 480, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1735080260
 MonoBehaviour:
@@ -2470,7 +2516,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1735080261}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 538017247}
+        m_TargetAssemblyTypeName: UserInterface.CanvasAndButtons.MainMenuCanvas,
+          Assembly-CSharp
+        m_MethodName: OnHostClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1735080261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2679,10 +2738,10 @@ RectTransform:
   - {fileID: 2041767841}
   m_Father: {fileID: 950638358}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 300, y: -290}
+  m_SizeDelta: {x: 480, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2092377817
 MonoBehaviour:
@@ -2727,7 +2786,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2092377818}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 538017247}
+        m_TargetAssemblyTypeName: UserInterface.CanvasAndButtons.MainMenuCanvas,
+          Assembly-CSharp
+        m_MethodName: OnClientClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2092377818
 MonoBehaviour:
   m_ObjectHideFlags: 0
