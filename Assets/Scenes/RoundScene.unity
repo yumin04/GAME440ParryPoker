@@ -300,6 +300,9 @@ GameObject:
   m_Component:
   - component: {fileID: 782911592}
   - component: {fileID: 782911593}
+  - component: {fileID: 782911594}
+  - component: {fileID: 782911595}
+  - component: {fileID: 782911596}
   m_Layer: 0
   m_Name: Round
   m_TagString: Untagged
@@ -334,6 +337,65 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c9ea9f0954b41a191366ce707123e25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Round
+--- !u!114 &782911594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 782911591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a468f3bf2708a4276b22183e2bb79c3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UserInterface.CanvasAndButtons.GoHomeButtonController
+  goHomeButton: {fileID: 0}
+  buttonColor: {r: 0.9019608, g: 0.19999999, b: 0.26107854, a: 1}
+  buttonSize: {x: 220, y: 50}
+  buttonPositionY: 0.1
+  buttonSprite: {fileID: 0}
+  buttonText: Go Home
+  textColor: {r: 1, g: 1, b: 1, a: 1}
+  fontSize: 22
+  textFont: {fileID: 12800000, guid: e3265ab4bf004d28a9537516768c1c75, type: 3}
+--- !u!114 &782911595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 782911591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 1340920821
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
+--- !u!114 &782911596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 782911591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 989f32ce861c84b359d9a49290bb2038, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameOverSync
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
