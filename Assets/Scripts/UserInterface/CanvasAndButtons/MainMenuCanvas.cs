@@ -7,6 +7,7 @@ namespace UserInterface.CanvasAndButtons {
 		[Header("Panels")]
 		[SerializeField] private GameObject mainMenuPanel;
 		[SerializeField] private GameObject hostClientPanel;
+		[SerializeField] private GameObject addressPanel;
 
 		// mainMenuPanel Interactions
 		public void OnStartClicked() {
@@ -41,6 +42,11 @@ namespace UserInterface.CanvasAndButtons {
 		}
 
 		public void OnClientClicked() {
+			hostClientPanel.SetActive(false);
+			addressPanel.SetActive(true);
+		}
+		
+		public void OnAddressClicked() {
 			if (NetworkManager.Singleton == null) return;
 
 			HostClientManager.Instance.StartClient();
