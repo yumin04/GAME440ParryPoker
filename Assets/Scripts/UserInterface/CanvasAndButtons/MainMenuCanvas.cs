@@ -6,12 +6,12 @@ using UnityEngine;
 
 namespace UserInterface.CanvasAndButtons {
 	public class MainMenuCanvas : MonoBehaviour {
-		[Header("Panels")]
-		[SerializeField] private GameObject mainMenuPanel;
+		[Header("Panels")] [SerializeField] private GameObject mainMenuPanel;
 		[SerializeField] private GameObject hostClientPanel;
 		[SerializeField] private GameObject addressPanel;
-		[Header("Text Fields")]
-		[SerializeField] private TMP_InputField addressTextInput;
+
+		[Header("Text Fields")] [SerializeField]
+		private TMP_InputField addressTextInput;
 
 		// mainMenuPanel Interactions
 		public void OnStartClicked() {
@@ -32,8 +32,8 @@ namespace UserInterface.CanvasAndButtons {
 		}
 
 		// HostClientPanel Interactions
-		public void OnBackClicked() {
-			Debug.Log("OnBackClicked");
+		public void OnBackHostClientClicked() {
+			Debug.Log("OnBackHostClientClicked");
 			hostClientPanel.SetActive(false);
 		}
 
@@ -49,7 +49,14 @@ namespace UserInterface.CanvasAndButtons {
 			hostClientPanel.SetActive(false);
 			addressPanel.SetActive(true);
 		}
-		
+
+		/* address panel interactions */
+		public void OnBackAddressClicked() {
+			Debug.Log("OnBackAddressClicked");
+			addressPanel.SetActive(false);
+			hostClientPanel.SetActive(true);
+		}
+
 		public void OnAddressClicked() {
 			if (NetworkManager.Singleton == null) throw new NullReferenceException();
 
@@ -59,9 +66,8 @@ namespace UserInterface.CanvasAndButtons {
 		}
 
 		private static void OnClientDisconnect(ulong clientID) {
-			if (NetworkManager.Singleton.DisconnectReason != null) {
+			if (NetworkManager.Singleton.DisconnectReason != null)
 				Debug.LogError(NetworkManager.Singleton.DisconnectReason);
-			}
 		}
 	}
 }
