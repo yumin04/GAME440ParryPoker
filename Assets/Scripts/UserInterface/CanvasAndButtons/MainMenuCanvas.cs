@@ -36,7 +36,7 @@ namespace UserInterface.CanvasAndButtons {
 		public void OnHostClicked() {
 			if (NetworkManager.Singleton == null) return;
 
-			HostClientManager.Instance.StartHost();
+			HostClientManager.StartHost();
 			Debug.Log("StartHost");
 			// Move On To Next Scene
 		}
@@ -49,7 +49,7 @@ namespace UserInterface.CanvasAndButtons {
 		public void OnAddressClicked() {
 			if (NetworkManager.Singleton == null) return;
 
-			HostClientManager.Instance.StartClient();
+			HostClientManager.StartClient("127.0.0.1");
 			Debug.Log("StartClient");
 			// Move On To Next Scene
 		}
