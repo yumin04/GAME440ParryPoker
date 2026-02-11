@@ -1,4 +1,5 @@
-﻿using Unity.Netcode;
+﻿using System;
+using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEngine;
 
@@ -14,10 +15,13 @@ namespace Managers {
 			NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
 		}
 
-		public static void StartClient(string address = "127.0.0.1") {
+		public static void StartClient(string address = "127.0.0.1", Action<ulong> onClientDisconnect = null) {
 			SetNetworkAddress(address);
 			NetworkManager.Singleton.StartClient();
 			NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+
+			if (onClientDisconnect != null)
+				NetworkManager.Singleton.OnClientDisconnectCallback += onClientDisconnect;
 		}
 
 		public static void EndClient() {

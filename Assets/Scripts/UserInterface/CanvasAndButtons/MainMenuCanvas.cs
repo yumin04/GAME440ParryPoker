@@ -53,9 +53,15 @@ namespace UserInterface.CanvasAndButtons {
 		public void OnAddressClicked() {
 			if (NetworkManager.Singleton == null) throw new NullReferenceException();
 
-			HostClientManager.StartClient(addressTextInput.text);
+			HostClientManager.StartClient(addressTextInput.text, OnClientDisconnect);
 			Debug.Log("StartClient");
 			// Move On To Next Scene
+		}
+
+		private static void OnClientDisconnect(ulong clientID) {
+			if (NetworkManager.Singleton.DisconnectReason != null) {
+				Debug.LogError(NetworkManager.Singleton.DisconnectReason);
+			}
 		}
 	}
 }
