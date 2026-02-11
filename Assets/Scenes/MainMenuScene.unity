@@ -1379,6 +1379,7 @@ MonoBehaviour:
   mainMenuPanel: {fileID: 1679384290}
   hostClientPanel: {fileID: 160058856}
   addressPanel: {fileID: 1306184763}
+  addressTextInput: {fileID: 907458043}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0

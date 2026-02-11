@@ -1,4 +1,6 @@
-﻿using Managers;
+﻿using System;
+using Managers;
+using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -8,6 +10,8 @@ namespace UserInterface.CanvasAndButtons {
 		[SerializeField] private GameObject mainMenuPanel;
 		[SerializeField] private GameObject hostClientPanel;
 		[SerializeField] private GameObject addressPanel;
+		[Header("Text Fields")]
+		[SerializeField] private TMP_InputField addressTextInput;
 
 		// mainMenuPanel Interactions
 		public void OnStartClicked() {
@@ -34,7 +38,7 @@ namespace UserInterface.CanvasAndButtons {
 		}
 
 		public void OnHostClicked() {
-			if (NetworkManager.Singleton == null) return;
+			if (NetworkManager.Singleton == null) throw new NullReferenceException();
 
 			HostClientManager.StartHost();
 			Debug.Log("StartHost");
@@ -47,9 +51,9 @@ namespace UserInterface.CanvasAndButtons {
 		}
 		
 		public void OnAddressClicked() {
-			if (NetworkManager.Singleton == null) return;
+			if (NetworkManager.Singleton == null) throw new NullReferenceException();
 
-			HostClientManager.StartClient("127.0.0.1");
+			HostClientManager.StartClient(addressTextInput.text);
 			Debug.Log("StartClient");
 			// Move On To Next Scene
 		}
