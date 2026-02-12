@@ -60,7 +60,15 @@ namespace UserInterface.CanvasAndButtons {
 		public void OnAddressClicked() {
 			if (NetworkManager.Singleton == null) throw new NullReferenceException();
 
-			HostClientManager.StartClient(addressTextInput.text, OnClientDisconnect);
+			var address = addressTextInput.text;
+			// if no one put anything in the box, use the placeholder
+			if (address.Length == 0) {
+				var placeholder = addressTextInput.placeholder as TMP_Text;
+				// if someone sets the placeholder up stupid, fallback to loopback address
+				address = placeholder != null ? placeholder.text : "127.0.0.1";
+			}
+
+			HostClientManager.StartClient(address, OnClientDisconnect);
 			Debug.Log("StartClient");
 			// Move On To Next Scene
 		}
