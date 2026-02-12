@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Managers;
 using TMPro;
 using Unity.Netcode;
@@ -6,18 +7,25 @@ using UnityEngine;
 
 namespace UserInterface.CanvasAndButtons {
 	public class MainMenuCanvas : MonoBehaviour {
-		[Header("Panels")] [SerializeField] private GameObject mainMenuPanel;
+		[Header("Panels")]
+		[SerializeField] private GameObject mainMenuPanel;
+
+		[SerializeField] private GameObject netPanels;
 		[SerializeField] private GameObject hostClientPanel;
 		[SerializeField] private GameObject addressPanel;
 
-		[Header("Text Fields")] [SerializeField]
-		private TMP_InputField addressTextInput;
+		[Header("Text Fields")]
+		[SerializeField] private TMP_InputField addressTextInput;
+
+		private readonly Stack<GameObject> panelStack = new();
 
 		// mainMenuPanel Interactions
 		public void OnStartClicked() {
 			Debug.Log("OnStartClicked");
 			// make the "Host Client Panel" Pop Up
-			hostClientPanel.SetActive(true);
+			netPanels.SetActive(true);
+			panelStack.Push(netPanels);
+			panelStack.Push(hostClientPanel);
 		}
 
 		public void OnTutorialClicked() {
@@ -31,12 +39,25 @@ namespace UserInterface.CanvasAndButtons {
 			ApplicationManager.QuitApplication();
 		}
 
-		// HostClientPanel Interactions
-		public void OnBackHostClientClicked() {
-			Debug.Log("OnBackHostClientClicked");
-			hostClientPanel.SetActive(false);
+		// NetPanel Interactions
+		public void OnBackClicked() {
+			Debug.Log("OnBackClicked");
+
+			try {
+				if (panelStack.Count != 2) {
+					panelStack.Pop().SetActive(false);
+					panelStack.Peek().SetActive(true);
+				}
+				// hack to hide NetPanels
+				else {
+					panelStack.Pop().SetActive(true);
+					panelStack.Pop().SetActive(false);
+				}
+			}
+			catch (InvalidOperationException) { }
 		}
 
+		// HostClientPanel Interactions
 		public void OnHostClicked() {
 			if (NetworkManager.Singleton == null) throw new NullReferenceException();
 
@@ -48,15 +69,10 @@ namespace UserInterface.CanvasAndButtons {
 		public void OnClientClicked() {
 			hostClientPanel.SetActive(false);
 			addressPanel.SetActive(true);
+			panelStack.Push(addressPanel);
 		}
 
 		/* address panel interactions */
-		public void OnBackAddressClicked() {
-			Debug.Log("OnBackAddressClicked");
-			addressPanel.SetActive(false);
-			hostClientPanel.SetActive(true);
-		}
-
 		public void OnAddressClicked() {
 			if (NetworkManager.Singleton == null) throw new NullReferenceException();
 
