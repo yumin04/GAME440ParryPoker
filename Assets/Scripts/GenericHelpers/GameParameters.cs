@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public static class GameParameters
-{
-    public static Transform FullViewCameraPoint;
+namespace GenericHelpers {
+	public static class GameParameters {
+		public static Transform FullViewCameraPoint;
+	}
 }

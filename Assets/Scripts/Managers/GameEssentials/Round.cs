@@ -1,30 +1,29 @@
-﻿using UnityEngine;
-using UnityEngine.InputSystem;
+﻿using GenericHelpers;
 using Unity.Netcode;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class Round : MonoBehaviour
-{
-    public void Start()
-    {
-        GameEvents.OnRoundStart?.Invoke();
-    }
+namespace Managers.GameEssentials {
+	public class Round : MonoBehaviour {
+		private GameOverSync sync;
 
-    void Update()
-    {
-        // Press G to end the game. In multiplayer we tell everyone; in solo we just do it locally.
-        if (Keyboard.current == null || !Keyboard.current.gKey.wasPressedThisFrame)
-            return;
+		public void Start() {
+			sync = FindAnyObjectByType<GameOverSync>();
+			GameEvents.OnRoundStart?.Invoke();
+		}
 
-        var net = NetworkManager.Singleton;
-        if (net != null && net.IsListening)
-        {
-            var sync = FindObjectOfType<GameOverSync>();
-            if (sync != null)
-                sync.RequestEndGameServerRpc();
-        }
-        else
-        {
-            GameEvents.OnRoundEnd?.Invoke();
-        }
-    }
+		private void Update() {
+			// Press G to end the game. In multiplayer we tell everyone; in solo we just do it locally.
+			if (Keyboard.current == null || !Keyboard.current.gKey.wasPressedThisFrame)
+				return;
+
+			if (NetworkManager.Singleton?.IsListening ?? false) {
+				if (sync)
+					sync.RequestEndGameServerRpc();
+			}
+			else {
+				GameEvents.OnRoundEnd?.Invoke();
+			}
+		}
+	}
 }
