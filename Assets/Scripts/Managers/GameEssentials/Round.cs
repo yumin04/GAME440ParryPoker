@@ -1,4 +1,5 @@
-﻿using Unity.Netcode;
+﻿using GenericHelpers;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
