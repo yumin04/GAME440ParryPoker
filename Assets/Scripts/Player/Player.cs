@@ -18,7 +18,6 @@ public class Player : NetworkBehaviour
         playerCamera.gameObject.SetActive(IsOwner);
         // position and rotation determined by the server
         SetPlayerPosition();
-
     }
 
     public void OnEnable()
@@ -27,7 +26,6 @@ public class Player : NetworkBehaviour
         GameEvents.OnRoundStart += MoveCameraToFullView;
     }
     
-
     public void OnDisable()
     {
         GameEvents.OnRoundStart -= MoveCameraToFullView;
@@ -42,12 +40,12 @@ public class Player : NetworkBehaviour
         
         if (OwnerClientId == 0)
         {
-            transform.position = new Vector3(0, 0, -10);
+            transform.position = new Vector3(-10, 10, 0);
             transform.rotation = Quaternion.identity;
         }
         else
         {
-            transform.position = new Vector3(0, 0, 10);
+            transform.position = new Vector3(10, 10, 0);
             transform.rotation = Quaternion.Euler(0, 180, 0);
         }
     }

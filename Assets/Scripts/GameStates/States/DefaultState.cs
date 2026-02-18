@@ -1,4 +1,4 @@
-﻿public class DefaultState : IState
+﻿public class DefaultState : IGameState, IUserState
 {
     public void OnEnter()
     {

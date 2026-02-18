@@ -1,4 +1,4 @@
-﻿public class GameState : IState
+﻿public class InGameState : IGameState
 {
     public void OnEnter()
     {

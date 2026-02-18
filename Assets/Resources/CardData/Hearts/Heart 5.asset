@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e1edcdb54c648eb9cc17d8731dffc3e, type: 3}
   m_Name: Heart 5
   m_EditorClassIdentifier: Assembly-CSharp::SOFile.CardDataSO
+  cardID: 31
   cardSymbol: 2
   cardNumber: 5
-  cardImage: {fileID: 1434800826, guid: 0561379f815a8cf4cb67c4cdd9ef35de, type: 3}
+  cardMaterial: {fileID: 0}
+  baseDamage: 0

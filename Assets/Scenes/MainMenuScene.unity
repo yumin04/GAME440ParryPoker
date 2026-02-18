@@ -280,20 +280,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 97674675}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 538017247}
-        m_TargetAssemblyTypeName: UserInterface.CanvasAndButtons.MainMenuCanvas,
-          Assembly-CSharp
-        m_MethodName: OnStartClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &97674675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -938,20 +925,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 346308298}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 538017247}
-        m_TargetAssemblyTypeName: UserInterface.CanvasAndButtons.MainMenuCanvas,
-          Assembly-CSharp
-        m_MethodName: OnBackClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &354726186
 GameObject:
   m_ObjectHideFlags: 0
@@ -1377,6 +1351,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MainMenuCanvas
   mainMenuPanel: {fileID: 1679384290}
   hostClientPanel: {fileID: 160058856}
+  startButton: {fileID: 97674674}
+  tutorialButton: {fileID: 1680970356}
+  exitButton: {fileID: 1385425380}
+  backButton: {fileID: 346308300}
+  hostButton: {fileID: 1735080260}
+  clientButton: {fileID: 2092377817}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1814,8 +1794,55 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1259613670}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1311857126
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1311857128}
+  - component: {fileID: 1311857127}
+  m_Layer: 0
+  m_Name: GameInitializer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1311857127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1311857126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58a062def7954cc5a79dc4f2b96ab8b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameInitializer
+  gamePrefab: {fileID: 346633383234907667, guid: 8f835b3813719124a8161ce712da8989, type: 3}
+  roundPrefab: {fileID: 3223506422396905578, guid: e4d17350b124e0b47b99d8f7e40e9034, type: 3}
+  subRoundPrefab: {fileID: 8549556196984498345, guid: c980d5a9c0ef51444ae626deae510a41, type: 3}
+--- !u!4 &1311857128
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1311857126}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1520, y: 350, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2039,20 +2066,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1385425381}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 538017247}
-        m_TargetAssemblyTypeName: UserInterface.CanvasAndButtons.MainMenuCanvas,
-          Assembly-CSharp
-        m_MethodName: OnExitClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1385425381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2382,20 +2396,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1680970357}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 538017247}
-        m_TargetAssemblyTypeName: UserInterface.CanvasAndButtons.MainMenuCanvas,
-          Assembly-CSharp
-        m_MethodName: OnTutorialClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1680970357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2516,20 +2517,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1735080261}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 538017247}
-        m_TargetAssemblyTypeName: UserInterface.CanvasAndButtons.MainMenuCanvas,
-          Assembly-CSharp
-        m_MethodName: OnHostClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1735080261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2786,20 +2774,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2092377818}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 538017247}
-        m_TargetAssemblyTypeName: UserInterface.CanvasAndButtons.MainMenuCanvas,
-          Assembly-CSharp
-        m_MethodName: OnClientClicked
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &2092377818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2851,3 +2826,4 @@ SceneRoots:
   - {fileID: 1553233281}
   - {fileID: 354726188}
   - {fileID: 1259613672}
+  - {fileID: 1311857128}
