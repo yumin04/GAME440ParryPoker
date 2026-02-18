@@ -45,6 +45,7 @@ public class Card : NetworkBehaviour
         // if (!IsOwner) return;
         DespawnCardRPC();
     }
+    
     [Rpc(SendTo.Server)]
     private void DespawnCardRPC(RpcParams rpcParams = default)
     {

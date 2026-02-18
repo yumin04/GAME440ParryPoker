@@ -37,13 +37,27 @@ public class SubRound : NetworkBehaviour
     }
     private void OnKeepClicked()
     {
+        RequestKeepRpc();
+    }
+    
+    [Rpc(SendTo.Server)]
+    private void RequestKeepRpc()
+    {
         if (!IsServer) return;
+
         Debug.Log("[DEBUG] Starting Keep");
-        GameEvents.OnSubRoundEnd?.Invoke();
+
+        NotifySubRoundEndClientRpc();
 
         NetworkObject.Despawn(true);
     }
-    
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void NotifySubRoundEndClientRpc()
+    {
+        GameEvents.OnSubRoundEnd?.Invoke();
+    }
+
 
     private void OnAttackClicked()
     {
