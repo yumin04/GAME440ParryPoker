@@ -1,15 +1,22 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Player : NetworkBehaviour
 {
     [Header("Game Objects")]
     [SerializeField] Camera playerCamera;
+    [SerializeField] private GameObject priorityPanel;
+    [SerializeField] private GameObject waitPanel;
 
     [Header("Parameters")]
     [SerializeField] private float cameraTransitionTime = 4f;
+    
+    [Header("Player Data")]
+    [SerializeField] private List<int> playerCardIds;
     
     // TODO: This happens when "start client" and "start host" has been called.
     // Some parts of the logic needs to be changed
@@ -24,11 +31,16 @@ public class Player : NetworkBehaviour
     {
         // TODO: We will be changing the camera view was we show what number of round we are in
         GameEvents.OnRoundStart += MoveCameraToFullView;
+        GameEvents.OnHavingPriority += HavePriority;
+        GameEvents.OnLosingPriority += LosePriority;
     }
-    
+
+
     public void OnDisable()
     {
         GameEvents.OnRoundStart -= MoveCameraToFullView;
+        GameEvents.OnHavingPriority -= HavePriority;
+        GameEvents.OnLosingPriority -= LosePriority;
     }
     
     
@@ -87,5 +99,34 @@ public class Player : NetworkBehaviour
 
     #endregion
 
-    
+
+    private void HavePriority()
+    {
+        if (!IsOwner) return;
+        
+        Debug.Log("Have Priority");
+        
+        ShowPriorityUI();
+    }
+
+
+    private void LosePriority()
+    {
+        if (!IsOwner) return;
+        Debug.Log("Lost Priority");
+        
+        ShowWaitingUI();
+        // TODO: maybe "waiting for opponent" or smth like this
+    }
+
+    private void ShowWaitingUI()
+    {
+        waitPanel.SetActive(true);
+    }
+
+    private void ShowPriorityUI()
+    { 
+        priorityPanel.SetActive(true);
+    }
+
 }

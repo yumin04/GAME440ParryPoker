@@ -1,19 +1,57 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using SOFile;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Netcode;
+using System.Linq;
+using Random = UnityEngine.Random;
 
 public class Round : NetworkBehaviour
 {
 
     private NetworkList<int> roundCardIDs = new NetworkList<int>();
-    private NetworkVariable<bool> roundReady = new(false);
-    
+
+    public void OnEnable()
+    {
+        GameEvents.OnSubRoundEnd += CheckSubRoundRemaining;
+    }
+
+    public void OnDisable()
+    {
+        GameEvents.OnSubRoundEnd -= CheckSubRoundRemaining;
+    }
+
+    private void CheckSubRoundRemaining()
+    {
+        if (!IsServer) return;
+
+        if (roundCardIDs.Count == 0)
+        {
+            Debug.Log("No more cards. Ending round.");
+
+            EndRound();
+        }
+        else
+        {
+            Debug.Log("Cards remaining. Starting next subround.");
+
+            StartSubRound();
+        }
+    }
+
+    private void EndRound()
+    {
+        // TODO: we need to implement this
+        Debug.Log("[DEBUG] EndRound, For now, ending Game");
+        Game.Instance.EndGame();
+        
+    }
+
+
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
-
         roundCardIDs.OnListChanged += OnRoundCardsChanged;
 
         if (IsServer)
@@ -24,22 +62,18 @@ public class Round : NetworkBehaviour
 
     private void OnRoundCardsChanged(NetworkListEvent<int> changeEvent)
     {
+        // TODO: Do we need this?
         if (!IsClient) return;
-        
-        if (roundReady.Value)
-        {
-            CardManager.Instance.InstantiateRoundCardsByID(roundCardIDs);
-            roundReady.Value = false;
-        }
+
     }
 
     
     private void StartRound()
     {
         // Reset();
-
+        Debug.Log("[DEBUG] Choosing 10 Cards");
         Choose10RoundCards();
-        
+        Debug.Log("[DEBUG] Chose 10 Cards: " + roundCardIDs.Count);
         // Wait 10 seconds
         WaitForMemorization();
     }
@@ -51,11 +85,15 @@ public class Round : NetworkBehaviour
 
     private IEnumerator MemorizationCoroutine()
     {
+        if (!IsServer) yield break;
+
         yield return new WaitForSeconds(10f);
-        RunAfterMemorization();
+        RunAfterMemorizationRPC();
     }
 
-    private void RunAfterMemorization()
+    
+    [Rpc(SendTo.ClientsAndHost)]
+    private void RunAfterMemorizationRPC()
     {
         CardManager.Instance.HideAllRoundCards();
         StartSubRound();
@@ -65,14 +103,19 @@ public class Round : NetworkBehaviour
     {
         if (!IsServer) return;
 
+        if (roundCardIDs.Count == 0) return;
+
         int randomIndex = Random.Range(0, roundCardIDs.Count);
         int chosenCardID = roundCardIDs[randomIndex];
+        
+        roundCardIDs.RemoveAt(randomIndex);
 
         GameObject subRoundObj = GameInitializer.Instance.SpawnSubRound();
 
         SubRound subRound = subRoundObj.GetComponent<SubRound>();
         subRound.Initialize(chosenCardID);
     }
+
 
     private void Choose10RoundCards()
     {
@@ -87,9 +130,22 @@ public class Round : NetworkBehaviour
             roundCardIDs.Add(card.cardID);
         }
 
-        roundReady.Value = true;
+    
+        CardManager.Instance.InstantiateRoundCardsByID(roundCardIDs);
+        
 
     }
 
+    private int[] ToArray(NetworkList<int> list)
+    {
+        int[] ids = new int[list.Count];
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            ids[i] = list[i];
+        }
+        return ids;
+    }
     
+
 }

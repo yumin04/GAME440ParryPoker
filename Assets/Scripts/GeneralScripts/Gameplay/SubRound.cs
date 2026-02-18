@@ -1,6 +1,8 @@
-﻿using Unity.Netcode;
+﻿using System;
+using Unity.Netcode;
 using UnityEngine;
 using System.Collections;
+using Random = UnityEngine.Random;
 
 public class SubRound : NetworkBehaviour
 {
@@ -9,6 +11,17 @@ public class SubRound : NetworkBehaviour
 
     public NetworkVariable<int> CardID = new();
 
+    public void OnEnable()
+    {
+        GameEvents.OnAttackClicked += OnAttackClicked;
+        GameEvents.OnKeepClicked += OnKeepClicked;
+    }
+
+    public void OnDisable()
+    {
+        GameEvents.OnAttackClicked -= OnAttackClicked;
+        GameEvents.OnKeepClicked -= OnKeepClicked;
+    }
     public override void OnNetworkSpawn()
     {
         if (IsServer)
@@ -20,14 +33,20 @@ public class SubRound : NetworkBehaviour
     {
         float delay = Random.Range(minDelay, maxDelay);
         yield return new WaitForSeconds(delay);
-
-        if (IsServer)
-            InstantiateCardClientRpc(CardID.Value);
+        CardManager.Instance.InstantiateSubRoundCard(CardID.Value);
     }
-
-    [Rpc(SendTo.ClientsAndHost)]
-    private void InstantiateCardClientRpc(int id)
+    private void OnKeepClicked()
     {
-        CardManager.Instance.InstantiateSubRoundCard(id);
+        if (!IsServer) return;
+        Debug.Log("[DEBUG] Starting Keep");
+        GameEvents.OnSubRoundEnd?.Invoke();
+
+        NetworkObject.Despawn(true);
+    }
+    
+
+    private void OnAttackClicked()
+    {
+        Debug.Log("[DEBUG] Starting Attack");
     }
 }

@@ -5,7 +5,7 @@ using SOFile;
 public class CardRepository : MonoBehaviour
 {
     private List<CardDataSO> allCardData = new List<CardDataSO>();
-
+    
     private void LoadAllCardData()
     {
         allCardData.Clear();
@@ -26,6 +26,8 @@ public class CardRepository : MonoBehaviour
     }
     public CardDataSO GetCardByID(int id)
     {
+        if (allCardData.Count == 0) LoadAllCardData();
+        
         foreach (var card in allCardData)
         {
             if (card.cardID == id)

@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class Game : NetworkSingleton<Game>
 {
+    
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
         // show opponent character
         // show opponent health
+        
+        // Slowly change camera position of each player
+        GameEvents.OnRoundStart.Invoke();
+        
         
         // After all animation and visuals are done, spawn round
         GameInitializer.Instance.SpawnRound();

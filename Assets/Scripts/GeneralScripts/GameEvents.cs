@@ -11,4 +11,13 @@ public static class GameEvents
     public static Action OnLoadResultScene;
     
     public static Action HideAllInstantiatedCards;
+    public static Action DestroyAllInstantiatedCards;
+
+    public static Action OnHavingPriority;
+    public static Action OnLosingPriority;
+    
+    public static Action OnSubRoundEnd;
+    
+    public static Action OnKeepClicked;
+    public static Action OnAttackClicked;
 }
