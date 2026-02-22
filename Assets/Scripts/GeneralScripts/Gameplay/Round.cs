@@ -29,13 +29,11 @@ public class Round : NetworkBehaviour
         if (roundCardIDs.Count == 0)
         {
             Debug.Log("No more cards. Ending round.");
-
             EndRound();
         }
         else
         {
             Debug.Log("Cards remaining. Starting next subround.");
-
             StartSubRound();
         }
     }

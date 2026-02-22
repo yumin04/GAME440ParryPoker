@@ -1,5 +1,5 @@
 ﻿using UnityEditor;
-
+using UnityEngine;
 
 public static class EndApplication {
 	// Already Declared as Singleton from "GenericHelpers"
