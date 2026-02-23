@@ -5,22 +5,12 @@ namespace SOFile
     [CreateAssetMenu(fileName = "CardData", menuName = "ScriptableObjects/CardDataSO")]
     public class CardDataSO : ScriptableObject
     {
-        [Header("Card Info")]
+        [Header("Card Info")] 
+        public int cardID;
         public Suit cardSymbol;
         public int cardNumber;
-        public Sprite cardImage;
-        public Sprite cardBackImage;
-
-        public Sprite GetCardBackImage()
-        {
-            if (cardBackImage == null)
-            {
-                cardBackImage = Resources
-                    .Load<BackfaceImage>("CardData/CardBackImage/BackfaceImage")
-                    .cardBackImage;
-            }
-            return cardBackImage;
-        }
+        public Texture cardMaterial;
+        public int baseDamage;
     }
     
 }

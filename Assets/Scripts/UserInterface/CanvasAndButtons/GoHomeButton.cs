@@ -1,14 +1,16 @@
 using UnityEngine;
 using UnityEngine.UI;
-using Managers;
 
+// TODO: 
 namespace UserInterface.CanvasAndButtons
 {
     // Makes the "Go Home" button hidden until the game is over. When game is done, we show it so you can go back to main menu.
-    public class GoHomeButtonController : MonoBehaviour
+    public class GoHomeButton : MonoBehaviour
     {
         [SerializeField] private GameObject goHomeButton;
-
+        
+        
+        // TODO: Delete all this and start refactoring
         [Header("Button design (used when button is created at runtime)")]
         [SerializeField] private Color buttonColor = new Color(0.2f, 0.5f, 0.9f);
         [SerializeField] private Vector2 buttonSize = new Vector2(220f, 50f);

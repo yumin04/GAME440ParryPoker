@@ -23,6 +23,7 @@ public class SceneLoader : Singleton<SceneLoader>
     public void LoadResultScene()
     {
         Load(SceneType.ResultScene);
+        // TODO: Change State Here?
     }
 
     public void LoadRoundScene()
@@ -37,12 +38,6 @@ public class SceneLoader : Singleton<SceneLoader>
     private void Load(SceneType sceneType)
     {
         string sceneName = sceneType.ToString();
-
-        // Going back to main menu: shut down network so we can start a new Host/Client next time
-        if (sceneType == SceneType.MainMenuScene && NetworkManager.Singleton != null && NetworkManager.Singleton.IsListening)
-        {
-            NetworkManager.Singleton.Shutdown();
-        }
 
         if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsListening)
         {
