@@ -41,11 +41,13 @@ public class SubRound : NetworkBehaviour
     }
     
     [Rpc(SendTo.Server)]
-    private void RequestKeepRpc()
+    private void RequestKeepRpc(RpcParams rpcParams = default)
     {
         if (!IsServer) return;
 
-        Debug.Log("[DEBUG] Starting Keep");
+        ulong senderId = rpcParams.Receive.SenderClientId;
+        
+        GameEvents.OnPlayerKeepCard?.Invoke(senderId, CardID.Value);
 
         NotifySubRoundEndClientRpc();
 

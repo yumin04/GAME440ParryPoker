@@ -9,11 +9,7 @@ public class PriorityPanel : MonoBehaviour
     [Header("Attack Keep button")]
     [SerializeField] private Button attackButton;
     [SerializeField] private Button keepButton;
-    public void Awake()
-    {
-        Debug.Log("PriorityPanel.Awake");
-        // gameObject.SetActive(false);
-    }
+    
     public void Start()
     {
         attackButton.onClick.AddListener(OnAttackClicked);

@@ -5,14 +5,6 @@ using UnityEngine.UI;
 
 public class WaitPanel : MonoBehaviour
 {
-
-
-    public void Awake()
-    {
-        Debug.Log("Wait.Awake");
-        // gameObject.SetActive(false);
-    }
-
     public void OnEnable()
     {
         GameEvents.OnSubRoundEnd += DisablePanel;

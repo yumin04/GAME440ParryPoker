@@ -22,11 +22,11 @@ public class CardManager : Singleton<CardManager>
     [SerializeField] private CardRepository cardRepository;
 
 
-    public CardDataSO[] GetRoundCards(int numSubRound)
+    public CardDataSO[] GetCards(int numCards)
     {
-        CardDataSO[] roundCards = new CardDataSO[numSubRound];
+        CardDataSO[] roundCards = new CardDataSO[numCards];
 
-        for (int i = 0; i < numSubRound; i++)
+        for (int i = 0; i < numCards; i++)
         {
             roundCards[i] = cardRepository.GetRandomCard();
         }

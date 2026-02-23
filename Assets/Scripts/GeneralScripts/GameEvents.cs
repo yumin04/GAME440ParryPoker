@@ -19,5 +19,6 @@ public static class GameEvents
     public static Action OnSubRoundEnd;
     
     public static Action OnKeepClicked;
+    public static Action<ulong, int> OnPlayerKeepCard;
     public static Action OnAttackClicked;
 }

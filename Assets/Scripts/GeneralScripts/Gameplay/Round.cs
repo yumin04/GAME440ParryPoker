@@ -70,7 +70,12 @@ public class Round : NetworkBehaviour
     {
         // Reset();
         Debug.Log("[DEBUG] Choosing 10 Cards");
+        
+        // Give 2 cards to each player
+        Give2CardsToEachPlayer();
+        
         Choose10RoundCards();
+
         Debug.Log("[DEBUG] Chose 10 Cards: " + roundCardIDs.Count);
         // Wait 10 seconds
         WaitForMemorization();
@@ -114,21 +119,37 @@ public class Round : NetworkBehaviour
         subRound.Initialize(chosenCardID);
     }
 
+    private void Give2CardsToEachPlayer()
+    {
+        if (!IsServer) return;
+        
+        // Refactor?
+        foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
+        {
+            ulong clientId = client.ClientId;
 
+            var cards = CardManager.Instance.GetCards(2);
+
+            foreach (var card in cards)
+            {
+                GameEvents.OnPlayerKeepCard?.Invoke(clientId, card.cardID);
+            }
+        }
+    }
+    
     private void Choose10RoundCards()
     {
         if (!IsServer) return;
 
         roundCardIDs.Clear();
 
-        CardDataSO[] roundCardData = CardManager.Instance.GetRoundCards(10);
+        CardDataSO[] roundCardData = CardManager.Instance.GetCards(10);
 
         foreach (var card in roundCardData)
         {
             roundCardIDs.Add(card.cardID);
         }
-
-    
+        
         CardManager.Instance.InstantiateRoundCardsByID(roundCardIDs);
         
 
