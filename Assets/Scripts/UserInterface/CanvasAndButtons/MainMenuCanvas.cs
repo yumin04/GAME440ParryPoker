@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,6 +22,12 @@ public class MainMenuCanvas : MonoBehaviour
     [SerializeField] private Button backButton;
     [SerializeField] private Button hostButton;
     [SerializeField] private Button clientButton;
+
+    [Header("Audio")]
+    [SerializeField] private AudioSource musicSource;
+    [Tooltip("Looping menu music. Asset: Assets/Audio/jazzforgame84.mp3")]
+    [SerializeField] private AudioClip mainMenuMusic;
+
     public void Awake()
     {
         Debug.Log("MainMenuCanvas Awake");
@@ -38,23 +44,43 @@ public class MainMenuCanvas : MonoBehaviour
         backButton.onClick.AddListener(OnBackClicked);
         hostButton.onClick.AddListener(OnHostClicked);
         clientButton.onClick.AddListener(OnClientClicked);
+
+        StartMainMenuMusic();
+    }
+
+    private void StartMainMenuMusic()
+    {
+        if (mainMenuMusic == null) mainMenuMusic = Resources.Load<AudioClip>("Audio/jazzforgame84");
+        if (musicSource != null && mainMenuMusic != null)
+        {
+            musicSource.clip = mainMenuMusic;
+            musicSource.loop = true;
+            musicSource.volume = 4f;
+            musicSource.mute = false;
+            musicSource.Play();
+        }
+    }
+
+    private void PlayButtonSound()
+    {
+        if (musicSource != null) musicSource.Stop();
     }
     
     // mainMenuPanel Interactions
     private void OnStartClicked()
     {
+        PlayButtonSound();
         Debug.Log("OnStartClicked");
-        // make the "Host Client Panel" Pop Up
         hostClientPanel.SetActive(true);
     }
     private void OnTutorialClicked()
     {
+        PlayButtonSound();
         Debug.Log("OnTutorialClicked");
-        // After all game is made
-        // Doesn't need to be Tutorial?
     }
     private void OnExitClicked()
     {
+        PlayButtonSound();
         Debug.Log("OnExitClicked");
         EndApplication.QuitApplication();
     }
@@ -62,25 +88,27 @@ public class MainMenuCanvas : MonoBehaviour
     // HostClientPanel Interactions
     private void OnBackClicked()
     {
+        PlayButtonSound();
         Debug.Log("OnBackClicked");
         hostClientPanel.SetActive(false);
+        StartMainMenuMusic();
     }
 
     private void OnHostClicked()
     {
+        PlayButtonSound();
         if (NetworkManager.Singleton == null) return;
 
         HostClientManager.Instance.StartHost();
         Debug.Log("StartHost");
-        // Move On To Next Scene
     }
 
     private void OnClientClicked()
     {
+        PlayButtonSound();
         if (NetworkManager.Singleton == null) return;
 
         HostClientManager.Instance.StartClient();
         Debug.Log("StartClient");
-        // Move On To Next Scene
     }
 }
