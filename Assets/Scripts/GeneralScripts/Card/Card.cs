@@ -1,4 +1,5 @@
-﻿using SOFile;
+﻿using System;
+using SOFile;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -14,13 +15,17 @@ namespace GeneralScripts.Card {
 			UpdateTexture();
 		}
 
-
-		public void OnEnable() {
-			GameEvents.HideAllInstantiatedCards += HideCard;
-			GameEvents.DestroyAllInstantiatedCards += DestroyCard;
-			cardId.OnValueChanged += OnCardDataChanged;
-			GameEvents.OnKeepClicked += TryDespawn;
-		}
+    
+    public void OnEnable()
+    {
+        GameEvents.HideAllInstantiatedCards += HideCard;
+        GameEvents.DestroyAllInstantiatedCards += DestroyCard;
+        cardId.OnValueChanged += OnCardDataChanged;
+        
+        // Can be handled by despawn since it is a networking object.
+        GameEvents.OnKeepClicked += TryDespawn;
+        GameEvents.OnAttackClicked += TryDespawn;
+    }
 
 		public void OnDisable() {
 			GameEvents.HideAllInstantiatedCards -= HideCard;
@@ -44,6 +49,37 @@ namespace GeneralScripts.Card {
 		private void DespawnCardRPC(RpcParams rpcParams = default) {
 			NetworkObject.Despawn();
 		}
+    
+    
+    public void OnDisable()
+    {
+        GameEvents.HideAllInstantiatedCards -= HideCard;
+        GameEvents.DestroyAllInstantiatedCards -= DestroyCard;
+        cardId.OnValueChanged -= OnCardDataChanged;
+        
+        // Can be handled by despawn since it is a networking object.
+        GameEvents.OnKeepClicked -= TryDespawn;
+        GameEvents.OnAttackClicked -= TryDespawn;
+    }
+    
+    // TODO: Refactor this so Card does not need to know this maybe?
+    private void OnCardDataChanged(int previousValue, int newValue)
+    {
+        cardData = CardManager.Instance.GetCardByID(newValue);
+        // TODO: This is where we change the texture of the card.
+    }    
+    
+    private void TryDespawn()
+    {
+        // if (!IsOwner) return;
+        DespawnCardRPC();
+    }
+    
+    [Rpc(SendTo.Server)]
+    private void DespawnCardRPC(RpcParams rpcParams = default)
+    {
+        NetworkObject.Despawn(true);
+    }
 
 		private void HideCard() {
 			// Or move to a different place
