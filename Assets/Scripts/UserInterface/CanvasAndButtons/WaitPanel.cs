@@ -7,7 +7,7 @@ public class WaitPanel : MonoBehaviour
 {
     public void OnEnable()
     {
-        GameEvents.OnSubRoundEnd += DisablePanel;
+        GameEvents.HideWaitAndAttackPanel += DisablePanel;
         // If keep clicked, it will come to SubRoundEnd naturally, so no need to add that
         
         // If attack is clicked, it needs to move on to attack phase
@@ -16,7 +16,7 @@ public class WaitPanel : MonoBehaviour
 
     public void OnDisable()
     {
-        GameEvents.OnSubRoundEnd -= DisablePanel;
+        GameEvents.HideWaitAndAttackPanel -= DisablePanel;
         // GameEvents.OnAttackClicked -= DisablePanel;
     }
     

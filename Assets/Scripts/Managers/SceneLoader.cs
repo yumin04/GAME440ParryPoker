@@ -11,10 +11,6 @@ public class SceneLoader : Singleton<SceneLoader>
         ResultScene,
     }
 
-    // =========================
-    // Public Scene APIs
-    // =========================
-
     public void LoadMainMenuScene()
     {
         Load(SceneType.MainMenuScene);
@@ -23,17 +19,12 @@ public class SceneLoader : Singleton<SceneLoader>
     public void LoadResultScene()
     {
         Load(SceneType.ResultScene);
-        // TODO: Change State Here?
     }
 
     public void LoadRoundScene()
     {
         Load(SceneType.RoundScene);
     }
-
-    // =========================
-    // Internal Loader
-    // =========================
 
     private void Load(SceneType sceneType)
     {
