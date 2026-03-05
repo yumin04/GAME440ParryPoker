@@ -20,7 +20,10 @@ public class Card : NetworkBehaviour
         GameEvents.HideAllInstantiatedCards += HideCard;
         GameEvents.DestroyAllInstantiatedCards += DestroyCard;
         cardId.OnValueChanged += OnCardDataChanged;
+        
+        // Can be handled by despawn since it is a networking object.
         GameEvents.OnKeepClicked += TryDespawn;
+        GameEvents.OnAttackClicked += TryDespawn;
     }
 
     
@@ -30,7 +33,10 @@ public class Card : NetworkBehaviour
         GameEvents.HideAllInstantiatedCards -= HideCard;
         GameEvents.DestroyAllInstantiatedCards -= DestroyCard;
         cardId.OnValueChanged -= OnCardDataChanged;
+        
+        // Can be handled by despawn since it is a networking object.
         GameEvents.OnKeepClicked -= TryDespawn;
+        GameEvents.OnAttackClicked -= TryDespawn;
     }
     
     // TODO: Refactor this so Card does not need to know this maybe?

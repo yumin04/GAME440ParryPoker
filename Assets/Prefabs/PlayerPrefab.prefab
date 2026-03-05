@@ -35,7 +35,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2610733040644858146}
-  - {fileID: 6953460262131171211}
   - {fileID: 5944593789544533972}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -128,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 19753839
+  GlobalObjectIdHash: 2131885327
   InScenePlacedSourceGlobalObjectIdHash: 2717642765
   DeferredDespawnTick: 0
   Ownership: 1
@@ -867,7 +866,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6953460262131171211}
   m_Father: {fileID: 8929967922509943838}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &1034582147054398281
@@ -1217,7 +1217,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 7747582754727737746}
   m_OnClick:
     m_PersistentCalls:
@@ -1759,12 +1759,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7744471181194579564}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 760, y: 175, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.75, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8929967922509943838}
+  m_Father: {fileID: 2610733040644858146}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5827375768040497723
 MonoBehaviour:
@@ -1778,5 +1778,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb743cd64a714d61bc475623e9290bf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHand
-  cardPrefab: {fileID: 7922050725990393640, guid: 303d06ad58f4c99468cd6dea59b6fc75, type: 3}
+  playerDisplayCardPrefab: {fileID: 7922050725990393640, guid: 37bb2f9ac9c0a2e47ba91eea34e639bd, type: 3}
   spacing: 1.5
+  radius: 1
+  maxAngle: 60
