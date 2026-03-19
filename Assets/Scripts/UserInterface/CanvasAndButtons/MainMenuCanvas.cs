@@ -12,6 +12,12 @@ public class MainMenuCanvas : MonoBehaviour
     [SerializeField] private GameObject mainMenuPanel;
     [SerializeField] private GameObject hostClientPanel;
     [Space]
+
+    [Header("Main Menu Visuals")]
+    [Tooltip("Optional extra visuals to hide/show with the main menu (ex: TitleLogo).")]
+    [SerializeField] private GameObject[] mainMenuVisualObjects;
+    [Tooltip("Optional smoke particle system shown on the main menu.")]
+    [SerializeField] private ParticleSystem menuSmoke;
     
     [Header("Main Menu Buttons")]
     [SerializeField] private Button startButton;
@@ -31,8 +37,10 @@ public class MainMenuCanvas : MonoBehaviour
     public void Awake()
     {
         Debug.Log("MainMenuCanvas Awake");
+        TryAutoWireOptionalVisuals();
         mainMenuPanel.SetActive(true);
         hostClientPanel.SetActive(false);
+        SetMainMenuState(true);
     }
     
     public void Start()
@@ -71,7 +79,7 @@ public class MainMenuCanvas : MonoBehaviour
     {
         PlayButtonSound();
         Debug.Log("OnStartClicked");
-        hostClientPanel.SetActive(true);
+        SetMainMenuState(false);
     }
     private void OnTutorialClicked()
     {
@@ -90,7 +98,7 @@ public class MainMenuCanvas : MonoBehaviour
     {
         PlayButtonSound();
         Debug.Log("OnBackClicked");
-        hostClientPanel.SetActive(false);
+        SetMainMenuState(true);
         StartMainMenuMusic();
     }
 
@@ -110,5 +118,60 @@ public class MainMenuCanvas : MonoBehaviour
 
         HostClientManager.Instance.StartClient();
         Debug.Log("StartClient");
+    }
+
+    private void SetMainMenuState(bool showMainMenu)
+    {
+        mainMenuPanel.SetActive(showMainMenu);
+        hostClientPanel.SetActive(!showMainMenu);
+
+        if (mainMenuVisualObjects != null)
+        {
+            foreach (GameObject visual in mainMenuVisualObjects)
+            {
+                if (visual != null)
+                {
+                    visual.SetActive(showMainMenu);
+                }
+            }
+        }
+
+        if (menuSmoke != null)
+        {
+            GameObject smokeObject = menuSmoke.gameObject;
+            smokeObject.SetActive(showMainMenu);
+
+            if (showMainMenu)
+            {
+                // Reset and replay so smoke always looks correct after returning.
+                menuSmoke.Clear(true);
+                menuSmoke.Play(true);
+            }
+            else
+            {
+                menuSmoke.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            }
+        }
+    }
+
+    private void TryAutoWireOptionalVisuals()
+    {
+        if (menuSmoke == null)
+        {
+            GameObject smokeObject = GameObject.Find("Smoke");
+            if (smokeObject != null)
+            {
+                menuSmoke = smokeObject.GetComponent<ParticleSystem>();
+            }
+        }
+
+        if (mainMenuVisualObjects == null || mainMenuVisualObjects.Length == 0)
+        {
+            GameObject titleLogo = GameObject.Find("TitleLogo");
+            if (titleLogo != null)
+            {
+                mainMenuVisualObjects = new[] { titleLogo };
+            }
+        }
     }
 }
