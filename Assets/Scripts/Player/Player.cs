@@ -12,43 +12,33 @@ public class Player : NetworkBehaviour
     [SerializeField] private GameObject priorityPanel;
     [SerializeField] private GameObject waitPanel;
     [SerializeField] private PlayerHand playerHand;
-
-
+    [SerializeField] private SlotMachineInstantiator slotMachineSpawner;
+    
     [Header("Parameters")]
     [SerializeField] private float cameraTransitionTime = 4f;
     
     [Header("Player Data")]
     private NetworkList<int> playerCardIds = new();
 
-    #region Debugging Purpose Only
+    private bool isAttacking = false;
+    
+
     [Header("Debug Only")]
     [SerializeField] private List<int> debugPlayerCardIds = new();
-    private void OnCardsChanged(NetworkListEvent<int> changeEvent)
-    {
-        SyncDebugList();
-    }
-    private void SyncDebugList()
-    {
-        debugPlayerCardIds.Clear();
-
-        foreach (var id in playerCardIds)
-            debugPlayerCardIds.Add(id);
-    }
-    #endregion
-
     
+
     // TODO: This happens when "start client" and "start host" has been called.
     // Some parts of the logic needs to be changed
     public override void OnNetworkSpawn()
     {
-        // TODO: ONLY FOR DEBUG. Delete
         playerCardIds.OnListChanged += OnCardsChanged;
-        // Delete.
+
+        isAttacking = false;
         
         playerCamera.gameObject.SetActive(IsOwner);
         // position and rotation determined by the server
         SetPlayerPosition();
-    }
+    }    
 
     public void OnEnable()
     {
@@ -57,7 +47,12 @@ public class Player : NetworkBehaviour
         GameEvents.OnLosingPriority += LosePriority;
 
         GameEvents.OnPlayerKeepCard += OnPlayerKeepCard;
+        
+        GameEvents.OnAttackStart += MoveCameraToOriginal;
+        GameEvents.OnAttackStart += StartAttackOrDefend;
     }
+
+    
 
     public void OnDisable()
     {
@@ -66,8 +61,16 @@ public class Player : NetworkBehaviour
         GameEvents.OnLosingPriority -= LosePriority;
 
         GameEvents.OnPlayerKeepCard -= OnPlayerKeepCard;
+        
+        GameEvents.OnAttackStart -= MoveCameraToOriginal;
+        GameEvents.OnAttackStart -= StartAttackOrDefend;
     }
     
+    private void MoveCameraToOriginal()
+    {
+        playerCamera.transform.position = transform.position;
+        playerCamera.transform.rotation = transform.rotation;
+    }
     
     #region PrivateMethods
     private void SetPlayerPosition()
@@ -78,12 +81,12 @@ public class Player : NetworkBehaviour
         if (OwnerClientId == 0)
         {
             transform.position = new Vector3(-10, 10, 0);
-            transform.rotation = Quaternion.identity;
+            transform.rotation = Quaternion.Euler(0, 90, 0);
         }
         else
         {
             transform.position = new Vector3(10, 10, 0);
-            transform.rotation = Quaternion.Euler(0, 180, 0);
+            transform.rotation = Quaternion.Euler(0, -90, 0);
         }
     }
     
@@ -95,6 +98,12 @@ public class Player : NetworkBehaviour
     {
         playerCamera.transform.SetParent(null);
         StartCoroutine(MoveCameraCoroutine(cameraTransitionTime));
+    }
+
+    // TODO: This needs to be added to "attack ended" 
+    private void MoveCameraToFullViewAfterAttack()
+    {
+        StartCoroutine(MoveCameraCoroutine(2f));
     }
 
     private IEnumerator MoveCameraCoroutine(float duration)
@@ -125,9 +134,47 @@ public class Player : NetworkBehaviour
     #endregion
 
 
+    private void StartAttackOrDefend()
+    {
+        if (IsOwner!) return;
+        if (isAttacking)
+        {
+            // Spawn Slot Machine
+        }
+        else
+        {
+            // Waiting for slot machine...
+        }
+        // what if it is defending, then wait until something change?
+    }
+    
+    private void OnCardsChanged(NetworkListEvent<int> changeEvent)
+    {
+        // TODO: [DEBUG] Delete
+        SyncDebugList();
+        
+        List<int> copy = new List<int>();
+
+        for (int i = 0; i < playerCardIds.Count; i++)
+        {
+            copy.Add(playerCardIds[i]);
+        }
+
+        playerHand.DisplayCards(copy);
+    }
+    private void SyncDebugList()
+    {
+        debugPlayerCardIds.Clear();
+
+        foreach (var id in playerCardIds)
+            debugPlayerCardIds.Add(id);
+    }
+
     private void HavePriority()
     {
         if (!IsOwner) return;
+        
+        isAttacking = true;
         
         Debug.Log("Have Priority");
         
@@ -138,6 +185,9 @@ public class Player : NetworkBehaviour
     private void LosePriority()
     {
         if (!IsOwner) return;
+        
+        isAttacking = false;
+        
         Debug.Log("Lost Priority");
         
         ShowWaitingUI();
@@ -162,12 +212,6 @@ public class Player : NetworkBehaviour
 
         playerCardIds.Add(cardId);
         
-        // UpdateHandUI(cardId);
     }
     
-
-    private void UpdateHandUI(int cardId)
-    {
-        playerHand.AddCard(cardId);
-    }
 }

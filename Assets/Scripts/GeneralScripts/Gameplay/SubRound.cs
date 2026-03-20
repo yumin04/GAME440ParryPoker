@@ -48,7 +48,7 @@ public class SubRound : NetworkBehaviour
         ulong senderId = rpcParams.Receive.SenderClientId;
         
         GameEvents.OnPlayerKeepCard?.Invoke(senderId, CardID.Value);
-
+        
         NotifySubRoundEndClientRpc();
 
         NetworkObject.Despawn(true);
@@ -57,12 +57,38 @@ public class SubRound : NetworkBehaviour
     [Rpc(SendTo.ClientsAndHost)]
     private void NotifySubRoundEndClientRpc()
     {
+        GameEvents.HideWaitAndAttackPanel.Invoke();
         GameEvents.OnSubRoundEnd?.Invoke();
     }
 
 
     private void OnAttackClicked()
     {
-        Debug.Log("[DEBUG] Starting Attack");
+        RequestAttackRpc();
+        // Hide Attack and Wait Panel in both player
+        // Move camera to attack position (this is done through Player I believe)
+        // Slot machine pop up
+        // Wait for player "1" pop up
     }
+    [Rpc(SendTo.Server)]
+    private void RequestAttackRpc(RpcParams rpcParams = default)
+    {
+        Debug.Log("[DEBUG] Starting Attack");
+        
+        if (!IsServer) return;
+        
+        NotifyAttackStartRpc();
+        
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void NotifyAttackStartRpc()
+    {
+        GameEvents.HideWaitAndAttackPanel.Invoke();
+        
+        
+        GameEvents.OnAttackStart.Invoke();
+        
+    }
+
 }
