@@ -46,6 +46,8 @@ public class MainMenuCanvas : MonoBehaviour
         Debug.Log("OnStartClicked");
         // make the "Host Client Panel" Pop Up
         hostClientPanel.SetActive(true);
+        hostButton.interactable = true;
+        clientButton.interactable = true;
     }
     private void OnTutorialClicked()
     {
@@ -64,6 +66,7 @@ public class MainMenuCanvas : MonoBehaviour
     {
         Debug.Log("OnBackClicked");
         hostClientPanel.SetActive(false);
+        HostClientManager.Instance.EndHost();
     }
 
     private void OnHostClicked()
@@ -72,6 +75,8 @@ public class MainMenuCanvas : MonoBehaviour
 
         HostClientManager.Instance.StartHost();
         Debug.Log("StartHost");
+        hostButton.interactable = false;
+        clientButton.interactable = false;
         // Move On To Next Scene
     }
 
@@ -81,6 +86,8 @@ public class MainMenuCanvas : MonoBehaviour
 
         HostClientManager.Instance.StartClient();
         Debug.Log("StartClient");
+        hostButton.interactable = false;
+        clientButton.interactable = false;
         // Move On To Next Scene
     }
 }

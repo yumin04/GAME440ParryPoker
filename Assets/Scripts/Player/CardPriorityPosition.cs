@@ -5,6 +5,7 @@ public class CardPriorityPosition : MonoBehaviour
     private void Awake()
     {
         GameParameters.CardPriorityPosition = transform;
+        
     }
 
     private void OnDestroy()

@@ -11,6 +11,9 @@ public class Round : NetworkBehaviour
 {
 
     private NetworkList<int> roundCardIDs = new NetworkList<int>();
+    
+    // TODO: make sure we are having correct seconds
+    private float memorizationSeconds = 1f;
 
     public void OnEnable()
     {
@@ -29,6 +32,17 @@ public class Round : NetworkBehaviour
         if (roundCardIDs.Count == 0)
         {
             Debug.Log("No more cards. Ending round.");
+            
+
+            ulong loserID = CalculateRoundWinner();
+
+            // TODO:
+            // instead of 10, have a round damage
+            // or damage by hand rank?
+            
+            Game.Instance.DecreasePlayerHealth(loserID, 10);    
+            
+
             EndRound();
         }
         else
@@ -38,11 +52,20 @@ public class Round : NetworkBehaviour
         }
     }
 
+    private ulong CalculateRoundWinner()
+    {
+        // Stub 
+        Debug.LogWarning("[STUB] No Winner Calculation Implemented, player 2 lose");
+        // TODO: 
+        // 서버가 각각의 player에게 hand calculation 요청
+        // 그다음 hand 반환
+        return 1;
+    }
+
     private void EndRound()
     {
-        // TODO: we need to implement this
-        Debug.Log("[DEBUG] EndRound, For now, ending Game");
-        Game.Instance.EndGame();
+        Debug.Log("[DEBUG] EndRound");
+        GameEvents.OnRoundEnd?.Invoke();
         
     }
 
@@ -60,9 +83,10 @@ public class Round : NetworkBehaviour
 
     private void OnRoundCardsChanged(NetworkListEvent<int> changeEvent)
     {
-        // TODO: Do we need this?
+        // TODO:
+        // 여기서 SubRoundText 바꾸는거 ㄱㅊ할듯?
+        // 이거 둘다 돌려지는지 확인
         if (!IsClient) return;
-
     }
 
     
@@ -89,8 +113,9 @@ public class Round : NetworkBehaviour
     private IEnumerator MemorizationCoroutine()
     {
         if (!IsServer) yield break;
-
-        yield return new WaitForSeconds(10f);
+        
+        
+        yield return new WaitForSeconds(memorizationSeconds);
         RunAfterMemorizationRPC();
     }
 
@@ -107,7 +132,8 @@ public class Round : NetworkBehaviour
         if (!IsServer) return;
 
         if (roundCardIDs.Count == 0) return;
-
+        
+        // TODO: UserInterface.Instance.
         int randomIndex = Random.Range(0, roundCardIDs.Count);
         int chosenCardID = roundCardIDs[randomIndex];
         

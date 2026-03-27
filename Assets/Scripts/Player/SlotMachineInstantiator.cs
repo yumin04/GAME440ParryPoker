@@ -2,7 +2,26 @@
 
 public class SlotMachineInstantiator : MonoBehaviour
 {
-    // Spawn Slot Machine
-    // going to be attached to the Main Camera
-    // Just like player hand
+    [SerializeField] private GameObject slotMachinePrefab;
+
+    private GameObject currentSlotMachine;
+    
+    public void InstantiateSlotMachine()
+    {
+        currentSlotMachine = Instantiate(
+            slotMachinePrefab,
+            transform.position,
+            transform.rotation,
+            transform
+        );
+    }
+
+    public void DestroySlotMachine()
+    {
+        if (currentSlotMachine != null)
+        {
+            Destroy(currentSlotMachine);
+            currentSlotMachine = null;
+        }
+    }
 }

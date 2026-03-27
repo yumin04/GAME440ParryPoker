@@ -13,14 +13,21 @@ public class Player : NetworkBehaviour
     [SerializeField] private GameObject waitPanel;
     [SerializeField] private PlayerHand playerHand;
     [SerializeField] private SlotMachineInstantiator slotMachineSpawner;
+
+    [SerializeField] private Attack attackObject;
+    [SerializeField] private Defend defendObject;
+    [SerializeField] private CardCollider cardCollider;
+
     
+    // TODO: Need Better Time
     [Header("Parameters")]
-    [SerializeField] private float cameraTransitionTime = 4f;
+    private float cameraTransitionTime = 1f;
     
     [Header("Player Data")]
     private NetworkList<int> playerCardIds = new();
 
-    private bool isAttacking = false;
+
+    private bool isAttacking;
     
 
     [Header("Debug Only")]
@@ -32,7 +39,7 @@ public class Player : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         playerCardIds.OnListChanged += OnCardsChanged;
-
+        
         isAttacking = false;
         
         playerCamera.gameObject.SetActive(IsOwner);
@@ -50,9 +57,14 @@ public class Player : NetworkBehaviour
         
         GameEvents.OnAttackStart += MoveCameraToOriginal;
         GameEvents.OnAttackStart += StartAttackOrDefend;
+        GameEvents.OnAttackStart += ClearHand;
+        GameEvents.OnSlotMachineFinished += TriggerAfterSlotMachineRpc;
+    
+        GameEvents.OnAttackEnd += MoveCameraToFullViewAfterAttack;
+        GameEvents.OnAttackEnd += DisplayCards;
     }
 
-    
+
 
     public void OnDisable()
     {
@@ -64,28 +76,46 @@ public class Player : NetworkBehaviour
         
         GameEvents.OnAttackStart -= MoveCameraToOriginal;
         GameEvents.OnAttackStart -= StartAttackOrDefend;
+        GameEvents.OnAttackStart -= ClearHand;
+        
+        GameEvents.OnSlotMachineFinished -= TriggerAfterSlotMachineRpc;
+        GameEvents.OnAttackEnd -= MoveCameraToFullViewAfterAttack;
+        GameEvents.OnAttackEnd -= DisplayCards;
     }
     
+    // RPC로 보내야 하는듯?
     private void MoveCameraToOriginal()
     {
-        playerCamera.transform.position = transform.position;
+        MoveCameraToOriginalRPC();
+    }
+    
+    [Rpc(SendTo.ClientsAndHost)]
+    private void MoveCameraToOriginalRPC()
+    {
+        // TODO: instead of this, 포지션 다시 static variable + class 로 마무리
+        Vector3 originalPosition = transform.position;
+        
+        // Current Camera position (x,y) = (+-8,7)
+        originalPosition.x = originalPosition.x * 0.8f;
+        originalPosition.y += 8.5f;
+        
+        playerCamera.transform.position = originalPosition;
         playerCamera.transform.rotation = transform.rotation;
     }
     
     #region PrivateMethods
     private void SetPlayerPosition()
     {
-        // only server changes position
         if (!IsServer) return;
         
         if (OwnerClientId == 0)
         {
-            transform.position = new Vector3(-10, 10, 0);
+            transform.position = new Vector3(-10, -2, 1);
             transform.rotation = Quaternion.Euler(0, 90, 0);
         }
         else
         {
-            transform.position = new Vector3(10, 10, 0);
+            transform.position = new Vector3(10, -2, 1);
             transform.rotation = Quaternion.Euler(0, -90, 0);
         }
     }
@@ -99,11 +129,19 @@ public class Player : NetworkBehaviour
         playerCamera.transform.SetParent(null);
         StartCoroutine(MoveCameraCoroutine(cameraTransitionTime));
     }
-
-    // TODO: This needs to be added to "attack ended" 
+    
+    
+    
     private void MoveCameraToFullViewAfterAttack()
     {
-        StartCoroutine(MoveCameraCoroutine(2f));
+        MoveCameraToFullViewAfterAttackRPC();
+
+    }
+    
+    [Rpc(SendTo.ClientsAndHost)]
+    private void MoveCameraToFullViewAfterAttackRPC()
+    {
+        StartCoroutine(MoveCameraCoroutine(2f));        
     }
 
     private IEnumerator MoveCameraCoroutine(float duration)
@@ -136,31 +174,79 @@ public class Player : NetworkBehaviour
 
     private void StartAttackOrDefend()
     {
-        if (IsOwner!) return;
+        if (!IsOwner) return;
+        
+        Debug.Log("[DEBUG] Start Attack Or Defend");
+        Debug.Log("[DEBUG] Inside StartAttackOrDefend isAttacking: "+ isAttacking.ToString());
         if (isAttacking)
         {
+            Debug.Log("[DEBUG] Instantiating Slot Machine");
             // Spawn Slot Machine
+            slotMachineSpawner.InstantiateSlotMachine();
         }
         else
         {
             // Waiting for slot machine...
+            Debug.Log("[DEBUG] Waiting for Slot Machine");
         }
-        // what if it is defending, then wait until something change?
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void TriggerAfterSlotMachineRpc()
+    {
+        TriggerAfterSlotMachine();
+    }
+    
+    private void TriggerAfterSlotMachine()
+    {
+        if (!IsOwner) return;
+        
+        if (isAttacking)
+        {
+            slotMachineSpawner.DestroySlotMachine();
+            ActivateAttack();
+        }
+        else
+        {
+            ActivateDefend();
+            EnableCardCollider();
+        }
+    }
+
+    private void EnableCardCollider()
+    {
+        if (cardCollider != null)
+        {
+            cardCollider.EnableCollider();
+        }
+    }
+
+    private void ActivateAttack()
+    {
+        if (attackObject == null) return;
+        
+        attackObject.StartAttack(-1 * (transform.position.x / 2));
+    }
+
+    private void ActivateDefend()
+    {
+        // nothing here yet?
+        if (defendObject == null) return;
+        // TODO:
+        // SlotMachine Instantiate해서 그거 하고 있다는거 indicate해주고
+        // Card Dispenser Instantiate해서 곧 쏠거라는거 알려주고 해야함
+        
+        // defendObject.gameObject.SetActive(true);
+        // defendObject.PlayDefendAnimation();
     }
     
     private void OnCardsChanged(NetworkListEvent<int> changeEvent)
     {
         // TODO: [DEBUG] Delete
         SyncDebugList();
-        
-        List<int> copy = new List<int>();
 
-        for (int i = 0; i < playerCardIds.Count; i++)
-        {
-            copy.Add(playerCardIds[i]);
-        }
+        DisplayCards();
 
-        playerHand.DisplayCards(copy);
     }
     private void SyncDebugList()
     {
@@ -169,6 +255,46 @@ public class Player : NetworkBehaviour
         foreach (var id in playerCardIds)
             debugPlayerCardIds.Add(id);
     }
+    private void DisplayCards()
+    {
+        DisplayCardsRPC();
+    }
+    
+    [Rpc(SendTo.ClientsAndHost)]
+    private void DisplayCardsRPC()
+    {
+        if (!IsOwner) return;
+        
+        List<int> copy = new List<int>();
+
+        for (int i = 0; i < playerCardIds.Count; i++)
+        {
+            copy.Add(playerCardIds[i]);
+        }
+
+        Debug.Log("[DEBUG] Display Cards");
+        playerHand.DisplayCards(copy);   
+    }
+
+    private void ClearHand()
+    {
+        playerHand.Clear();
+    }
+    
+
+    
+    private void OnPlayerKeepCard(ulong clientId, int cardId)
+    {
+        if (OwnerClientId != clientId) return;
+
+        Debug.Log($"Player {clientId} received card {cardId}");
+
+        playerCardIds.Add(cardId);
+        
+    }
+    
+    // DONE
+    #region Priority Panel
 
     private void HavePriority()
     {
@@ -177,8 +303,9 @@ public class Player : NetworkBehaviour
         isAttacking = true;
         
         Debug.Log("Have Priority");
-        
+
         ShowPriorityUI();
+        Debug.Log("isAttacking: "+ isAttacking.ToString());
     }
 
 
@@ -192,6 +319,7 @@ public class Player : NetworkBehaviour
         
         ShowWaitingUI();
         // TODO: maybe "waiting for opponent" or smth like this
+        Debug.Log("isAttacking: "+ isAttacking.ToString());
     }
 
     private void ShowWaitingUI()
@@ -203,15 +331,26 @@ public class Player : NetworkBehaviour
     { 
         priorityPanel.SetActive(true);
     }
+    
 
-    private void OnPlayerKeepCard(ulong clientId, int cardId)
+    #endregion
+
+    public void SpawnAttackCard(Vector3 startPos, Vector3 endPos)
     {
-        if (OwnerClientId != clientId) return;
-
-        Debug.Log($"Player {clientId} received card {cardId}");
-
-        playerCardIds.Add(cardId);
-        
+        if (IsServer)
+        {
+            CardManager.Instance.InstantiateAttackCard(startPos, endPos);
+        }
+        else
+        {
+            SpawnAttackCardRPC(startPos, endPos);
+        }
     }
     
+    
+    [Rpc(SendTo.Server)]
+    private void SpawnAttackCardRPC(Vector3 startPos, Vector3 endPos)
+    {
+        CardManager.Instance.InstantiateAttackCard(startPos, endPos);
+    }
 }
