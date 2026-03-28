@@ -1,4 +1,4 @@
-using Managers;
+using System;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class MainMenuCanvas : MonoBehaviour {
 	// Don't change it, made this so we do not need to hook up to UI again.
-	// To make things scalable, this is better (even though this is TOTALLY not scalable)
+	// To make things scalable, this is better
 	[Header("Panels")]
 	[SerializeField] private GameObject mainMenuPanel;
 	[SerializeField] private GameObject hostClientPanel;
@@ -20,41 +20,54 @@ public class MainMenuCanvas : MonoBehaviour {
 	[SerializeField] private Button tutorialButton;
 	[SerializeField] private Button exitButton;
 
-	[Header("Host Client Buttons")]
-	[FormerlySerializedAs("backButton")]
-	[SerializeField] private Button backButtonHostClient;
-	[SerializeField] private Button hostButton;
-	[SerializeField] private Button clientButton;
+    [Header("Host Client Buttons")]
+    [SerializeField] private Button backButtonHostClient;
+    [SerializeField] private Button hostButton;
+    [SerializeField] private Button clientButton;
+    
+    [Header("Client Address Panels")]
+    [SerializeField] private Button backButtonClientAddress;
+    [SerializeField] private Button clientStartButton;
+    [SerializeField] private TMP_InputField addressInputField;
+    public void Awake()
+    {
+        Debug.Log("MainMenuCanvas Awake");
+        mainMenuPanel.SetActive(true);
+        hostClientPanel.SetActive(false);
+    }
+    
 
-	[Header("Client Address Panels")]
-	[SerializeField] private Button backButtonClientAddress;
-	[SerializeField] private Button clientStartButton;
-	[SerializeField] private TMP_InputField addressInputField;
+    public void Start() {
+	    startButton.onClick.AddListener(OnStartClicked);
+	    tutorialButton.onClick.AddListener(OnTutorialClicked);
+	    exitButton.onClick.AddListener(OnExitClicked);
+
+	    backButtonHostClient.onClick.AddListener(OnBackHostClientClicked);
+	    hostButton.onClick.AddListener(OnHostClicked);
+	    clientButton.onClick.AddListener(OnClientClicked);
+
+	    backButtonClientAddress.onClick.AddListener(OnBackClientAddressClicked);
+	    clientStartButton.onClick.AddListener(OnClientStartClicked);
+
+	    StartMainMenuMusic();
+    }
+    
+    
+    // HostClientPanel Interactions
+    private void OnBackClicked()
+    {
+        Debug.Log("OnBackClicked");
+        hostClientPanel.SetActive(false);
+        HostClientManager.Instance.EndHost();
+    }
+	
+
 
 	[Header("Audio")] [SerializeField] private AudioSource musicSource;
 	[Tooltip("Looping menu music. Asset: Assets/Audio/jazzforgame84.mp3")]
 	[SerializeField] private AudioClip mainMenuMusic;
 
-	public void Awake() {
-		Debug.Log("MainMenuCanvas Awake");
-		mainMenuPanel.SetActive(true);
-		hostClientPanel.SetActive(false);
-	}
 
-	public void Start() {
-		startButton.onClick.AddListener(OnStartClicked);
-		tutorialButton.onClick.AddListener(OnTutorialClicked);
-		exitButton.onClick.AddListener(OnExitClicked);
-
-		backButtonHostClient.onClick.AddListener(OnBackHostClientClicked);
-		hostButton.onClick.AddListener(OnHostClicked);
-		clientButton.onClick.AddListener(OnClientClicked);
-
-		backButtonClientAddress.onClick.AddListener(OnBackClientAddressClicked);
-		clientStartButton.onClick.AddListener(OnClientStartClicked);
-
-		StartMainMenuMusic();
-	}
 
 	private void StartMainMenuMusic() {
 		if (!mainMenuMusic) mainMenuMusic = Resources.Load<AudioClip>("Audio/jazzforgame84");
@@ -75,6 +88,8 @@ public class MainMenuCanvas : MonoBehaviour {
 		PlayButtonSound();
 		Debug.Log("OnStartClicked");
 		hostClientPanel.SetActive(true);
+		hostButton.interactable = true;
+		clientButton.interactable = true;
 	}
 
 	private void OnTutorialClicked() {
@@ -102,13 +117,16 @@ public class MainMenuCanvas : MonoBehaviour {
 
 		HostClientManager.Instance.StartHost();
 		Debug.Log("StartHost");
+		hostButton.interactable = false;
+		clientButton.interactable = false;
 	}
 
 	private void OnClientClicked() {
 		PlayButtonSound();
 		Debug.Log("OnClientClicked");
 		clientAddressPanel.SetActive(true);
-		hostClientPanel.SetActive(false);
+		hostClientPanel.SetActive(false);		
+		
 	}
 
 	private void OnBackClientAddressClicked() {
@@ -117,17 +135,24 @@ public class MainMenuCanvas : MonoBehaviour {
 		clientAddressPanel.SetActive(false);
 		hostClientPanel.SetActive(true);
 	}
-
+	
 	private void OnClientStartClicked() {
 		PlayButtonSound();
 		if (!NetworkManager.Singleton) return;
 
-		var address = addressInputField.text;
-		if (address.Length > 0)
-			HostClientManager.Instance.StartClient(address);
-		else
-			HostClientManager.Instance.StartClient();
+        HostClientManager.Instance.StartClient();
+        Debug.Log("StartClient");
+        hostButton.interactable = false;
+        clientButton.interactable = false;
+        // Move On To Next Scene
+        var address = addressInputField.text;
+        if (address.Length > 0)
+	        HostClientManager.Instance.StartClient(address);
+        else
+	        HostClientManager.Instance.StartClient();
 
-		Debug.Log("StartClient");
-	}
+        Debug.Log("StartClient");
+    }
+
+	
 }

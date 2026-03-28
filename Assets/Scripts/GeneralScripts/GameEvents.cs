@@ -1,4 +1,5 @@
 using System;
+using Unity.Netcode;
 
 public static class GameEvents
 {
@@ -21,4 +22,20 @@ public static class GameEvents
     public static Action OnKeepClicked;
     public static Action<ulong, int> OnPlayerKeepCard;
     public static Action OnAttackClicked;
+    public static Action HideWaitAndAttackPanel;
+
+    public static Action OnAttackStart;
+
+    public static Action OnAllLeversDown;
+    public static Action OnSlotMachineFinished;
+    
+    
+    public static Action OnAttackEnd;
+    
+    
+    // 안사용중
+    // public static Action KeepCard;
+
+
+
 }

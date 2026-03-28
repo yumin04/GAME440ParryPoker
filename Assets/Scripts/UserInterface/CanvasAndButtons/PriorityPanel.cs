@@ -15,18 +15,23 @@ public class PriorityPanel : MonoBehaviour
         attackButton.onClick.AddListener(OnAttackClicked);
         keepButton.onClick.AddListener(OnKeepClicked);
     }
-    
 
+    public void OnEnable()
+    {
+        GameEvents.HideWaitAndAttackPanel += DisablePanel;
+    }
+    public void OnDisable()
+    {
+        GameEvents.HideWaitAndAttackPanel -= DisablePanel;
+    }
     private void OnKeepClicked()
     {
         GameEvents.OnKeepClicked.Invoke();
-        DisablePanel();
     }
 
-    private void OnAttackClicked()
+    private void OnAttackClicked()  
     {
         GameEvents.OnAttackClicked.Invoke();
-        DisablePanel();
     }
 
     private void DisablePanel()

@@ -3,7 +3,7 @@ using Unity.Netcode.Transports.UTP;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Managers {
+
 	public class HostClientManager : Singleton<HostClientManager> {
 		// private bool clientConnected = false;
 		protected override void Awake() {
@@ -84,4 +84,3 @@ namespace Managers {
 
 		#endregion
 	}
-}

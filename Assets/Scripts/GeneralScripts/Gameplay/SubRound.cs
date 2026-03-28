@@ -15,12 +15,15 @@ public class SubRound : NetworkBehaviour
     {
         GameEvents.OnAttackClicked += OnAttackClicked;
         GameEvents.OnKeepClicked += OnKeepClicked;
+        
+        GameEvents.OnAttackEnd += KeepCard;
     }
 
     public void OnDisable()
     {
         GameEvents.OnAttackClicked -= OnAttackClicked;
         GameEvents.OnKeepClicked -= OnKeepClicked;
+        GameEvents.OnAttackEnd -= KeepCard;
     }
     public override void OnNetworkSpawn()
     {
@@ -35,11 +38,55 @@ public class SubRound : NetworkBehaviour
         yield return new WaitForSeconds(delay);
         CardManager.Instance.InstantiateSubRoundCard(CardID.Value);
     }
+
+    #region Click Method
+    
+    private void OnAttackClicked()
+    {
+        RequestAttackRpc();
+        RequestHideWaitAndAttackPanelRPC();
+        // Hide Attack and Wait Panel in both player
+        // Move camera to attack position (this is done through Player I believe)
+        // Slot machine pop up
+        // Wait for player "1" pop up
+    }
+    
+    // 이거는 click, 패널부분
     private void OnKeepClicked()
+    {
+        RequestHideWaitAndAttackPanelRPC();
+        KeepCard();
+
+    }
+    
+    // 이거는 Keep도, Attack도 결국에는 부르는 function
+    private void KeepCard()
     {
         RequestKeepRpc();
     }
+    #endregion
+
+    // TODO:Delete
+    #region HidePanelRPC
     
+    [Rpc(SendTo.Server)]
+    private void RequestHideWaitAndAttackPanelRPC()
+    {
+        NotifyHideWaitAndAttackPanelRPC();   
+    }
+    
+    
+    [Rpc(SendTo.ClientsAndHost)]
+    private void NotifyHideWaitAndAttackPanelRPC()
+    {
+        Debug.Log("[DEBUG] Inside NotifyHideWaitAndAttackPanelRPC");
+        GameEvents.HideWaitAndAttackPanel.Invoke();
+    }
+    #endregion
+
+    #region KeepRPC
+
+    // Keep Card에 넣고
     [Rpc(SendTo.Server)]
     private void RequestKeepRpc(RpcParams rpcParams = default)
     {
@@ -48,11 +95,35 @@ public class SubRound : NetworkBehaviour
         ulong senderId = rpcParams.Receive.SenderClientId;
         
         GameEvents.OnPlayerKeepCard?.Invoke(senderId, CardID.Value);
-
+        
         NotifySubRoundEndClientRpc();
 
         NetworkObject.Despawn(true);
     }
+
+    #endregion
+
+    #region AttackRPC
+
+    [Rpc(SendTo.Server)]
+    private void RequestAttackRpc(RpcParams rpcParams = default)
+    {
+        Debug.Log("[DEBUG] Starting Attack");
+        
+        if (!IsServer) return;
+        
+        NotifyAttackStartRpc();
+        
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    private void NotifyAttackStartRpc()
+    {
+        GameEvents.OnAttackStart.Invoke();
+    }
+
+
+    #endregion
 
     [Rpc(SendTo.ClientsAndHost)]
     private void NotifySubRoundEndClientRpc()
@@ -61,8 +132,4 @@ public class SubRound : NetworkBehaviour
     }
 
 
-    private void OnAttackClicked()
-    {
-        Debug.Log("[DEBUG] Starting Attack");
-    }
 }
