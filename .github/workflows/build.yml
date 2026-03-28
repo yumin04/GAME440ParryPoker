@@ -76,3 +76,36 @@ jobs:
           name: Parry-Poker-macOS
           path: build/StandaloneOSX
           retention-days: 90
+      release:
+    name: Release Build
+    needs: [build-windows, build-macos]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download Windows Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: Parry-Poker-Windows
+          path: windows-build
+
+      - name: Download macOS Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: Parry-Poker-macOS
+          path: macos-build
+
+      - name: Zip Builds
+        run: |
+          zip -r Parry-Poker-Windows.zip windows-build
+          zip -r Parry-Poker-macOS.zip macos-build
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ github.run_number }}
+          name: Build v${{ github.run_number }}
+          files: |
+            Parry-Poker-Windows.zip
+            Parry-Poker-macOS.zip
