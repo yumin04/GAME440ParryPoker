@@ -39,7 +39,7 @@ jobs:
       - name: UploadArtifact
         uses: actions/upload-artifact@v6
         with: 
-            name: Party-Tricks-Windows
+            name: Parry-Poker-Windows
             path: build/StandaloneWindows64
             retention-days: 90
             
@@ -73,6 +73,6 @@ jobs:
       - name: UploadArtifact
         uses: actions/upload-artifact@v6
         with:
-          name: Party-Tricks-macOS
+          name: Parry-Poker-macOS
           path: build/StandaloneOSX
           retention-days: 90
