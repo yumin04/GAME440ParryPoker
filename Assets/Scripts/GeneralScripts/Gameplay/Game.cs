@@ -12,7 +12,8 @@ public class Game : NetworkSingleton<Game>
     private NetworkVariable<int> player1Health = new();
     private NetworkVariable<int> player2Health = new();
     private NetworkVariable<int> roundNumber = new();
-    
+
+    private NetworkObject roundObject;
     // TODO: changeToStartRound가 바뀔때에 UserInterface.Instance.DisplayRoundNumber(roundNumber); 하면 됨
     
     public void OnEnable()
@@ -91,10 +92,13 @@ public class Game : NetworkSingleton<Game>
         UserInterface.Instance.ChangePlayer1Health(newValue);
         // 
         if (!IsServer) return;
+        // TODO: RPC통해서 각각의 client에 보내야 함
         if (newValue <= 0)
         {
+            // 이거는 RPC가 아니야
             UserInterface.Instance.ChangePlayer1Health(0);
             UserInterface.Instance.Player2Win();
+            // 이거는 RPC인데
             EndGame();
         }
     }
@@ -113,8 +117,10 @@ public class Game : NetworkSingleton<Game>
         if (!IsServer) return;
         if (newValue <= 0)
         {
+            // 이거는 RPC가 아니야
             UserInterface.Instance.ChangePlayer2Health(0);
             UserInterface.Instance.Player1Win();
+            // 이거는 RPC인데
             EndGame();
         }
     }
@@ -142,9 +148,12 @@ public class Game : NetworkSingleton<Game>
     {
         // Slowly change camera position of each player
         GameEvents.OnRoundStart.Invoke();
+
+        if (!IsServer) return;
+        if(roundObject != null) roundObject.Despawn();
         
         // After all animation and visuals are done, spawn round
-        GameInitializer.Instance.SpawnRound();
+        roundObject = GameInitializer.Instance.SpawnRound();
         
         // TODO: UserInterface에서 RoundNumber text 바꾸는것도 해야함
         
