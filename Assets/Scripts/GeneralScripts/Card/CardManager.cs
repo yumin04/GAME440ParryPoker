@@ -16,7 +16,8 @@ public class CardManager : Singleton<CardManager>
 
     private const float zMinBoundary = -1.5f;
     private const float zMaxBoundary = 1.5f;
-    private Quaternion defaultRotation = Quaternion.Euler(90f, 0f, 0f);
+    private Quaternion cardShowInTableRotation = Quaternion.Euler(180f, 0f, 0f);
+    private Quaternion cardHideInTableRotation = Quaternion.Euler(0f, 0f, 0f);
     
     [SerializeField] private CardInstantiator cardInstantiator;
     [SerializeField] private CardRepository cardRepository;
@@ -33,31 +34,30 @@ public class CardManager : Singleton<CardManager>
 
         return roundCards;
     }
+    public CardDataSO GetCardByID(int newValue)
+    {
+        return  cardRepository.GetCardByID(newValue);
+    }
     
+    
+    public void InstantiateAttackCard(Vector3 startPosition, Vector3 endPosition)
+    {
 
-
+        Vector3 randomPosition = GenerateRandomXZPosition();
+        // Generate Random Position
+        cardInstantiator.SpawnAttackCard(startPosition, endPosition);
+        
+    }
+    
+    // DONE
+    #region RoundCards
     public void HideAllRoundCards()
     {
         // GameEvents.HideAllInstantiatedCards.Invoke();
         GameEvents.DestroyAllInstantiatedCards.Invoke();
     }
 
-    public void InstantiateSubRoundCard(int cardId)
-    {
-        Vector3 randomPosition = GenerateRandomXZPosition();
-        CardDataSO subRoundCard = cardRepository.GetCardByID(cardId);
-        // Generate Random Position
-        cardInstantiator.SpawnClickableCard(subRoundCard, randomPosition, defaultRotation);
-    }
-
-    private Vector3 GenerateRandomXZPosition()
-    {
-        float x = Random.Range(xMinBoundary, xMaxBoundary);
-        float z = Random.Range(zMinBoundary, zMaxBoundary);
-
-        return new Vector3(x, yPosition, z);
-    }
-
+    
     public void InstantiateRoundCardsByID(NetworkList<int> ids)
     {
         CardDataSO[] cards = new CardDataSO[ids.Count];
@@ -81,7 +81,6 @@ public class CardManager : Singleton<CardManager>
 
         InstantiateRoundCards(cards);
     }
-
     private void InstantiateRoundCards(CardDataSO[] roundCards)
     {
         int index = 0;
@@ -90,14 +89,33 @@ public class CardManager : Singleton<CardManager>
             foreach (float z in zPositions)
             {
                 Vector3 spawnPos = new Vector3(x, yPosition, z);
-                cardInstantiator.SpawnCard(roundCards[index], spawnPos, defaultRotation);
+                cardInstantiator.SpawnCard(roundCards[index], spawnPos, cardShowInTableRotation);
                 index++;
             }
         }
     }
+    #endregion
 
-    public CardDataSO GetCardByID(int newValue)
+    #region SubRoundCardOnTable
+        
+    public void InstantiateSubRoundCard(int cardId)
     {
-        return  cardRepository.GetCardByID(newValue);
+        Vector3 randomPosition = GenerateRandomXZPosition();
+        CardDataSO subRoundCard = cardRepository.GetCardByID(cardId);
+        // Generate Random Position
+        cardInstantiator.SpawnClickableCard(subRoundCard, randomPosition, cardHideInTableRotation);
     }
+
+    private Vector3 GenerateRandomXZPosition()
+    {
+        float x = Random.Range(xMinBoundary, xMaxBoundary);
+        float z = Random.Range(zMinBoundary, zMaxBoundary);
+
+        return new Vector3(x, yPosition, z);
+    }
+    #endregion
+
+    
+
+
 }

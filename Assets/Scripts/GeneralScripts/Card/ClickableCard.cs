@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using GeneralScripts.Card;
 using Unity.Netcode;
 using UnityEngine;
 

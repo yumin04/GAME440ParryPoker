@@ -4,30 +4,29 @@ using UnityEngine;
 
 public class PlayerHand : MonoBehaviour
 {
-    // Hopefully we can delete this and refactor more
     [SerializeField] private GameObject playerDisplayCardPrefab;
-    [SerializeField] private float spacing = 1.5f;
+
     [SerializeField] private float radius = 5f;
     [SerializeField] private float maxAngle = 60f;
 
-    // This is going to be deleted after the 10 cards destroy or whatever
     private List<GameObject> cards = new();
-
+    
     // public void Awake()
     // {
+    //     AddCard(1);
+    //     AddCard(2);
+    //     AddCard(3);
     //     Rearrange();
     // }
     //
-    // public void OnEnable()
-    // {
-    //     Rearrange();
-    // }
+
+    
 
     public void AddCard(int cardId)
     {
         GameObject card = Instantiate(playerDisplayCardPrefab, transform);
         
-        // card.GetComponent<Card>().Initialize(cardId);
+        card.GetComponent<PlayerCard>().Init(cardId);
 
         cards.Add(card);
         Rearrange();
@@ -40,7 +39,6 @@ public class PlayerHand : MonoBehaviour
         foreach (int id in cardIds)
             AddCard(id);
     }
-
 
     private void Rearrange()
     {
@@ -56,14 +54,16 @@ public class PlayerHand : MonoBehaviour
             float rad = angle * Mathf.Deg2Rad;
 
             float x = Mathf.Sin(rad) * radius;
-            float y = Mathf.Cos(rad) * radius - radius;
+            float z = -Mathf.Cos(rad) * radius + radius;
 
-            cards[i].transform.localPosition = new Vector3(x, y, 0);
-            cards[i].transform.localRotation = Quaternion.Euler(0, 0, -angle);
+            cards[i].transform.localPosition = new Vector3(x, 0, z);
+
+            // ⭐ Y축 회전
+            cards[i].transform.localRotation = Quaternion.Euler(0, -angle, 0);
         }
     }
 
-    private void Clear()
+    public void Clear()
     {
         foreach (var card in cards)
             Destroy(card);
