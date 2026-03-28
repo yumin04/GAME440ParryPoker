@@ -41,6 +41,7 @@ using System.Net.Sockets;
 
 		public void StartClient(string ipAddress = "127.0.0.1") {
 			SetIPAddress(ipAddress);
+			Debug.Log("ipAddress: " + ipAddress);
 			NetworkManager.Singleton.StartClient();
 			NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
 		}

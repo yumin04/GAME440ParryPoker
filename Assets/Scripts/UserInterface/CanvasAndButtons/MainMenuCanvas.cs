@@ -151,9 +151,6 @@ public class MainMenuCanvas : MonoBehaviour {
 	private void OnClientStartClicked() {
 		PlayButtonSound();
 		if (!NetworkManager.Singleton) return;
-
-        HostClientManager.Instance.StartClient();
-        Debug.Log("StartClient");
         
         // Move On To Next Scene
         var address = addressInputField.text;
