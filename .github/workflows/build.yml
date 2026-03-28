@@ -76,7 +76,7 @@ jobs:
           name: Parry-Poker-macOS
           path: build/StandaloneOSX
           retention-days: 90
-      release:
+  release:
     name: Release Build
     needs: [build-windows, build-macos]
     runs-on: ubuntu-latest
