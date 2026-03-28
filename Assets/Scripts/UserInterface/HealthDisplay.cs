@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-// TODO: Decide if it would be Mono or Network
+
 public class HealthDisplay : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI Player1HealthText;
@@ -22,7 +22,11 @@ public class HealthDisplay : MonoBehaviour
             Player2HealthText.color = Color.blue;
         }
     }
-    
+
+    public void HideHealthDisplay()
+    {
+        gameObject.SetActive(false);
+    }
     public void SetPlayer1Health(int player1Health)
     {
         Player1HealthText.text = "Player1: "+ player1Health.ToString() +" HP";
@@ -30,6 +34,6 @@ public class HealthDisplay : MonoBehaviour
 
     public void SetPlayer2Health(int player2Health)
     {
-        Player2HealthText.text = "Player1: " + player2Health.ToString() +" HP";
+        Player2HealthText.text = "Player2: " + player2Health.ToString() +" HP";
     }
 }

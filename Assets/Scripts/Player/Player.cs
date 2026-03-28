@@ -50,6 +50,7 @@ public class Player : NetworkBehaviour
     public void OnEnable()
     {
         GameEvents.OnRoundStart += MoveCameraToFullView;
+        GameEvents.OnRoundStart += ResetPlayer;
         GameEvents.OnHavingPriority += HavePriority;
         GameEvents.OnLosingPriority += LosePriority;
 
@@ -69,6 +70,7 @@ public class Player : NetworkBehaviour
     public void OnDisable()
     {
         GameEvents.OnRoundStart -= MoveCameraToFullView;
+        GameEvents.OnRoundStart -= ResetPlayer;
         GameEvents.OnHavingPriority -= HavePriority;
         GameEvents.OnLosingPriority -= LosePriority;
 
@@ -82,7 +84,14 @@ public class Player : NetworkBehaviour
         GameEvents.OnAttackEnd -= MoveCameraToFullViewAfterAttack;
         GameEvents.OnAttackEnd -= DisplayCards;
     }
-    
+
+    private void ResetPlayer()
+    {
+        if (!IsServer) return;
+        // Reset Card
+        playerCardIds.Clear();
+    }
+
     // RPC로 보내야 하는듯?
     private void MoveCameraToOriginal()
     {

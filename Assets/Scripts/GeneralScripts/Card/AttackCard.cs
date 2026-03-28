@@ -19,10 +19,7 @@ public class AttackCard : NetworkBehaviour
     
     // TODO: Correct Speed
     private float movementSpeed = 5f;
-    // TODO:
-    // CardCollider.cs 에서 health 깎이는거 구현
-    // OnMouseDown에 라운드 end구현도 가능하고
-    // Player에서 Card받는거 구현
+
 
 
     

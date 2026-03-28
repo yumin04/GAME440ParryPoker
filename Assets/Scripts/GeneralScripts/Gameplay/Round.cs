@@ -139,7 +139,7 @@ public class Round : NetworkBehaviour
         
         roundCardIDs.RemoveAt(randomIndex);
 
-        GameObject subRoundObj = GameInitializer.Instance.SpawnSubRound();
+        NetworkObject subRoundObj = GameInitializer.Instance.SpawnSubRound();
 
         SubRound subRound = subRoundObj.GetComponent<SubRound>();
         subRound.Initialize(chosenCardID);

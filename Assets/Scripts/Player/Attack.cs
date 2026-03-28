@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-// TODO: Change Position of Attack in the editor
 public class Attack : MonoBehaviour
 {
     // TODO: Refactor

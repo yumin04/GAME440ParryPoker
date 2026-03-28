@@ -2,7 +2,6 @@
 using UnityEngine;
 
 
-// TODO: Decide if this is in Table or Game
 namespace SOFile
 {
     [CreateAssetMenu(fileName = "TableData", menuName = "ScriptableObjects/GameDataSO")]

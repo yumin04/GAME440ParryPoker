@@ -66,7 +66,6 @@ public class SubRound : NetworkBehaviour
     }
     #endregion
 
-    // TODO:Delete
     #region HidePanelRPC
     
     [Rpc(SendTo.Server)]

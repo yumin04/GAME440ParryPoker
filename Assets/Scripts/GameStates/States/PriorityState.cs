@@ -8,6 +8,6 @@ public class PriorityState : IUserState
 
     public void OnExit()
     {
-        throw new System.NotImplementedException();
+
     }
 }

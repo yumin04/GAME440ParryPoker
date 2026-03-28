@@ -10,29 +10,35 @@ public class GameInitializer : Singleton<GameInitializer>
     [SerializeField] private GameObject subRoundPrefab;
 
 
-    public GameObject SpawnGame()
+    // TODO: IsServer여기서 체크 하지 않아도 괜찮아
+    // TODO: 죽이기
+    public NetworkObject SpawnGame()
     {
         if (!NetworkManager.Singleton.IsServer) return null;
 
         GameObject instance = Instantiate(gamePrefab);
-        instance.GetComponent<NetworkObject>().Spawn();
-        return instance;
+        NetworkObject nObj = instance.GetComponent<NetworkObject>();
+        nObj.Spawn();
+        return nObj;
     }
 
-    public GameObject SpawnRound()
+    public NetworkObject SpawnRound()
     {
         if (!NetworkManager.Singleton.IsServer) return null;
 
         GameObject instance = Instantiate(roundPrefab);
-        instance.GetComponent<NetworkObject>().Spawn();
-        return instance;
+        NetworkObject nObj = instance.GetComponent<NetworkObject>();
+        nObj.Spawn();
+        return nObj;
     }
-    public GameObject SpawnSubRound()
+    public NetworkObject SpawnSubRound()
     {
         if (!NetworkManager.Singleton.IsServer) return null;
 
         GameObject instance = Instantiate(subRoundPrefab);
-        instance.GetComponent<NetworkObject>().Spawn();
-        return instance;
+        
+        NetworkObject nObj = instance.GetComponent<NetworkObject>();
+        nObj.Spawn();
+        return nObj;
     }
 }
