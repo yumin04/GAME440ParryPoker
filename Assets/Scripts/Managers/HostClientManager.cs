@@ -2,7 +2,8 @@
 using Unity.Netcode.Transports.UTP;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using System.Net;
+using System.Net.Sockets;
 
 	public class HostClientManager : Singleton<HostClientManager> {
 		// private bool clientConnected = false;
@@ -23,6 +24,18 @@ using UnityEngine.SceneManagement;
 			NetworkManager.Singleton.StartHost();
 			NetworkManager.Singleton.SceneManager.OnLoadComplete += OnSceneLoaded;
 			NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+		}
+
+		
+		public string GetLocalIP()
+		{
+			var host = Dns.GetHostEntry(Dns.GetHostName());
+			foreach (var ip in host.AddressList)
+			{
+				if (ip.AddressFamily == AddressFamily.InterNetwork)
+					return ip.ToString();
+			}
+			return "No IPv4";
 		}
 
 
