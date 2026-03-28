@@ -22,7 +22,11 @@ public class HealthDisplay : MonoBehaviour
             Player2HealthText.color = Color.blue;
         }
     }
-    
+
+    public void HideHealthDisplay()
+    {
+        gameObject.SetActive(false);
+    }
     public void SetPlayer1Health(int player1Health)
     {
         Player1HealthText.text = "Player1: "+ player1Health.ToString() +" HP";

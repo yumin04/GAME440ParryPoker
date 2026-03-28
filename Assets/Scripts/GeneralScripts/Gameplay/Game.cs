@@ -133,6 +133,8 @@ public class Game : NetworkSingleton<Game>
         // 어차피 둘다 돌려지는건 사실이라
         // 이건 둘다 해야하는거고
         UserInterface.Instance.DisplayHealth(0);
+        UserInterface.Instance.ChangePlayer1Health(player1Health.Value);
+        UserInterface.Instance.ChangePlayer2Health(player2Health.Value);
         
         if (!IsServer) return;
         // CheckForHealth부분을 통한 StartRound를 시작하면 되지 않을까?
@@ -172,6 +174,8 @@ public class Game : NetworkSingleton<Game>
     }
     public void EndGame()
     {
+        UserInterface.Instance.HideHealthDisplay();
+        // TODO: Display Winner Here?
         if (IsServer)
         {
             EndGame_Server();

@@ -23,6 +23,11 @@ public class UserInterface : Singleton<UserInterface>
         healthDisplay.Init(isPlayer1);
     }
 
+    public void HideHealthDisplay()
+    {
+        healthDisplay.HideHealthDisplay();
+    }
+    
     public void ChangePlayer1Health(int health)
     {
         healthDisplay.SetPlayer1Health(health);
