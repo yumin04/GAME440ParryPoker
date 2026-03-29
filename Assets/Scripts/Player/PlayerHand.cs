@@ -1,20 +1,32 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerHand : MonoBehaviour
 {
-    // Hopefully we can delete this and refactor more
-    [SerializeField] private GameObject cardPrefab;
-    [SerializeField] private float spacing = 1.5f;
+    [SerializeField] private GameObject playerDisplayCardPrefab;
 
-    // This is going to be deleted after the 10 cards destroy or whatever
+    [SerializeField] private float radius = 5f;
+    [SerializeField] private float maxAngle = 60f;
+
     private List<GameObject> cards = new();
+    
+    // public void Awake()
+    // {
+    //     AddCard(1);
+    //     AddCard(2);
+    //     AddCard(3);
+    //     Rearrange();
+    // }
+    //
+
+    
 
     public void AddCard(int cardId)
     {
-        GameObject card = Instantiate(cardPrefab, transform);
+        GameObject card = Instantiate(playerDisplayCardPrefab, transform);
         
-        // card.GetComponent<Card>().Initialize(cardId);
+        card.GetComponent<PlayerCard>().Init(cardId);
 
         cards.Add(card);
         Rearrange();
@@ -30,14 +42,28 @@ public class PlayerHand : MonoBehaviour
 
     private void Rearrange()
     {
-        for (int i = 0; i < cards.Count; i++)
+        int count = cards.Count;
+        if (count == 0) return;
+
+        float angleStep = count == 1 ? 0 : maxAngle / (count - 1);
+        float startAngle = -maxAngle / 2f;
+
+        for (int i = 0; i < count; i++)
         {
-            Vector3 pos = new Vector3(i * spacing, 0, 0);
-            cards[i].transform.localPosition = pos;
+            float angle = startAngle + angleStep * i;
+            float rad = angle * Mathf.Deg2Rad;
+
+            float x = Mathf.Sin(rad) * radius;
+            float z = -Mathf.Cos(rad) * radius + radius;
+
+            cards[i].transform.localPosition = new Vector3(x, 0, z);
+
+            // ⭐ Y축 회전
+            cards[i].transform.localRotation = Quaternion.Euler(0, -angle, 0);
         }
     }
 
-    private void Clear()
+    public void Clear()
     {
         foreach (var card in cards)
             Destroy(card);

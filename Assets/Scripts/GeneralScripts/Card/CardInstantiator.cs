@@ -6,6 +6,7 @@ public class CardInstantiator : MonoBehaviour
 {
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private GameObject clickableCardPrefab;
+    [SerializeField] private GameObject attackCardPrefab;
 
     
     // TODO: Decide whether to get CardID instead of Card Data maybe?
@@ -41,5 +42,23 @@ public class CardInstantiator : MonoBehaviour
         card.Init(cardData.cardID);
         
     }
-    
+
+    public void SpawnAttackCard(Vector3 startPosition, Vector3 endPosition)
+    {
+        // 이거는 가져오면 될듯
+        Quaternion defaultRotation = Quaternion.LookRotation(endPosition - startPosition);
+        
+        GameObject obj = Instantiate(attackCardPrefab, startPosition, defaultRotation);
+        
+
+        NetworkObject netObj = obj.GetComponent<NetworkObject>();
+        netObj.Spawn();
+        
+        AttackCard card = obj.GetComponent<AttackCard>();
+        card.Init(endPosition);
+
+
+        
+        // 여기서 움직임 trigger도 괜찮을듯?
+    }
 }
