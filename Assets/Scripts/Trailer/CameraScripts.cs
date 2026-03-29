@@ -16,7 +16,7 @@ public enum CameraPosition
     P1CheckCard_11,
     P1OptionSelection_12,
     P1ChoosingAttack_13,
-    P1SlotMachine_14,
+    P1SlotMachine_14, // Slot Machine Pop Up
     P1SlotMachineOptions_15,
     P1AimP2AndShoot_16,
     P2HitByAttack_17,
@@ -27,7 +27,8 @@ public enum CameraPosition
     P2KeepCard_25,
     Repeat14_18_26,
     Repeat19_25_27,
-    P2InitializeCardAndGrab_28,
+    InitializeCard_28_1,
+    InitializeCard_28_2,
     P2CheckCard_29,
     P2ChooseAttack_30,
     P2SlotMachine_31,
