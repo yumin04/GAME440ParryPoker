@@ -1,58 +1,57 @@
 using UnityEngine;
-
-// 여기서 Camera Group들 나눠야 할듯
-public enum CameraPosition
-{
-    PlayerStare_1,
-    P1CloseUp_2,
-    P2CloseUp_3,
-    FollowCard_4,
-    P1CatchCard_5,
-    P1ShowHand_6,
-    P2ShowHand_7,
-    Pose_8,
-    MemorizeAndInitialize_9,
-    P1Grab_10,
-    P1CheckCard_11,
-    P1OptionSelection_12,
-    P1ChoosingAttack_13,
-    P1SlotMachine_14, // Slot Machine Pop Up
-    P1SlotMachineOptions_15,
-    P1AimP2AndShoot_16,
-    P2HitByAttack_17,
-    P2HealthDecrease_18,
-    InitializeSubRoundCard_22,
-    P2Grabs_23,
-    P2CheckCard_24,
-    P2KeepCard_25,
-    Repeat14_18_26,
-    Repeat19_25_27,
-    InitializeCard_28_1,
-    InitializeCard_28_2,
-    P2CheckCard_29,
-    P2ChooseAttack_30,
-    P2SlotMachine_31,
-    P2AimP2AndShoot_32,
-    P1Hit_33,
-    P2InitializeCardAndGrab_34,
-    P2CheckCard_35,
-    P2SlowMotionChooseAttack_36,
-    P2SlotMachine_37,
-    P2AimP2AndShoot_38,
-    P1Hit_39
-}
+using System.Collections;
 
 public class CameraScripts : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [Header("Main Camera")]
+    [SerializeField] private Transform cameraTransform;
+
+    [Header("Timing")]
+    [SerializeField] private float moveDuration = 1.5f;
+    [SerializeField] private float stayDuration = 1.0f;
+
+    private void Start()
     {
-        
+        StartCoroutine(PlayCameraSequence());
     }
 
-    // Update is called once per frame
-    void Update()
+    private IEnumerator PlayCameraSequence()
     {
-        
+        foreach (CameraPosition pos in System.Enum.GetValues(typeof(CameraPosition)))
+        {
+            Transform target = TrailerCameraPosition.cameraPositions[(int)pos];
+
+            if (target == null) continue;
+
+            yield return StartCoroutine(MoveCamera(target, moveDuration));
+            Debug.Log("[DEBUG] Position: " + pos);
+            yield return new WaitForSeconds(stayDuration);
+        }
+    }
+
+    private IEnumerator MoveCamera(Transform target, float duration)
+    {
+        Vector3 startPos = cameraTransform.position;
+        Quaternion startRot = cameraTransform.rotation;
+
+        Vector3 endPos = target.position;
+        Quaternion endRot = target.rotation;
+
+        float time = 0f;
+
+        while (time < duration)
+        {
+            float t = time / duration;
+
+            cameraTransform.position = Vector3.Lerp(startPos, endPos, t);
+            cameraTransform.rotation = Quaternion.Slerp(startRot, endRot, t);
+
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        // 마지막 보정
+        cameraTransform.position = endPos;
+        cameraTransform.rotation = endRot;
     }
 }

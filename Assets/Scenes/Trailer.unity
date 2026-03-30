@@ -129,7 +129,6 @@ GameObject:
   m_Component:
   - component: {fileID: 394055}
   - component: {fileID: 394058}
-  - component: {fileID: 394057}
   - component: {fileID: 394056}
   m_Layer: 0
   m_Name: 17P2HitByAttack
@@ -197,14 +196,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &394057
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 394054}
-  m_Enabled: 1
 --- !u!20 &394058
 Camera:
   m_ObjectHideFlags: 0
@@ -266,7 +257,6 @@ GameObject:
   m_Component:
   - component: {fileID: 19185652}
   - component: {fileID: 19185655}
-  - component: {fileID: 19185654}
   - component: {fileID: 19185653}
   m_Layer: 0
   m_Name: 30P2ChooseAttack
@@ -334,14 +324,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &19185654
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 19185651}
-  m_Enabled: 1
 --- !u!20 &19185655
 Camera:
   m_ObjectHideFlags: 0
@@ -403,7 +385,6 @@ GameObject:
   m_Component:
   - component: {fileID: 45527738}
   - component: {fileID: 45527741}
-  - component: {fileID: 45527740}
   - component: {fileID: 45527739}
   m_Layer: 0
   m_Name: 33P1Hit
@@ -471,14 +452,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &45527740
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 45527737}
-  m_Enabled: 1
 --- !u!20 &45527741
 Camera:
   m_ObjectHideFlags: 0
@@ -540,8 +513,8 @@ GameObject:
   m_Component:
   - component: {fileID: 71951332}
   - component: {fileID: 71951331}
-  - component: {fileID: 71951330}
   - component: {fileID: 71951329}
+  - component: {fileID: 71951333}
   m_Layer: 0
   m_Name: 2P1Closeup
   m_TagString: Untagged
@@ -593,14 +566,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &71951330
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 71951328}
-  m_Enabled: 1
 --- !u!20 &71951331
 Camera:
   m_ObjectHideFlags: 0
@@ -667,6 +632,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2104308635}
   m_LocalEulerAnglesHint: {x: 22.8, y: 180, z: 0}
+--- !u!114 &71951333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 71951328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a90987eebba347d8bb733f48ab9650f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraPositionStorage
+  cameraPosition: 1
 --- !u!1 &114377224
 GameObject:
   m_ObjectHideFlags: 0
@@ -677,7 +655,6 @@ GameObject:
   m_Component:
   - component: {fileID: 114377225}
   - component: {fileID: 114377228}
-  - component: {fileID: 114377227}
   - component: {fileID: 114377226}
   m_Layer: 0
   m_Name: 14P1SlotMachine
@@ -745,14 +722,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &114377227
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 114377224}
-  m_Enabled: 1
 --- !u!20 &114377228
 Camera:
   m_ObjectHideFlags: 0
@@ -814,7 +783,6 @@ GameObject:
   m_Component:
   - component: {fileID: 127048923}
   - component: {fileID: 127048926}
-  - component: {fileID: 127048925}
   - component: {fileID: 127048924}
   m_Layer: 0
   m_Name: 11P1CheckCard
@@ -882,14 +850,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &127048925
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 127048922}
-  m_Enabled: 1
 --- !u!20 &127048926
 Camera:
   m_ObjectHideFlags: 0
@@ -951,7 +911,6 @@ GameObject:
   m_Component:
   - component: {fileID: 156154780}
   - component: {fileID: 156154783}
-  - component: {fileID: 156154782}
   - component: {fileID: 156154781}
   m_Layer: 0
   m_Name: 10P1Grab
@@ -1019,14 +978,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &156154782
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 156154779}
-  m_Enabled: 1
 --- !u!20 &156154783
 Camera:
   m_ObjectHideFlags: 0
@@ -1088,8 +1039,8 @@ GameObject:
   m_Component:
   - component: {fileID: 276762072}
   - component: {fileID: 276762071}
-  - component: {fileID: 276762070}
   - component: {fileID: 276762073}
+  - component: {fileID: 276762074}
   m_Layer: 0
   m_Name: 1PlayerStare
   m_TagString: MainCamera
@@ -1097,14 +1048,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &276762070
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 276762069}
-  m_Enabled: 1
 --- !u!20 &276762071
 Camera:
   m_ObjectHideFlags: 0
@@ -1215,13 +1158,26 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &276762074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276762069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a90987eebba347d8bb733f48ab9650f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraPositionStorage
+  cameraPosition: 0
 --- !u!1001 &298641872
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 2104308635}
+    m_TransformParent: {fileID: 1435961996}
     m_Modifications:
     - target: {fileID: 6793761581164844116, guid: 6d8605e6b5fef4a408f49605ae3d62e8, type: 3}
       propertyPath: GlobalObjectIdHash
@@ -1229,15 +1185,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7018298915737109446, guid: 6d8605e6b5fef4a408f49605ae3d62e8, type: 3}
       propertyPath: m_LocalScale.x
-      value: 96
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7018298915737109446, guid: 6d8605e6b5fef4a408f49605ae3d62e8, type: 3}
       propertyPath: m_LocalScale.y
-      value: 3.435491
+      value: 0.5810472
       objectReference: {fileID: 0}
     - target: {fileID: 7018298915737109446, guid: 6d8605e6b5fef4a408f49605ae3d62e8, type: 3}
       propertyPath: m_LocalScale.z
-      value: 144.53346
+      value: 1.017437
       objectReference: {fileID: 0}
     - target: {fileID: 7018298915737109446, guid: 6d8605e6b5fef4a408f49605ae3d62e8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1245,15 +1201,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7018298915737109446, guid: 6d8605e6b5fef4a408f49605ae3d62e8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.07594795
       objectReference: {fileID: 0}
     - target: {fileID: 7018298915737109446, guid: 6d8605e6b5fef4a408f49605ae3d62e8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.0017545731
       objectReference: {fileID: 0}
     - target: {fileID: 7018298915737109446, guid: 6d8605e6b5fef4a408f49605ae3d62e8, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7018298915737109446, guid: 6d8605e6b5fef4a408f49605ae3d62e8, type: 3}
       propertyPath: m_LocalRotation.x
@@ -1261,11 +1217,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7018298915737109446, guid: 6d8605e6b5fef4a408f49605ae3d62e8, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: -0.9988899
       objectReference: {fileID: 0}
     - target: {fileID: 7018298915737109446, guid: 6d8605e6b5fef4a408f49605ae3d62e8, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0.047106404
       objectReference: {fileID: 0}
     - target: {fileID: 7018298915737109446, guid: 6d8605e6b5fef4a408f49605ae3d62e8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1287,10 +1243,7 @@ PrefabInstance:
     - {fileID: 6793761581164844116, guid: 6d8605e6b5fef4a408f49605ae3d62e8, type: 3}
     - {fileID: 7629740899230657702, guid: 6d8605e6b5fef4a408f49605ae3d62e8, type: 3}
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 7018298915737109446, guid: 6d8605e6b5fef4a408f49605ae3d62e8, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1435961996}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d8605e6b5fef4a408f49605ae3d62e8, type: 3}
 --- !u!4 &298641873 stripped
@@ -1343,7 +1296,6 @@ GameObject:
   m_Component:
   - component: {fileID: 348756600}
   - component: {fileID: 348756603}
-  - component: {fileID: 348756602}
   - component: {fileID: 348756601}
   m_Layer: 0
   m_Name: 23P2Grabs
@@ -1411,14 +1363,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &348756602
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 348756599}
-  m_Enabled: 1
 --- !u!20 &348756603
 Camera:
   m_ObjectHideFlags: 0
@@ -1518,7 +1462,6 @@ GameObject:
   m_Component:
   - component: {fileID: 439108419}
   - component: {fileID: 439108418}
-  - component: {fileID: 439108417}
   - component: {fileID: 439108416}
   m_Layer: 0
   m_Name: 3P2Closeup
@@ -1571,14 +1514,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &439108417
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 439108415}
-  m_Enabled: 1
 --- !u!20 &439108418
 Camera:
   m_ObjectHideFlags: 0
@@ -1818,7 +1753,6 @@ GameObject:
   m_Component:
   - component: {fileID: 650983206}
   - component: {fileID: 650983205}
-  - component: {fileID: 650983204}
   - component: {fileID: 650983203}
   m_Layer: 0
   m_Name: 7P2ShowHand
@@ -1826,7 +1760,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &650983203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1871,14 +1805,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &650983204
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 650983202}
-  m_Enabled: 1
 --- !u!20 &650983205
 Camera:
   m_ObjectHideFlags: 0
@@ -1955,7 +1881,6 @@ GameObject:
   m_Component:
   - component: {fileID: 718675009}
   - component: {fileID: 718675012}
-  - component: {fileID: 718675011}
   - component: {fileID: 718675010}
   m_Layer: 0
   m_Name: 36P2SlowMotionChooseAttack
@@ -2023,14 +1948,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &718675011
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 718675008}
-  m_Enabled: 1
 --- !u!20 &718675012
 Camera:
   m_ObjectHideFlags: 0
@@ -2092,7 +2009,6 @@ GameObject:
   m_Component:
   - component: {fileID: 734888720}
   - component: {fileID: 734888723}
-  - component: {fileID: 734888722}
   - component: {fileID: 734888721}
   m_Layer: 0
   m_Name: 13P1ChoosingAttack
@@ -2160,14 +2076,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &734888722
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 734888719}
-  m_Enabled: 1
 --- !u!20 &734888723
 Camera:
   m_ObjectHideFlags: 0
@@ -2229,7 +2137,6 @@ GameObject:
   m_Component:
   - component: {fileID: 799740520}
   - component: {fileID: 799740523}
-  - component: {fileID: 799740522}
   - component: {fileID: 799740521}
   m_Layer: 0
   m_Name: 25P2KeepCard
@@ -2297,14 +2204,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &799740522
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 799740519}
-  m_Enabled: 1
 --- !u!20 &799740523
 Camera:
   m_ObjectHideFlags: 0
@@ -2366,7 +2265,6 @@ GameObject:
   m_Component:
   - component: {fileID: 815003144}
   - component: {fileID: 815003147}
-  - component: {fileID: 815003146}
   - component: {fileID: 815003145}
   m_Layer: 0
   m_Name: 34InitializeCard
@@ -2434,14 +2332,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &815003146
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 815003143}
-  m_Enabled: 1
 --- !u!20 &815003147
 Camera:
   m_ObjectHideFlags: 0
@@ -2493,6 +2383,159 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!1 &854757556
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 854757561}
+  - component: {fileID: 854757560}
+  - component: {fileID: 854757559}
+  - component: {fileID: 854757558}
+  - component: {fileID: 854757557}
+  m_Layer: 0
+  m_Name: Camera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &854757557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 854757556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f0a7f72132277244beff858bae2ae4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraScripts
+  cameraTransform: {fileID: 854757561}
+  moveDuration: 1.5
+  stayDuration: 1
+--- !u!114 &854757558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 854757556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalCameraData
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
+--- !u!81 &854757559
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 854757556}
+  m_Enabled: 1
+--- !u!20 &854757560
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 854757556}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!4 &854757561
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 854757556}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.11182328, y: 0.6912264, z: -0.109564304, w: 0.7054767}
+  m_LocalPosition: {x: 4.5488267, y: 3.2913728, z: 1.6088562}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &909174292
 GameObject:
   m_ObjectHideFlags: 0
@@ -2503,7 +2546,6 @@ GameObject:
   m_Component:
   - component: {fileID: 909174293}
   - component: {fileID: 909174296}
-  - component: {fileID: 909174295}
   - component: {fileID: 909174294}
   m_Layer: 0
   m_Name: 29P2CheckCard
@@ -2571,14 +2613,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &909174295
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 909174292}
-  m_Enabled: 1
 --- !u!20 &909174296
 Camera:
   m_ObjectHideFlags: 0
@@ -2640,7 +2674,6 @@ GameObject:
   m_Component:
   - component: {fileID: 942805562}
   - component: {fileID: 942805565}
-  - component: {fileID: 942805564}
   - component: {fileID: 942805563}
   m_Layer: 0
   m_Name: 37P2SlotMachine
@@ -2708,14 +2741,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &942805564
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 942805561}
-  m_Enabled: 1
 --- !u!20 &942805565
 Camera:
   m_ObjectHideFlags: 0
@@ -2813,7 +2838,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1018898079}
   - component: {fileID: 1018898082}
-  - component: {fileID: 1018898081}
   - component: {fileID: 1018898080}
   m_Layer: 0
   m_Name: 34-1P2Grab
@@ -2881,14 +2905,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &1018898081
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1018898078}
-  m_Enabled: 1
 --- !u!20 &1018898082
 Camera:
   m_ObjectHideFlags: 0
@@ -2950,7 +2966,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1155317824}
   - component: {fileID: 1155317823}
-  - component: {fileID: 1155317822}
   - component: {fileID: 1155317821}
   m_Layer: 0
   m_Name: 5P1CatchCard
@@ -2958,7 +2973,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1155317821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3003,14 +3018,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &1155317822
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1155317820}
-  m_Enabled: 1
 --- !u!20 &1155317823
 Camera:
   m_ObjectHideFlags: 0
@@ -3156,7 +3163,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1229308963}
   - component: {fileID: 1229308966}
-  - component: {fileID: 1229308965}
   - component: {fileID: 1229308964}
   m_Layer: 0
   m_Name: 24P2CheckCard
@@ -3224,14 +3230,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &1229308965
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1229308962}
-  m_Enabled: 1
 --- !u!20 &1229308966
 Camera:
   m_ObjectHideFlags: 0
@@ -3293,7 +3291,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1251428252}
   - component: {fileID: 1251428255}
-  - component: {fileID: 1251428254}
   - component: {fileID: 1251428253}
   m_Layer: 0
   m_Name: 22InitializeSubRoundCard
@@ -3361,14 +3358,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &1251428254
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1251428251}
-  m_Enabled: 1
 --- !u!20 &1251428255
 Camera:
   m_ObjectHideFlags: 0
@@ -3430,7 +3419,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1309123251}
   - component: {fileID: 1309123254}
-  - component: {fileID: 1309123253}
   - component: {fileID: 1309123252}
   m_Layer: 0
   m_Name: 28-1P2Grab
@@ -3498,14 +3486,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &1309123253
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1309123250}
-  m_Enabled: 1
 --- !u!20 &1309123254
 Camera:
   m_ObjectHideFlags: 0
@@ -3567,7 +3547,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1323078727}
   - component: {fileID: 1323078730}
-  - component: {fileID: 1323078729}
   - component: {fileID: 1323078728}
   m_Layer: 0
   m_Name: 9MemorizeAndInitialize
@@ -3635,14 +3614,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &1323078729
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1323078726}
-  m_Enabled: 1
 --- !u!20 &1323078730
 Camera:
   m_ObjectHideFlags: 0
@@ -3704,7 +3675,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1345964102}
   - component: {fileID: 1345964101}
-  - component: {fileID: 1345964100}
   - component: {fileID: 1345964099}
   m_Layer: 0
   m_Name: 6P1ShowHand
@@ -3712,7 +3682,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1345964099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3757,14 +3727,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &1345964100
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1345964098}
-  m_Enabled: 1
 --- !u!20 &1345964101
 Camera:
   m_ObjectHideFlags: 0
@@ -3841,7 +3803,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1435961996}
   - component: {fileID: 1435961995}
-  - component: {fileID: 1435961994}
   - component: {fileID: 1435961993}
   m_Layer: 0
   m_Name: 4FollowCard
@@ -3894,14 +3855,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &1435961994
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1435961992}
-  m_Enabled: 1
 --- !u!20 &1435961995
 Camera:
   m_ObjectHideFlags: 0
@@ -3961,13 +3914,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1435961992}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.9988899, z: -0.047106404, w: 0}
-  m_LocalPosition: {x: 0, y: 0.11, z: 0.0015}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.03330926, y: -0.70632184, z: 0.03330926, w: 0.70632184}
+  m_LocalPosition: {x: 5, y: 3.28, z: -0.17}
+  m_LocalScale: {x: 96, y: 4.685106, z: 143.28384}
   m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 298641873}
-  m_LocalEulerAnglesHint: {x: 5.4, y: 180, z: 0}
+  m_Children:
+  - {fileID: 298641873}
+  m_Father: {fileID: 2104308635}
+  m_LocalEulerAnglesHint: {x: 5.4, y: -90, z: 0}
 --- !u!1 &1476742305
 GameObject:
   m_ObjectHideFlags: 0
@@ -4105,7 +4059,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1504969312}
   - component: {fileID: 1504969315}
-  - component: {fileID: 1504969314}
   - component: {fileID: 1504969313}
   m_Layer: 0
   m_Name: 28InitalizeCard
@@ -4173,14 +4126,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &1504969314
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1504969311}
-  m_Enabled: 1
 --- !u!20 &1504969315
 Camera:
   m_ObjectHideFlags: 0
@@ -4242,7 +4187,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1511494652}
   - component: {fileID: 1511494655}
-  - component: {fileID: 1511494654}
   - component: {fileID: 1511494653}
   m_Layer: 0
   m_Name: 27Repeat19-25
@@ -4310,14 +4254,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &1511494654
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1511494651}
-  m_Enabled: 1
 --- !u!20 &1511494655
 Camera:
   m_ObjectHideFlags: 0
@@ -4379,7 +4315,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1571773066}
   - component: {fileID: 1571773069}
-  - component: {fileID: 1571773068}
   - component: {fileID: 1571773067}
   m_Layer: 0
   m_Name: 31P2SlotMachine
@@ -4447,14 +4382,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &1571773068
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1571773065}
-  m_Enabled: 1
 --- !u!20 &1571773069
 Camera:
   m_ObjectHideFlags: 0
@@ -4516,7 +4443,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1591068166}
   - component: {fileID: 1591068169}
-  - component: {fileID: 1591068168}
   - component: {fileID: 1591068167}
   m_Layer: 0
   m_Name: 35P2CheckCard
@@ -4584,14 +4510,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &1591068168
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1591068165}
-  m_Enabled: 1
 --- !u!20 &1591068169
 Camera:
   m_ObjectHideFlags: 0
@@ -4653,7 +4571,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1618116776}
   - component: {fileID: 1618116779}
-  - component: {fileID: 1618116778}
   - component: {fileID: 1618116777}
   m_Layer: 0
   m_Name: 39P1Hit
@@ -4721,14 +4638,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &1618116778
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1618116775}
-  m_Enabled: 1
 --- !u!20 &1618116779
 Camera:
   m_ObjectHideFlags: 0
@@ -4828,7 +4737,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1772698747}
   - component: {fileID: 1772698750}
-  - component: {fileID: 1772698749}
   - component: {fileID: 1772698748}
   m_Layer: 0
   m_Name: 16P1AimP2AndShoot
@@ -4896,14 +4804,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &1772698749
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1772698746}
-  m_Enabled: 1
 --- !u!20 &1772698750
 Camera:
   m_ObjectHideFlags: 0
@@ -4965,7 +4865,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1806094060}
   - component: {fileID: 1806094063}
-  - component: {fileID: 1806094062}
   - component: {fileID: 1806094061}
   m_Layer: 0
   m_Name: 26Repeat14-18
@@ -5033,14 +4932,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &1806094062
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1806094059}
-  m_Enabled: 1
 --- !u!20 &1806094063
 Camera:
   m_ObjectHideFlags: 0
@@ -5102,7 +4993,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1820364751}
   - component: {fileID: 1820364754}
-  - component: {fileID: 1820364753}
   - component: {fileID: 1820364752}
   m_Layer: 0
   m_Name: 18P2HealthDecrease
@@ -5170,14 +5060,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &1820364753
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1820364750}
-  m_Enabled: 1
 --- !u!20 &1820364754
 Camera:
   m_ObjectHideFlags: 0
@@ -5296,7 +5178,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1826599083}
   - component: {fileID: 1826599082}
-  - component: {fileID: 1826599081}
   - component: {fileID: 1826599080}
   m_Layer: 0
   m_Name: 8Pose
@@ -5304,7 +5185,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1826599080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5349,14 +5230,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &1826599081
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1826599079}
-  m_Enabled: 1
 --- !u!20 &1826599082
 Camera:
   m_ObjectHideFlags: 0
@@ -5433,7 +5306,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1840621480}
   - component: {fileID: 1840621483}
-  - component: {fileID: 1840621482}
   - component: {fileID: 1840621481}
   m_Layer: 0
   m_Name: 12P1OptionSelection
@@ -5501,14 +5373,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &1840621482
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1840621479}
-  m_Enabled: 1
 --- !u!20 &1840621483
 Camera:
   m_ObjectHideFlags: 0
@@ -5570,7 +5434,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1850171122}
   - component: {fileID: 1850171125}
-  - component: {fileID: 1850171124}
   - component: {fileID: 1850171123}
   m_Layer: 0
   m_Name: 15P1SlotMachineOptions
@@ -5638,14 +5501,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &1850171124
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1850171121}
-  m_Enabled: 1
 --- !u!20 &1850171125
 Camera:
   m_ObjectHideFlags: 0
@@ -5707,7 +5562,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1914939653}
   - component: {fileID: 1914939656}
-  - component: {fileID: 1914939655}
   - component: {fileID: 1914939654}
   m_Layer: 0
   m_Name: 32P2AimP2AndShoot
@@ -5775,14 +5629,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &1914939655
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1914939652}
-  m_Enabled: 1
 --- !u!20 &1914939656
 Camera:
   m_ObjectHideFlags: 0
@@ -5941,7 +5787,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2087869276}
   - component: {fileID: 2087869279}
-  - component: {fileID: 2087869278}
   - component: {fileID: 2087869277}
   m_Layer: 0
   m_Name: 38P2AimP2AndShoot
@@ -6009,14 +5854,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &2087869278
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2087869275}
-  m_Enabled: 1
 --- !u!20 &2087869279
 Camera:
   m_ObjectHideFlags: 0
@@ -6100,7 +5937,7 @@ Transform:
   - {fileID: 276762072}
   - {fileID: 71951332}
   - {fileID: 439108419}
-  - {fileID: 298641873}
+  - {fileID: 1435961996}
   - {fileID: 1155317824}
   - {fileID: 1345964102}
   - {fileID: 650983206}
@@ -6156,3 +5993,4 @@ SceneRoots:
   - {fileID: 2129162483}
   - {fileID: 412649975}
   - {fileID: 1636728577}
+  - {fileID: 854757561}
