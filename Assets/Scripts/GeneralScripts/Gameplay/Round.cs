@@ -13,7 +13,7 @@ public class Round : NetworkBehaviour
     private NetworkList<int> roundCardIDs = new NetworkList<int>();
     
     // TODO: make sure we are having correct seconds
-    private float memorizationSeconds = 1f;
+    private float memorizationSeconds = 12f;
 
     public void OnEnable()
     {
