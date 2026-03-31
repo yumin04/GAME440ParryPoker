@@ -19,7 +19,6 @@ public class Player : NetworkBehaviour
     [SerializeField] private CardCollider cardCollider;
 
     
-    // TODO: Need Better Time
     [Header("Parameters")]
     private float cameraTransitionTime = 1f;
     

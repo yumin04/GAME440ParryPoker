@@ -25,7 +25,18 @@ public class CardInstantiator : MonoBehaviour
         
 
     }
+    public void InstantiateCard(
+        CardDataSO cardData,
+        Vector3 position,
+        Quaternion rotation)
+    {
+        GameObject obj = Instantiate(cardPrefab, position, rotation);
 
+        Card card = obj.GetComponent<Card>();
+        card.Init(cardData.cardID);
+        
+
+    }
 
     public void SpawnClickableCard(
         CardDataSO cardData,

@@ -13,7 +13,7 @@ public class Card : NetworkBehaviour {
 	public void Init(int id) 
 	{
 		cardId.Value = id;
-		UpdateTexture();
+		// UpdateTexture();
 	}
 
 
@@ -74,7 +74,7 @@ public class Card : NetworkBehaviour {
 	private void UpdateTexture() {
 		var propertyBlock = new MaterialPropertyBlock();
 		// hack for managing the suit values, some changes will have to be made I'm sure
-		propertyBlock.SetFloat(Slice, (int)cardData.cardSymbol * 4 + cardData.cardNumber);
+		propertyBlock.SetFloat(Slice, (int)cardData.cardSymbol * 13 + (cardData.cardNumber - 1));
 
 		GetComponent<MeshRenderer>().SetPropertyBlock(propertyBlock);
 	}

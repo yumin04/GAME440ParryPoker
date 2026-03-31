@@ -16,9 +16,13 @@ public class PlayerHand : MonoBehaviour
     //     AddCard(1);
     //     AddCard(2);
     //     AddCard(3);
+    //     AddCard(1);
+    //     AddCard(2);
+    //     AddCard(3);
+    //     AddCard(1);
     //     Rearrange();
     // }
-    //
+    
 
     
 
@@ -47,7 +51,7 @@ public class PlayerHand : MonoBehaviour
 
         float angleStep = count == 1 ? 0 : maxAngle / (count - 1);
         float startAngle = -maxAngle / 2f;
-
+        float y = 0;
         for (int i = 0; i < count; i++)
         {
             float angle = startAngle + angleStep * i;
@@ -55,11 +59,11 @@ public class PlayerHand : MonoBehaviour
 
             float x = Mathf.Sin(rad) * radius;
             float z = -Mathf.Cos(rad) * radius + radius;
-
-            cards[i].transform.localPosition = new Vector3(x, 0, z);
-
-            // ⭐ Y축 회전
+            
+            cards[i].transform.localPosition = new Vector3(x, y, z);
+            
             cards[i].transform.localRotation = Quaternion.Euler(0, -angle, 0);
+            y -= 0.001f;
         }
     }
 

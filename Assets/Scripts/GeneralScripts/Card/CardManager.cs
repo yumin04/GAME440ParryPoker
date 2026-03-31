@@ -22,6 +22,21 @@ public class CardManager : Singleton<CardManager>
     [SerializeField] private CardInstantiator cardInstantiator;
     [SerializeField] private CardRepository cardRepository;
 
+    public void Start()
+    {
+        DebuggingCardTextures();
+    }
+    private void DebuggingCardTextures()
+    {
+        Vector3 position = new Vector3();
+        for (int i = 1; i <= 52; i++)
+        {
+            CardDataSO cardData = cardRepository.GetCardByID(i);   
+            cardInstantiator.InstantiateCard(cardData, position, Quaternion.identity);
+            position.x += 1f;
+        }
+
+    }
 
     public CardDataSO[] GetCards(int numCards)
     {
@@ -36,17 +51,13 @@ public class CardManager : Singleton<CardManager>
     }
     public CardDataSO GetCardByID(int newValue)
     {
-        return  cardRepository.GetCardByID(newValue);
+        return cardRepository.GetCardByID(newValue);
     }
     
     
     public void InstantiateAttackCard(Vector3 startPosition, Vector3 endPosition)
     {
-
-        Vector3 randomPosition = GenerateRandomXZPosition();
-        // Generate Random Position
         cardInstantiator.SpawnAttackCard(startPosition, endPosition);
-        
     }
     
     // DONE
