@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Spade 13
   m_EditorClassIdentifier: Assembly-CSharp::SOFile.CardDataSO
   cardID: 52
-  cardSymbol: 0
+  cardSymbol: 3
   cardNumber: 13
   cardMaterial: {fileID: 0}
   baseDamage: 0

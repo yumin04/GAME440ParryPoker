@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Club 11
   m_EditorClassIdentifier: Assembly-CSharp::SOFile.CardDataSO
   cardID: 11
-  cardSymbol: 3
+  cardSymbol: 0
   cardNumber: 11
   cardMaterial: {fileID: 0}
   baseDamage: 0
