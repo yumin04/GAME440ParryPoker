@@ -36,17 +36,13 @@ public class CardManager : Singleton<CardManager>
     }
     public CardDataSO GetCardByID(int newValue)
     {
-        return  cardRepository.GetCardByID(newValue);
+        return cardRepository.GetCardByID(newValue);
     }
     
     
     public void InstantiateAttackCard(Vector3 startPosition, Vector3 endPosition)
     {
-
-        Vector3 randomPosition = GenerateRandomXZPosition();
-        // Generate Random Position
         cardInstantiator.SpawnAttackCard(startPosition, endPosition);
-        
     }
     
     // DONE
