@@ -4,7 +4,7 @@ using SOFile;
 
 public class CardRepository : MonoBehaviour
 {
-    private List<CardDataSO> allCardData = new List<CardDataSO>();
+    public List<CardDataSO> allCardData = new List<CardDataSO>();
     
     
     private HashSet<int> usedCardIds = new HashSet<int>();

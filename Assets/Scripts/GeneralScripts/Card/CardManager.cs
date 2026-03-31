@@ -22,6 +22,21 @@ public class CardManager : Singleton<CardManager>
     [SerializeField] private CardInstantiator cardInstantiator;
     [SerializeField] private CardRepository cardRepository;
 
+    public void Start()
+    {
+        DebuggingCardTextures();
+    }
+    private void DebuggingCardTextures()
+    {
+        Vector3 position = new Vector3();
+        for (int i = 1; i <= 52; i++)
+        {
+            CardDataSO cardData = cardRepository.GetCardByID(i);   
+            cardInstantiator.InstantiateCard(cardData, position, Quaternion.identity);
+            position.x += 1f;
+        }
+
+    }
 
     public CardDataSO[] GetCards(int numCards)
     {
