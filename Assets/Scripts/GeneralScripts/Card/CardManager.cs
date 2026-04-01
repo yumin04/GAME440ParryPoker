@@ -22,10 +22,10 @@ public class CardManager : Singleton<CardManager>
     [SerializeField] private CardInstantiator cardInstantiator;
     [SerializeField] private CardRepository cardRepository;
 
-    public void Start()
-    {
-        DebuggingCardTextures();
-    }
+    // public void Start()
+    // {
+    //     // DebuggingCardTextures();
+    // }
     private void DebuggingCardTextures()
     {
         Vector3 position = new Vector3();
