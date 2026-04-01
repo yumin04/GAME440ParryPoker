@@ -63,7 +63,7 @@ public class PlayerHand : MonoBehaviour
             cards[i].transform.localPosition = new Vector3(x, y, z);
             
             cards[i].transform.localRotation = Quaternion.Euler(0, -angle, 0);
-            y -= 0.001f;
+            y += 0.001f;
         }
     }
 
