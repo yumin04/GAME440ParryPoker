@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Diamond 2
   m_EditorClassIdentifier: Assembly-CSharp::SOFile.CardDataSO
   cardID: 15
-  cardSymbol: 1
+  cardSymbol: 2
   cardNumber: 2
   cardMaterial: {fileID: 0}
   baseDamage: 0
