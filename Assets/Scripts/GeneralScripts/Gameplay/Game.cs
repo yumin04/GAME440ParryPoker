@@ -44,7 +44,7 @@ public class Game : NetworkSingleton<Game>
         // Host is always 0
         // Refactor Later
         UserInterface.Instance.DisplayVS(0);
-        
+        UserInterface.Instance.EnableRoundNumber();
         if (!IsServer) return;
         player1Health.Value = 100;
         player2Health.Value = 100;
@@ -150,14 +150,12 @@ public class Game : NetworkSingleton<Game>
     {
         // Slowly change camera position of each player
         GameEvents.OnRoundStart.Invoke();
-
+        UserInterface.Instance.ChangeRoundNumber(newValue);
         if (!IsServer) return;
         if(roundObject != null) roundObject.Despawn();
         
         // After all animation and visuals are done, spawn round
         roundObject = GameInitializer.Instance.SpawnRound();
-        
-        // TODO: UserInterface에서 RoundNumber text 바꾸는것도 해야함
         
     }
 
@@ -175,6 +173,8 @@ public class Game : NetworkSingleton<Game>
     public void EndGame()
     {
         UserInterface.Instance.HideHealthDisplay();
+        UserInterface.Instance.DisableRoundNumber();
+        UserInterface.Instance.DisableSubRoundNumber();
         // TODO: Display Winner Here?
         if (IsServer)
         {
