@@ -25,7 +25,7 @@ public class Lever : MonoBehaviour
             if (isSpinning[i])
             {
                 // up and down
-                slots[i].Rotate(Vector3.up * rotateSpeed * Time.deltaTime);
+                slots[i].Rotate(Vector3.left * rotateSpeed * Time.deltaTime);
             }
         }
     }
