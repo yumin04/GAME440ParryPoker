@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Android;
@@ -6,8 +7,9 @@ using UnityEngine.Android;
 public class VSDisplayer : MonoBehaviour
 {
 
-    [SerializeField] private GameObject player1You;
-    [SerializeField] private GameObject player2You;
+    [SerializeField] private TextMeshProUGUI player1You;
+    [SerializeField] private TextMeshProUGUI player2You;
+    private float cameraTransitionTime = 4f;
     public void Init(bool isPlayer1)
     {
         gameObject.SetActive(true);
@@ -20,22 +22,29 @@ public class VSDisplayer : MonoBehaviour
         
         if (isPlayer1)
         {
-            player1You.SetActive(true);
-            player2You.SetActive(false);
+            player1You.faceColor = Color.antiqueWhite;
+            player2You.faceColor = new Color32(0xFF, 0x31, 0x31, 255);
         }
         else
         {
-            player1You.SetActive(false);
-            player2You.SetActive(true);
+            player1You.faceColor = new Color32(0xFF, 0x31, 0x31, 255);
+            player2You.faceColor = Color.antiqueWhite;
         }
+        
+        DisableCoroutine(cameraTransitionTime);
+        yield return null;
+    }
 
-        
+    private void DisableCoroutine(float disableTime)
+    {
+        StartCoroutine(DisablePanel(disableTime));
+    }
+
+    private IEnumerator DisablePanel(float disableTime)
+    {
         // TODO: animate the vs display
-        yield return new WaitForSeconds(2f);
-        
-        Debug.Log("[DEBUG] After Show Routine");
+        yield return new WaitForSeconds(disableTime);
         gameObject.SetActive(false);
-        
     }
 
     public void OnDisable()

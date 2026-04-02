@@ -24,12 +24,13 @@ public class HealthDisplay : MonoBehaviour
         {
             Player1HealthText.color = Color.black;
             Player1HealthBarImage.sprite = greenHealthBar;
-            Player2HealthText.color = Color.red;
+            Player2HealthText.color = new Color32(0xFF, 0x31, 0x31, 255);
             Player2HealthBarImage.sprite = redHealthBar;
         }
         else
         {
-            Player1HealthText.color = Color.red;
+
+            Player1HealthText.color = new Color32(0xFF, 0x31, 0x31, 255);
             Player1HealthBarImage.sprite = redHealthBar;
             Player2HealthText.color = Color.black;
             Player2HealthBarImage.sprite = greenHealthBar;
