@@ -162,7 +162,6 @@ MonoBehaviour:
   slotMachineSpawner: {fileID: 9122120899202990723}
   attackObject: {fileID: 8723412680989289279}
   cardCollider: {fileID: 6434254984772356216}
-  cameraTransitionTime: 5
   debugPlayerCardIds: 
 --- !u!1 &1202321347536353483
 GameObject:
@@ -298,7 +297,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbfa5dffc4ac4f1692f77f9a452932fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlotMachineInstantiator
-  slotMachinePrefab: {fileID: 533511585012106818, guid: 528aab2f0c4473944831a5f69048366a, type: 3}
+  slotMachinePrefab: {fileID: 3214548848633090330, guid: 528aab2f0c4473944831a5f69048366a, type: 3}
 --- !u!1 &2039177175350191089
 GameObject:
   m_ObjectHideFlags: 0
@@ -1562,9 +1561,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f372432715a4573b5a084fc70dac060, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Attack
+  player: {fileID: 0}
   fixedX: 8
   crosshair: {fileID: 6003965321028695555, guid: b15e4e055fd06b340aae33d9e4d891e6, type: 3}
   cam: {fileID: 1034582147054398281}
+  shootCooldown: 0.2
   minY: 8
   maxY: 12
   minZ: -3
