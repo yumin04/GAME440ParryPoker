@@ -22,13 +22,13 @@ public class VSDisplayer : MonoBehaviour
         
         if (isPlayer1)
         {
-            player1You.faceColor = Color.antiqueWhite;
+            player1You.faceColor = Color.black;
             player2You.faceColor = new Color32(0xFF, 0x31, 0x31, 255);
         }
         else
         {
             player1You.faceColor = new Color32(0xFF, 0x31, 0x31, 255);
-            player2You.faceColor = Color.antiqueWhite;
+            player2You.faceColor = Color.black;
         }
         
         DisableCoroutine(cameraTransitionTime);

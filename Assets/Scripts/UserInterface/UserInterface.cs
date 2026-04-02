@@ -6,6 +6,9 @@ public class UserInterface : Singleton<UserInterface>
 {
     [SerializeField] private VSDisplayer vsDisplayer;
     [SerializeField] private HealthDisplay healthDisplay;
+    [SerializeField] private SubRoundIndicator subRoundIndicator;
+    [SerializeField] private RoundIndicator roundIndicator;
+
 
     public void DisplayVS(ulong serverClientId)
     {
@@ -36,17 +39,27 @@ public class UserInterface : Singleton<UserInterface>
     {
         healthDisplay.SetPlayer2Health(health);
     }
-    
-    public void DisplayRoundNumber(int roundNumber)
+
+
+    public void EnableSubRoundNumber() => subRoundIndicator.EnableAllSubRound();
+
+    public void DisableSubRoundNumber() => subRoundIndicator.DisableSubRoundNumber();
+
+    public void EnableRoundNumber() => roundIndicator.EnableRoundNumber();
+
+
+    public void DisableRoundNumber() => roundIndicator.DisableRoundNumber();
+
+    public void ChangeSubRoundNumber(int subroundNumber)
     {
-        
+        subRoundIndicator.DisableSubRound(subroundNumber);
     }
 
-    public void DisplaySubroundNumber(int subroundNumber)
+    public void ChangeRoundNumber(int roundNumber)
     {
-        
-    }
+        roundIndicator.ChangeRoundText(roundNumber);
 
+    }
     public void Player2Win()
     {
         // TODO: Winner Display

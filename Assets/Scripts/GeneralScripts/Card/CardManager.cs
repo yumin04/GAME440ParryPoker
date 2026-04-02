@@ -7,16 +7,16 @@ public class CardManager : Singleton<CardManager>
 {
     private readonly float[] xPositions = { -3f, -1.5f, 0f, 1.5f, 3f };
 
-    private readonly float[] zPositions = { -1f, 1f };
+    private readonly float[] zPositions = { 0f, 2f };
 
     private const float yPosition = 2.4f;
 
     private const float xMinBoundary = -4.5f;
     private const float xMaxBoundary = 4.5f;
 
-    private const float zMinBoundary = -1.5f;
-    private const float zMaxBoundary = 1.5f;
-    private Quaternion cardShowInTableRotation = Quaternion.Euler(180f, 0f, 0f);
+    private const float zMinBoundary = -0.5f;
+    private const float zMaxBoundary = 2.5f;
+    private Quaternion cardShowInTableRotation = Quaternion.Euler(180f, 180f, 0f);
     private Quaternion cardHideInTableRotation = Quaternion.Euler(0f, 0f, 0f);
     
     [SerializeField] private CardInstantiator cardInstantiator;
