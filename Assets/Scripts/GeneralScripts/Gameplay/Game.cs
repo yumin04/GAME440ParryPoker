@@ -43,7 +43,11 @@ public class Game : NetworkSingleton<Game>
         // TODO:
         // Host is always 0
         // Refactor Later
-        UserInterface.Instance.DisplayVS(0);
+        ulong myId = NetworkManager.Singleton.LocalClientId;
+        bool isPlayer1 = (myId == 0);
+        UserInterface.Instance.Init(isPlayer1);
+        
+        UserInterface.Instance.DisplayVS();
         UserInterface.Instance.EnableRoundNumber();
         if (!IsServer) return;
         player1Health.Value = 100;
@@ -132,7 +136,7 @@ public class Game : NetworkSingleton<Game>
         // TODO: 이거 맞는지 확인
         // 어차피 둘다 돌려지는건 사실이라
         // 이건 둘다 해야하는거고
-        UserInterface.Instance.DisplayHealth(0);
+        UserInterface.Instance.DisplayHealth();
         UserInterface.Instance.ChangePlayer1Health(player1Health.Value);
         UserInterface.Instance.ChangePlayer2Health(player2Health.Value);
         

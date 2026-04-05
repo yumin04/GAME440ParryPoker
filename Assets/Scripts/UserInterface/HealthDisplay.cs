@@ -5,16 +5,16 @@ using UnityEngine.UI;
 
 public class HealthDisplay : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI Player1HealthText;
-    [SerializeField] private TextMeshProUGUI Player2HealthText;
-    [SerializeField] private GameObject Player1HealthBar;
-    [SerializeField] private GameObject Player2HealthBar;
-    [SerializeField] private Sprite redHealthBar;
-    [SerializeField] private Sprite greenHealthBar;
-    private Image Player1HealthBarImage;
-    private Image Player2HealthBarImage;
+    [SerializeField] protected TextMeshProUGUI Player1HealthText;
+    [SerializeField] protected TextMeshProUGUI Player2HealthText;
+    [SerializeField] protected GameObject Player1HealthBar;
+    [SerializeField] protected GameObject Player2HealthBar;
+    [SerializeField] protected Sprite redHealthBar;
+    [SerializeField] protected Sprite greenHealthBar;
+    protected Image Player1HealthBarImage;
+    protected Image Player2HealthBarImage;
     
-    public void Init(bool isPlayer1)
+    public virtual void Init(bool isPlayer1)
     {
 
         Player1HealthBarImage = Player1HealthBar.GetComponent<Image>();

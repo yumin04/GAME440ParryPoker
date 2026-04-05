@@ -1,4 +1,5 @@
-﻿using SOFile;
+﻿using System.Collections;
+using SOFile;
 using UnityEngine;
 
 public class TrailerObjectInstantiator : MonoBehaviour
@@ -31,21 +32,53 @@ public class TrailerObjectInstantiator : MonoBehaviour
         {
             cards[i] = cardRepository.GetCardByID(ids[i]);
         }
-
-        InstantiateRoundCards(cards);
+        Debug.Log("[DEBUG] Cards: " + cards.Length);
+        StartCoroutine(InstantiateRoundCards(cards));
     }
-    private void InstantiateRoundCards(CardDataSO[] roundCards)
+    
+    private IEnumerator InstantiateRoundCards(CardDataSO[] roundCards)
     {
         int index = 0;
         foreach (float x in xPositions)
         {
             foreach (float z in zPositions)
             {
-                Vector3 spawnPos = new Vector3(x, yPosition, z);
-                Instantiate(Card, spawnPos, Quaternion.identity);
+                Vector3 spawnPos = new Vector3(x, yPosition + 1f, z + 0.5f);
+                // TODO: 이거 카드 뒷면이고
+                // 여기서 Animate하는걸로
+                TrailerCard card = Instantiate(Card, spawnPos, Quaternion.Euler(0f, 0f, 180f)).GetComponent<TrailerCard>();
+                Debug.Log("[DEBUG] Card: " + roundCards[index].name);
+                card.Init(roundCards[index]);
                 index++;
+                StartCoroutine(AnimateTrailerCard(card, z));
+                yield return new WaitForSeconds(0.1f);
             }
         }
+    }
+
+    private IEnumerator AnimateTrailerCard(TrailerCard card, float z)
+    {
+        Transform t = card.transform;
+
+        Vector3 startPos = t.position; // 이미 y+1 상태
+        Vector3 targetPos = new Vector3(startPos.x, yPosition, z);
+
+        float duration = 0.5f;
+        float time = 0f;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            float t01 = time / duration;
+
+            // 부드럽게 (ease out 느낌)
+            float ease = 1f - Mathf.Pow(1f - t01, 3f);
+
+            t.position = Vector3.Lerp(startPos, targetPos, ease);
+            yield return null;
+        }
+
+        t.position = targetPos;
     }
 
     public void InstantiateSubRoundCard(int cardId)

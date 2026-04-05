@@ -9,12 +9,14 @@ public class VSDisplayer : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI player1You;
     [SerializeField] private TextMeshProUGUI player2You;
+
+    private Coroutine showRoutine;
     private float cameraTransitionTime = 4f;
     public void Init(bool isPlayer1)
     {
         gameObject.SetActive(true);
 
-        StartCoroutine(ShowRoutine(isPlayer1));
+        showRoutine = StartCoroutine(ShowRoutine(isPlayer1));
     }
 
     private IEnumerator ShowRoutine(bool isPlayer1)
@@ -35,6 +37,17 @@ public class VSDisplayer : MonoBehaviour
         yield return null;
     }
 
+    public void InstantDisableShowRoutine()
+    {
+        if (showRoutine != null)
+        {
+            gameObject.SetActive(false);
+            StopCoroutine(showRoutine);
+            showRoutine = null;
+        }
+        
+    }
+    
     private void DisableCoroutine(float disableTime)
     {
         StartCoroutine(DisablePanel(disableTime));
@@ -49,8 +62,6 @@ public class VSDisplayer : MonoBehaviour
 
     public void OnDisable()
     {
-        // TODO: Refactor
-        // So this thing does not need to know GAME
-        Game.Instance.StartGame();
+        Game.Instance?.StartGame();
     }
 }

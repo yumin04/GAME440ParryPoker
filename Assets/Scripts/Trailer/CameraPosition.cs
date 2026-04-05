@@ -1,44 +1,109 @@
 ﻿// 여기서 Camera Group들 나눠야 할듯
 
-public enum CameraPosition
+public enum HookCameraPosition
 {
-    PlayerStare_1,
-    P1CloseUp_2,
-    P2CloseUp_3,
-    FollowCard_4,
-    P1CatchCard_5,
-    P1ShowHand_6,
-    P2ShowHand_7,
-    Pose_8,
-    Memorize_9,
-    InitializeCard_9_1,
-    P1Grab_10,
-    P1CheckCard_11,
-    P1OptionSelection_12,
-    P1ChoosingAttack_13,
-    P1SlotMachine_14, // Slot Machine Pop Up
-    P1SlotMachineOptions_15,
-    P1AimP2AndShoot_16,
-    P2HitByAttack_17,
-    P2HealthDecrease_18,
-    InitializeSubRoundCard_22,
-    P2Grab_23,
-    P2CheckCard_24,
-    P2KeepCard_25,
+    PlayerStareAtEachOther,
+    P1CloseUpGrabPose,
+    P2CloseUpShootPose,
+    P2ShootCard,
+    FollowCard,
+    P1CatchCard,
+    P1ShowHand,
+    P2ShowHand,
+    Pose,
+}
+
+public enum IntroCameraPosition
+{
+    VsScreenPopUp,
+    HealthBarPopUp,
+    CardsPopUp,
+    Memorize,
+}
+
+public enum P1GrabThenAttackCameraPosition
+{
+    InitializeCard,
+    P1Grab,
+    P1CheckCard,
+    P1OptionSelection,
+    P1ChoosingAttack,
+}
+
+public enum P2GrabThenAttackCameraPosition
+{
+    InitializeCard,
+    P2Grab,
+    P2CheckCard,
+    P2OptionSelection,
+    P2ChoosingAttack,
+}
+public enum P1AttackCameraPosition
+{
+    P1SlotMachine,
+    P1SlotMachineOptions,
+    P1AimP2AndShoot,
+    P2HitByAttack,
+    P2HealthDecrease,
+}
+public enum P2AttackCameraPosition
+{
+    P2SlotMachine,
+    P2SlotMachineOptions,
+    P2AimP2AndShoot,
+    P1HitByAttack,
+    P1HealthDecrease,
+}
+public enum P1GrabAndKeepCameraPosition
+{
+    InitializeSubRoundCard,
+    P1Grab,
+    P1CheckCard,
+    P1KeepCard,
+}
+
+public enum P2GrabAndKeepCameraPosition
+{
+    InitializeSubRoundCard,
+    P2Grab,
+    P2CheckCard,
+    P2KeepCard,
+}
+
+public enum RepeatCameraPosition
+{
     Repeat14_18_26,
     Repeat19_25_27,
-    InitializeCard_28_1,
-    P2Grab_28_2,
-    P2CheckCard_29,
-    P2ChooseAttack_30,
-    P2SlotMachine_31,
-    P2AimP1AndShoot_32,
-    P1Hit_33,
-    InitializeCard_34_1,
-    P2Grab_34_2,
-    P2CheckCard_35,
-    P2SlowMotionChooseAttack_36,
-    P2SlotMachine_37,
-    P2AimP1AndShoot_38,
-    P1Hit_39
+}
+
+
+public enum RisingActionCameraPosition
+{
+    // P2GrabThenAttackCameraPosition
+    // P1AttackCameraPosition
+    P2QuickSlotMachine,
+    P2AimAndShoot,
+    P1Hit,
+    P1DecreaseHealth
+}
+
+public enum ClimaxCameraPosition
+{
+    // P2GrabThenAttackCameraPosition but with slow motion
+    InitializeCard,
+    P2Grab,
+    P2CheckCard,
+    P2SlowMotionChooseAttack, // Important, duplicate and Use the same position, but add slowmotion
+    P2SlotMachine,
+    P2AimP1AndShoot,
+    P1Hit,
+    P1EvilSmile,
+    P2LayDownHand,
+    P1LayDownHand,
+    P1WinPose,
+}
+
+public enum ResultCameraPosition
+{
+    ParryPoker,
 }
