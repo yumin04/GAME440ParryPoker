@@ -17,9 +17,10 @@ public class LightFlicker : MonoBehaviour
     void Update()
     {
         float t = Time.time + _phase;
-        float wobble = Mathf.Sin(t * 5.7f) * 0.05f + Mathf.Sin(t * 11.3f) * 0.035f;
-        float noise = (Mathf.PerlinNoise(t * 0.8f, _phase) - 0.5f) * 0.12f;
-        float m = 1f + wobble + noise;
-        _light.intensity = _baseIntensity * Mathf.Clamp(m, 0.82f, 1.12f);
+        float wobble = Mathf.Sin(t * 5.7f) * 0.06f + Mathf.Sin(t * 11.3f) * 0.042f;
+        float noise = (Mathf.PerlinNoise(t * 0.8f, _phase) - 0.5f) * 0.2f;
+        float slowDip = Mathf.Sin(t * 2.1f + _phase * 1.3f) * 0.16f;
+        float m = 1f + wobble + noise + slowDip;
+        _light.intensity = _baseIntensity * Mathf.Clamp(m, 0.52f, 1.12f);
     }
 }
