@@ -10,8 +10,6 @@ public class SlotMachineInstantiator : MonoBehaviour
     {
         currentSlotMachine = Instantiate(
             slotMachinePrefab,
-            transform.position,
-            transform.rotation,
             transform
         );
     }

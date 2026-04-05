@@ -83,10 +83,7 @@ public class Round : NetworkBehaviour
 
     private void OnRoundCardsChanged(NetworkListEvent<int> changeEvent)
     {
-        // TODO:
-        // 여기서 SubRoundText 바꾸는거 ㄱㅊ할듯?
-        // 이거 둘다 돌려지는지 확인
-        if (!IsClient) return;
+        UserInterface.Instance.ChangeSubRoundNumber(roundCardIDs.Count);
     }
 
     
@@ -99,11 +96,12 @@ public class Round : NetworkBehaviour
         Give2CardsToEachPlayer();
         
         Choose10RoundCards();
-
         Debug.Log("[DEBUG] Chose 10 Cards: " + roundCardIDs.Count);
+        
         // Wait 10 seconds
         WaitForMemorization();
     }
+
 
     private void WaitForMemorization()
     {
@@ -124,6 +122,7 @@ public class Round : NetworkBehaviour
     private void RunAfterMemorizationRPC()
     {
         CardManager.Instance.HideAllRoundCards();
+        UserInterface.Instance.EnableSubRoundNumber();
         StartSubRound();
     }
     
@@ -138,7 +137,6 @@ public class Round : NetworkBehaviour
         int chosenCardID = roundCardIDs[randomIndex];
         
         roundCardIDs.RemoveAt(randomIndex);
-
         NetworkObject subRoundObj = GameInitializer.Instance.SpawnSubRound();
 
         SubRound subRound = subRoundObj.GetComponent<SubRound>();

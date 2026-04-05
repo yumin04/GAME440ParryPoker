@@ -18,7 +18,7 @@ public class AttackCard : NetworkBehaviour
     public NetworkVariable<Vector3> endPosition = new();
     
     // TODO: Correct Speed
-    private float movementSpeed = 5f;
+    private float movementSpeed = 15f;
 
 
 

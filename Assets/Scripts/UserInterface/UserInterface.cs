@@ -6,20 +6,23 @@ public class UserInterface : Singleton<UserInterface>
 {
     [SerializeField] private VSDisplayer vsDisplayer;
     [SerializeField] private HealthDisplay healthDisplay;
+    [SerializeField] private SubRoundIndicator subRoundIndicator;
+    [SerializeField] private RoundIndicator roundIndicator;
 
-    public void DisplayVS(ulong serverClientId)
+    private bool isPlayer1;
+
+    public void Init(bool isPlayer1)
     {
-        ulong myId = NetworkManager.Singleton.LocalClientId;
-
-        bool isPlayer1 = (myId == serverClientId);
-
+        this.isPlayer1 = isPlayer1;
+    }
+    
+    public void DisplayVS()
+    {
         vsDisplayer.Init(isPlayer1);
     }
 
-    public void DisplayHealth(ulong serverClientId)
+    public void DisplayHealth()
     {
-        ulong myId = NetworkManager.Singleton.LocalClientId;
-        bool isPlayer1 = (myId == serverClientId);
         healthDisplay.Init(isPlayer1);
     }
 
@@ -36,17 +39,27 @@ public class UserInterface : Singleton<UserInterface>
     {
         healthDisplay.SetPlayer2Health(health);
     }
-    
-    public void DisplayRoundNumber(int roundNumber)
+
+
+    public void EnableSubRoundNumber() => subRoundIndicator.EnableAllSubRound();
+
+    public void DisableSubRoundNumber() => subRoundIndicator.DisableSubRoundNumber();
+
+    public void EnableRoundNumber() => roundIndicator.EnableRoundNumber();
+
+
+    public void DisableRoundNumber() => roundIndicator.DisableRoundNumber();
+
+    public void ChangeSubRoundNumber(int subroundNumber)
     {
-        
+        subRoundIndicator.DisableSubRound(subroundNumber);
     }
 
-    public void DisplaySubroundNumber(int subroundNumber)
+    public void ChangeRoundNumber(int roundNumber)
     {
-        
-    }
+        roundIndicator.ChangeRoundText(roundNumber);
 
+    }
     public void Player2Win()
     {
         // TODO: Winner Display
@@ -54,5 +67,10 @@ public class UserInterface : Singleton<UserInterface>
     public void Player1Win()
     {
         // TODO: Winner Display
+    }
+
+    public void DisableDisplayVS()
+    {
+        vsDisplayer.InstantDisableShowRoutine();
     }
 }
