@@ -40,17 +40,17 @@ public class IntroCameraScript : MonoBehaviour
                     yield return StartCoroutine(MoveCamera(target, moveDuration));
                     UserInterface.Instance.DisplayVS();
                     // Can this be done during the Move?
-                    yield return new WaitForSeconds(stayDuration);
+                    yield return new WaitForSeconds(2f);
                     UserInterface.Instance.DisableDisplayVS();
                     break;
                 case IntroCameraPosition.HealthBarPopUp:
                     UserInterface.Instance.DisplayHealth();
                     // yield return StartCoroutine(MoveCamera(target, moveDuration));
-                    yield return new WaitForSeconds(1f);
+                    yield return new WaitForSeconds(1.5f);
                     break;
                 case IntroCameraPosition.CardsPopUp:
+                    yield return StartCoroutine(MoveCamera(target, 0.5f));
                     trailerObjectInstantiator.InstantiateRoundCardsByID(roundCards);
-                    yield return StartCoroutine(MoveCamera(target, 0.3f));
                     yield return new WaitForSeconds(5f);
                     break;
                 case IntroCameraPosition.Memorize:
