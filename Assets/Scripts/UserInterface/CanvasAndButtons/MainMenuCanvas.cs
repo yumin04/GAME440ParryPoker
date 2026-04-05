@@ -10,6 +10,7 @@ public class MainMenuCanvas : MonoBehaviour {
 	// To make things scalable, this is better
 	[Header("Panels")]
 	[SerializeField] private GameObject mainMenuPanel;
+	[SerializeField] private GameObject titleLogo;
 	[SerializeField] private GameObject hostClientPanel;
 	[SerializeField] private GameObject clientAddressPanel;
 	[SerializeField] private GameObject hostAddressPanel;
@@ -40,6 +41,9 @@ public class MainMenuCanvas : MonoBehaviour {
     [Tooltip("Looping menu music. Asset: Assets/Audio/jazzforgame84.mp3")]
     [SerializeField] private AudioClip mainMenuMusic;
 
+    [Header("FX")]
+    [SerializeField] private ParticleSystem coinsBurst;
+
 
 
     public void Awake()
@@ -47,6 +51,8 @@ public class MainMenuCanvas : MonoBehaviour {
         Debug.Log("MainMenuCanvas Awake");
         mainMenuPanel.SetActive(true);
         hostClientPanel.SetActive(false);
+        if (coinsBurst)
+            coinsBurst.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
     }
     
 
@@ -82,6 +88,11 @@ public class MainMenuCanvas : MonoBehaviour {
 	}
 
 	private void PlayButtonSound() {
+		if (coinsBurst)
+		{
+			coinsBurst.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+			coinsBurst.Play();
+		}
 		if (musicSource) musicSource.Stop();
 	}
 
@@ -89,9 +100,9 @@ public class MainMenuCanvas : MonoBehaviour {
 	private void OnStartClicked() {
 		PlayButtonSound();
 		Debug.Log("OnStartClicked");
+		mainMenuPanel.SetActive(false);
+		if (titleLogo) titleLogo.SetActive(false);
 		hostClientPanel.SetActive(true);
-		// hostButton.interactable = true;
-		// clientButton.interactable = true;
 	}
 
 	private void OnTutorialClicked() {
@@ -110,6 +121,8 @@ public class MainMenuCanvas : MonoBehaviour {
 		PlayButtonSound();
 		Debug.Log("OnBackHostClientClicked");
 		hostClientPanel.SetActive(false);
+		mainMenuPanel.SetActive(true);
+		if (titleLogo) titleLogo.SetActive(true);
 		StartMainMenuMusic();
 	}
 
