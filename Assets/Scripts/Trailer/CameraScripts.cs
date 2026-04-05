@@ -36,7 +36,6 @@ public class CameraScripts : MonoBehaviour
             Transform target = EnumPositionStorage<IntroCameraPosition>.Positions[(int)pos];
 
             if (target == null) continue;
-            float maxAngle;
             switch (pos)
             {
                 // TODO: This can go after hook and start with the close up

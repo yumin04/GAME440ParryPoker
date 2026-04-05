@@ -18,8 +18,8 @@ RenderSettings:
   m_FogColor: {r: 0.069, g: 0.072, b: 0.082, a: 1}
   m_FogMode: 1
   m_FogDensity: 0.01
-  m_LinearFogStart: 22
-  m_LinearFogEnd: 78
+  m_LinearFogStart: 20
+  m_LinearFogEnd: 72
   m_AmbientSkyColor: {r: 0.08, g: 0.085, b: 0.1, a: 1}
   m_AmbientEquatorColor: {r: 0.05, g: 0.052, b: 0.058, a: 1}
   m_AmbientGroundColor: {r: 0.02, g: 0.019, b: 0.018, a: 1}
@@ -177,8 +177,8 @@ Light:
   serializedVersion: 11
   m_Type: 2
   m_Color: {r: 1, g: 0.65332776, b: 0.45597476, a: 1}
-  m_Intensity: 12
-  m_Range: 24
+  m_Intensity: 130
+  m_Range: 25
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -7364,6 +7364,7 @@ GameObject:
   - component: {fileID: 623825970}
   - component: {fileID: 623825969}
   - component: {fileID: 623825968}
+  - component: {fileID: 623825971}
   m_Layer: 0
   m_Name: Point Light (3)
   m_TagString: Untagged
@@ -7411,8 +7412,8 @@ Light:
   serializedVersion: 11
   m_Type: 2
   m_Color: {r: 1, g: 0.65332776, b: 0.45597476, a: 1}
-  m_Intensity: 12
-  m_Range: 24
+  m_Intensity: 130
+  m_Range: 25
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -7480,6 +7481,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &623825971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 623825967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1a2b3c4d5e6f7890a1b2c3d4e5f6789, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LightFlicker
 --- !u!1 &636543455
 GameObject:
   m_ObjectHideFlags: 0
@@ -7759,8 +7772,8 @@ Light:
   serializedVersion: 11
   m_Type: 2
   m_Color: {r: 1, g: 0.65332776, b: 0.45597476, a: 1}
-  m_Intensity: 12
-  m_Range: 24
+  m_Intensity: 35
+  m_Range: 25
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -7938,7 +7951,7 @@ MonoBehaviour:
   priority: 0
   blendDistance: 0
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: c3d4e5f608192a3b4c5d6e7f8091a2b3, type: 2}
+  sharedProfile: {fileID: 11400000, guid: e8f9a1b2c3d4456789e0f1a2b3c4d5e6, type: 2}
 --- !u!4 &832575519
 Transform:
   m_ObjectHideFlags: 0
@@ -9564,8 +9577,9 @@ GameObject:
   - component: {fileID: 1176474320}
   - component: {fileID: 1176474319}
   - component: {fileID: 1176474318}
+  - component: {fileID: 1176474321}
   m_Layer: 0
-  m_Name: Point Light
+  m_Name: Point Light (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9611,8 +9625,8 @@ Light:
   serializedVersion: 11
   m_Type: 2
   m_Color: {r: 1, g: 0.65332776, b: 0.45597476, a: 1}
-  m_Intensity: 12
-  m_Range: 24
+  m_Intensity: 40
+  m_Range: 25
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -9674,12 +9688,24 @@ Transform:
   m_GameObject: {fileID: 1176474317}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.203, y: 7.599, z: 0.507}
+  m_LocalPosition: {x: -0.17, y: 7.599, z: 0.507}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1176474321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1176474317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1a2b3c4d5e6f7890a1b2c3d4e5f6789, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LightFlicker
 --- !u!1 &1212369315
 GameObject:
   m_ObjectHideFlags: 0
@@ -10061,7 +10087,7 @@ MonoBehaviour:
   priority: 0
   blendDistance: 0
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: c3d4e5f608192a3b4c5d6e7f8091a2b3, type: 2}
+  sharedProfile: {fileID: 11400000, guid: e8f9a1b2c3d4456789e0f1a2b3c4d5e6, type: 2}
 --- !u!4 &1337712731
 Transform:
   m_ObjectHideFlags: 0
@@ -16658,6 +16684,7 @@ GameObject:
   - component: {fileID: 1717845639}
   - component: {fileID: 1717845638}
   - component: {fileID: 1717845637}
+  - component: {fileID: 1717845640}
   m_Layer: 0
   m_Name: Point Light (4)
   m_TagString: Untagged
@@ -16705,8 +16732,8 @@ Light:
   serializedVersion: 11
   m_Type: 2
   m_Color: {r: 1, g: 0.65332776, b: 0.45597476, a: 1}
-  m_Intensity: 12
-  m_Range: 24
+  m_Intensity: 130
+  m_Range: 25
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -16774,6 +16801,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1717845640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1717845636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1a2b3c4d5e6f7890a1b2c3d4e5f6789, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LightFlicker
 --- !u!1 &1735080258
 GameObject:
   m_ObjectHideFlags: 0
@@ -17366,8 +17405,8 @@ Light:
   serializedVersion: 11
   m_Type: 2
   m_Color: {r: 1, g: 0.65332776, b: 0.45597476, a: 1}
-  m_Intensity: 12
-  m_Range: 24
+  m_Intensity: 35
+  m_Range: 25
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -18155,8 +18194,8 @@ Light:
   serializedVersion: 11
   m_Type: 2
   m_Color: {r: 1, g: 0.65332776, b: 0.45597476, a: 1}
-  m_Intensity: 12
-  m_Range: 24
+  m_Intensity: 130
+  m_Range: 25
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
