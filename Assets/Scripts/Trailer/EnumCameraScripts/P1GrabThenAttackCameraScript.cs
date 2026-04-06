@@ -15,11 +15,9 @@ public class P1GrabThenAttackCameraScript : MonoBehaviour
     [SerializeField] private GameObject player1;
     [SerializeField] private GameObject player2;
     
-    [Header("Other Objects")]
-    [SerializeField] private TrailerAttackCard trailerAttackCard;
-    [SerializeField] private Transform startPos;
-    [SerializeField] private Transform endPos;
-    [SerializeField] private GameObject blackScreen;
+    // [Header("Other Objects")]
+    // [SerializeField] private TrailerAttackCard trailerAttackCard;
+
     
      private void Start()
      {
@@ -40,16 +38,19 @@ public class P1GrabThenAttackCameraScript : MonoBehaviour
                 case P1GrabThenAttackCameraPosition.InitializeCard:
                     yield return StartCoroutine(MoveCamera(target, moveDuration));
                     // Initialize SubRound Card
-                    yield return new WaitForSeconds(stayDuration);
+                    
+                    yield return new WaitForSeconds(2f);
                     break;
                 case P1GrabThenAttackCameraPosition.P1Grab:
                     yield return StartCoroutine(MoveCamera(target, 0.3f));
                     // No Need to Move Camera
                     // Initialize Animation
+                    yield return new WaitForSeconds(2f);
                     break;
                 case P1GrabThenAttackCameraPosition.P1CheckCard:
                     yield return StartCoroutine(MoveCamera(target, 0.3f));
                     // follow Card movement, then go to Player 1's perspective
+                    yield return new WaitForSeconds(2f);
                     break;
                 
                 case P1GrabThenAttackCameraPosition.P1OptionSelection:
@@ -62,7 +63,6 @@ public class P1GrabThenAttackCameraScript : MonoBehaviour
                     yield return StartCoroutine(MoveCamera(target, 0.7f));
                     // move the mouse toward Attack, and click
                     yield return new WaitForSeconds(0.5f);
-                    blackScreen.SetActive(false);
                     break;
             }
             

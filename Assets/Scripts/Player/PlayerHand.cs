@@ -11,19 +11,22 @@ public class PlayerHand : MonoBehaviour
 
     private List<GameObject> cards = new();
     
-    // public void Awake()
-    // {
-    //     AddCard(1);
-    //     AddCard(2);
-    //     AddCard(3);
-    //     AddCard(1);
-    //     AddCard(2);
-    //     AddCard(3);
-    //     AddCard(1);
-    //     Rearrange();
-    // }
-    
+    public void Awake()
+    {
+        AddCard(1);
+        AddCard(2);
+        AddCard(3);
+        AddCard(1);
+        AddCard(2);
+        AddCard(3);
+        AddCard(1);
+        Rearrange();
+    }
 
+    public void OnEnable()
+    {
+        Rearrange();
+    }
     
 
     public void AddCard(int cardId)
