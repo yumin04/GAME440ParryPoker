@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SOFile;
 using UnityEngine;
 
 public class PlayerHand : MonoBehaviour
@@ -11,17 +12,6 @@ public class PlayerHand : MonoBehaviour
 
     private List<GameObject> cards = new();
     
-    public void Awake()
-    {
-        AddCard(1);
-        AddCard(2);
-        AddCard(3);
-        AddCard(1);
-        AddCard(2);
-        AddCard(3);
-        AddCard(1);
-        Rearrange();
-    }
 
     public void OnEnable()
     {
@@ -39,6 +29,14 @@ public class PlayerHand : MonoBehaviour
         Rearrange();
     }
 
+    public void AddCard(CardDataSO cardData)
+    {
+        GameObject card = Instantiate(playerDisplayCardPrefab, transform);
+        card.GetComponent<PlayerCard>().Init(cardData);
+
+        cards.Add(card);
+        Rearrange();
+    }
     public void DisplayCards(List<int> cardIds)
     {
         Clear();

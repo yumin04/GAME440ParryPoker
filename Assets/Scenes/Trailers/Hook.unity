@@ -1040,6 +1040,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73bda50464604a7087f5d08305acbee1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::PlayerForTrailer
+--- !u!95 &534819704 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 99906df1a044ab0439b5cd064dba3b69, type: 3}
+  m_PrefabInstance: {fileID: 534819700}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &609155733
 GameObject:
   m_ObjectHideFlags: 0
@@ -1329,6 +1334,8 @@ MonoBehaviour:
   stayDuration: 1
   player1: {fileID: 1222389841}
   player2: {fileID: 2019738390}
+  player1Animation: {fileID: 534819704}
+  player2Animation: {fileID: 1806615275}
   trailerAttackCard: {fileID: 1435961998}
   startPos: {fileID: 355760204}
   endPos: {fileID: 973906688}
@@ -2209,6 +2216,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FrogAnimation_v0002
       objectReference: {fileID: 0}
+    - target: {fileID: 5004502141635262772, guid: 99906df1a044ab0439b5cd064dba3b69, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 76a0847d0d4c8b542a8ef3f5d350dc3e, type: 2}
     - target: {fileID: 5866666021909216657, guid: 99906df1a044ab0439b5cd064dba3b69, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -2217,6 +2228,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: eb41515c4c895554c9e5b473e68c8de6, type: 2}
+    - target: {fileID: 7205525178554542178, guid: 99906df1a044ab0439b5cd064dba3b69, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ffd0d09ab19d17b41aa66b0e10040e3b, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2247,6 +2262,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73bda50464604a7087f5d08305acbee1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::PlayerForTrailer
+--- !u!95 &1806615275 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 99906df1a044ab0439b5cd064dba3b69, type: 3}
+  m_PrefabInstance: {fileID: 1806615271}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1823930511
 PrefabInstance:
   m_ObjectHideFlags: 0

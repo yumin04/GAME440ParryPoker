@@ -3,7 +3,7 @@ using SOFile;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class P1GrabThenAttackCameraScript : MonoBehaviour
+public class P1GrabAndKeepCameraScript : MonoBehaviour
 {
     [Header("Main Camera")]
     [SerializeField] private Transform cameraTransform;
@@ -45,30 +45,30 @@ public class P1GrabThenAttackCameraScript : MonoBehaviour
 
      private void InitializePlayersHand()
      {
-         trailerObjectInstantiator.AddMultipleCardsToPlayer1(EnumPositionStorage<P1GrabThenAttackCameraPosition>.player1Cards);
-         trailerObjectInstantiator.AddMultipleCardsToPlayer2(EnumPositionStorage<P1GrabThenAttackCameraPosition>.player2Cards);
+         trailerObjectInstantiator.AddMultipleCardsToPlayer1(EnumPositionStorage<P1GrabAndKeepCameraPosition>.player1Cards);
+         trailerObjectInstantiator.AddMultipleCardsToPlayer2(EnumPositionStorage<P1GrabAndKeepCameraPosition>.player2Cards);
      }
 
      private IEnumerator PlayCameraSequence()
      {
-         foreach (P1GrabThenAttackCameraPosition pos in System.Enum.GetValues(typeof(P1GrabThenAttackCameraPosition)))
+         foreach (P1GrabAndKeepCameraPosition pos in System.Enum.GetValues(typeof(P1GrabAndKeepCameraPosition)))
          {
             Debug.Log("[DEBUG] Position: " + pos);
 
-            Transform target = EnumPositionStorage<P1GrabThenAttackCameraPosition>.Positions[(int)pos];
+            Transform target = EnumPositionStorage<P1GrabAndKeepCameraPosition>.Positions[(int)pos];
 
             if (target == null) continue;
             switch (pos)
             {
-                case P1GrabThenAttackCameraPosition.InitializeCard:
+                case P1GrabAndKeepCameraPosition.InitializeSubRoundCard:
                     trailerObjectInstantiator.DisablePlayer1Hand();
                     trailerObjectInstantiator.DisablePlayer2Hand();
 
                     yield return StartCoroutine(MoveCamera(target, moveDuration));
-                    trailerObjectInstantiator.InstantiateSubRoundCard(EnumPositionStorage<P1GrabThenAttackCameraPosition>.roundCards[subRoundNumber]);
+                    trailerObjectInstantiator.InstantiateSubRoundCard(EnumPositionStorage<P1GrabAndKeepCameraPosition>.roundCards[subRoundNumber]);
                     yield return new WaitForSeconds(2f);
                     break;
-                case P1GrabThenAttackCameraPosition.P1Grab:
+                case P1GrabAndKeepCameraPosition.P1Grab:
                     yield return StartCoroutine(MoveCamera(target, 0.3f));
 
                     player1Animation.SetTrigger("Grab");
@@ -77,7 +77,7 @@ public class P1GrabThenAttackCameraScript : MonoBehaviour
                     trailerObjectInstantiator.DisableCard();
                     yield return new WaitForSeconds(0.5f);
                     break;
-                case P1GrabThenAttackCameraPosition.P1CheckCard:
+                case P1GrabAndKeepCameraPosition.P1CheckCard:
                     yield return StartCoroutine(MoveCamera(target, 0.3f));
                     // After Animation, Fast Zoom to card check position
                     trailerObjectInstantiator.EnableCard();
@@ -86,16 +86,16 @@ public class P1GrabThenAttackCameraScript : MonoBehaviour
                     yield return new WaitForSeconds(0.5f);
                     break;
                 
-                case P1GrabThenAttackCameraPosition.P1OptionSelection:
+                case P1GrabAndKeepCameraPosition.P1OptionSelection:
                     yield return StartCoroutine(MoveCamera(target, 0.3f));
                     // Option Pops Up
                     // Mouse Pointer starts in between the options
                     trailerObjectInstantiator.EnableMousePointerUI();
                     yield return new WaitForSeconds(0.5f);
                     break;
-                 case P1GrabThenAttackCameraPosition.P1ChoosingAttack:
+                 case P1GrabAndKeepCameraPosition.P1KeepCard:
                     // move the mouse toward Attack, and click
-                    trailerObjectInstantiator.MoveMousePointerToAttack();
+                    trailerObjectInstantiator.MoveMousePointerToKeep();
                     yield return new WaitForSeconds(0.5f);
                     break;
             }

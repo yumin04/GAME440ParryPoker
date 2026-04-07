@@ -14,6 +14,9 @@ public class HookCameraScript : MonoBehaviour
     [Header("Player Positions")]
     [SerializeField] private GameObject player1;
     [SerializeField] private GameObject player2;
+        
+    [SerializeField] private Animator player1Animation;
+    [SerializeField] private Animator player2Animation;
     
     [Header("Other Objects")]
     [SerializeField] private TrailerAttackCard trailerAttackCard;
@@ -21,10 +24,13 @@ public class HookCameraScript : MonoBehaviour
     [SerializeField] private Transform endPos;
     [SerializeField] private GameObject blackScreen;
     
-         private void Start()
-     {
-         StartCoroutine(PlayCameraSequence());
-     }
+    private void Start()
+    {
+        player1Animation.SetBool("ReadytoCatchStance", true);
+        player2Animation.SetTrigger("ReadytoCatchStance");
+        // player2Animation.SetTrigger("ShootStance");
+        StartCoroutine(PlayCameraSequence());
+    }
 
      private IEnumerator PlayCameraSequence()
      {
@@ -57,6 +63,8 @@ public class HookCameraScript : MonoBehaviour
                 case HookCameraPosition.P2CloseUpShootPose:
                     // Same as above
                     yield return StartCoroutine(MoveCamera(target, 0.3f));
+                    // player2Animation.SetTrigger("ShootStance")?;
+                    // yield return StartCoroutine(WaitForAnimation());
                     maxAngle = -7f;
                     yield return StartCoroutine(OrbitAroundPlayer(player2.transform, 2f, maxAngle));
                     break;
@@ -128,7 +136,14 @@ public class HookCameraScript : MonoBehaviour
          
          yield return new WaitForSeconds(stayDuration);
      }
+     private IEnumerator WaitForAnimation()
+     {
+         yield return null;
 
+         AnimatorStateInfo stateInfo = player1Animation.GetCurrentAnimatorStateInfo(0);
+         float duration = stateInfo.length;
+         yield return new WaitForSeconds(duration);
+     }
      private IEnumerator OrbitAroundPlayer(Transform player, float duration, float maxAngle)
      {
          float timer = 0f;

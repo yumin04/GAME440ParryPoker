@@ -1306,7 +1306,16 @@ MonoBehaviour:
   slotMachine: {fileID: 3214548848633090330, guid: 528aab2f0c4473944831a5f69048366a, type: 3}
   crossHair: {fileID: 6003965321028695555, guid: b15e4e055fd06b340aae33d9e4d891e6, type: 3}
   Card: {fileID: 7651001146122000764, guid: 360a2222e0a3b024ba1e2d4b7c444c07, type: 3}
+  mousePointer: {fileID: 0}
+  trailerUI: {fileID: 0}
   cardRepository: {fileID: 302167841}
+  player1Hand: {fileID: 0}
+  player2Hand: {fileID: 0}
+  p1CheckCardPosition: {fileID: 0}
+  p2CheckCardPosition: {fileID: 0}
+  initialMousePointerPosition: {fileID: 0}
+  attackMousePointerPosition: {fileID: 0}
+  keepMousePointerPosition: {fileID: 0}
 --- !u!4 &359620736
 Transform:
   m_ObjectHideFlags: 0

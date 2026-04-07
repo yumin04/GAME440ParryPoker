@@ -59,6 +59,7 @@ public enum P1GrabAndKeepCameraPosition
     InitializeSubRoundCard,
     P1Grab,
     P1CheckCard,
+    P1OptionSelection,
     P1KeepCard,
 }
 
@@ -67,6 +68,7 @@ public enum P2GrabAndKeepCameraPosition
     InitializeSubRoundCard,
     P2Grab,
     P2CheckCard,
+    P2OptionSelection,
     P2KeepCard,
 }
 

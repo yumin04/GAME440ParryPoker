@@ -18,7 +18,7 @@ public class IntroCameraScript : MonoBehaviour
     [SerializeField] private GameObject blackScreen;
     [SerializeField] private TrailerObjectInstantiator trailerObjectInstantiator;
 
-    private int[] roundCards = new[] { 2,3,4,5,6,7,8,9,10,11 };
+
     
     
     private void Start()
@@ -50,7 +50,7 @@ public class IntroCameraScript : MonoBehaviour
                     break;
                 case IntroCameraPosition.CardsPopUp:
                     yield return StartCoroutine(MoveCamera(target, 0.5f));
-                    trailerObjectInstantiator.InstantiateRoundCardsByID(roundCards);
+                    trailerObjectInstantiator.InstantiateRoundCardsByID(EnumPositionStorage<IntroCameraPosition>.roundCards);
                     yield return new WaitForSeconds(5f);
                     break;
                 case IntroCameraPosition.Memorize:

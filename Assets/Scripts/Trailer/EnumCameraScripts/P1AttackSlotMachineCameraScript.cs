@@ -3,7 +3,7 @@ using SOFile;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class P1GrabThenAttackCameraScript : MonoBehaviour
+public class P1AttackSlotMachineCameraScript : MonoBehaviour
 {
     [Header("Main Camera")]
     [SerializeField] private Transform cameraTransform;
@@ -18,6 +18,9 @@ public class P1GrabThenAttackCameraScript : MonoBehaviour
     
     [SerializeField] private Animator player1Animation;
     [SerializeField] private Animator player2Animation;
+    
+    [SerializeField] private Attack attack;
+
     /// <summary>
     /// anim.SetTrigger("Hit");
     /// anim.SetTrigger("Catch");
@@ -39,63 +42,59 @@ public class P1GrabThenAttackCameraScript : MonoBehaviour
     
      private void Start()
      {
-         InitializePlayersHand();
+         // InitializePlayersHand();
          StartCoroutine(PlayCameraSequence());
      }
 
      private void InitializePlayersHand()
      {
-         trailerObjectInstantiator.AddMultipleCardsToPlayer1(EnumPositionStorage<P1GrabThenAttackCameraPosition>.player1Cards);
-         trailerObjectInstantiator.AddMultipleCardsToPlayer2(EnumPositionStorage<P1GrabThenAttackCameraPosition>.player2Cards);
+         trailerObjectInstantiator.AddMultipleCardsToPlayer1(EnumPositionStorage<P1AttackCameraPosition>.player1Cards);
+         trailerObjectInstantiator.AddMultipleCardsToPlayer2(EnumPositionStorage<P1AttackCameraPosition>.player2Cards);
      }
 
      private IEnumerator PlayCameraSequence()
      {
-         foreach (P1GrabThenAttackCameraPosition pos in System.Enum.GetValues(typeof(P1GrabThenAttackCameraPosition)))
+         foreach (P1AttackCameraPosition pos in System.Enum.GetValues(typeof(P1AttackCameraPosition)))
          {
             Debug.Log("[DEBUG] Position: " + pos);
 
-            Transform target = EnumPositionStorage<P1GrabThenAttackCameraPosition>.Positions[(int)pos];
+            Transform target = EnumPositionStorage<P1AttackCameraPosition>.Positions[(int)pos];
 
             if (target == null) continue;
             switch (pos)
             {
-                case P1GrabThenAttackCameraPosition.InitializeCard:
-                    trailerObjectInstantiator.DisablePlayer1Hand();
-                    trailerObjectInstantiator.DisablePlayer2Hand();
-
+                case P1AttackCameraPosition.P1SlotMachine:
+                    // Initialize Slot Machine
                     yield return StartCoroutine(MoveCamera(target, moveDuration));
-                    trailerObjectInstantiator.InstantiateSubRoundCard(EnumPositionStorage<P1GrabThenAttackCameraPosition>.roundCards[subRoundNumber]);
+                    trailerObjectInstantiator.InstantiateSlotMachine();
                     yield return new WaitForSeconds(2f);
+                    // Spin the slot machine
+                    // 하나에 안착하게 하기
                     break;
-                case P1GrabThenAttackCameraPosition.P1Grab:
-                    yield return StartCoroutine(MoveCamera(target, 0.3f));
+                case P1AttackCameraPosition.P1SlotMachineOptions:
 
-                    player1Animation.SetTrigger("Grab");
-                    yield return StartCoroutine(WaitForAnimation());
-                    trailerObjectInstantiator.MoveCardToP1CheckPosition();
-                    trailerObjectInstantiator.DisableCard();
+
+                    trailerObjectInstantiator.DisableSlotMachine();
                     yield return new WaitForSeconds(0.5f);
                     break;
-                case P1GrabThenAttackCameraPosition.P1CheckCard:
-                    yield return StartCoroutine(MoveCamera(target, 0.3f));
-                    // After Animation, Fast Zoom to card check position
-                    trailerObjectInstantiator.EnableCard();
-                    trailerObjectInstantiator.EnablePlayer1Hand();
-                    trailerObjectInstantiator.EnablePlayer2Hand();
-                    yield return new WaitForSeconds(0.5f);
+                case P1AttackCameraPosition.P1AimP2AndShoot:
+                    // Attack부분 코드 그냥 가져오는걸로
+
+                    attack.StartAttack(5f);
+                    yield return new WaitForSeconds(5f);
                     break;
                 
-                case P1GrabThenAttackCameraPosition.P1OptionSelection:
-                    yield return StartCoroutine(MoveCamera(target, 0.3f));
+                case P1AttackCameraPosition.P2HitByAttack:
+                    // Play Animation
+                    
+                    player2Animation.SetTrigger("Hit");
+                    yield return StartCoroutine(WaitForAnimation());
                     // Option Pops Up
                     // Mouse Pointer starts in between the options
-                    trailerObjectInstantiator.EnableMousePointerUI();
                     yield return new WaitForSeconds(0.5f);
                     break;
-                 case P1GrabThenAttackCameraPosition.P1ChoosingAttack:
-                    // move the mouse toward Attack, and click
-                    trailerObjectInstantiator.MoveMousePointerToAttack();
+                 case P1AttackCameraPosition.P2HealthDecrease:
+                    // UserInterface.Instance.ChangePlayer1Health(90);
                     yield return new WaitForSeconds(0.5f);
                     break;
             }
