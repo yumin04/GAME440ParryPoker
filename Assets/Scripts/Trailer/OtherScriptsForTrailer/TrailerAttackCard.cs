@@ -6,7 +6,7 @@ public class TrailerAttackCard : MonoBehaviour
     private Transform endPos;
 
     [SerializeField] private float moveSpeed = 20f;
-
+    [SerializeField] private GameObject card;
     private bool isInitialized = false;
     private float startTime;
     public void Init(Transform _startPos, Transform _endPos)
@@ -15,14 +15,14 @@ public class TrailerAttackCard : MonoBehaviour
         endPos = _endPos;
 
         transform.position = startPos.position;
-
-        // 시작할 때 바라보게
+        
         Vector3 dir = endPos.position - transform.position;
         dir.y = 0f;
         float yAngle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0f, yAngle, 0f);
         startTime = Time.time;
         isInitialized = true;
+        card.SetActive(true);
     }
 
     private void Update()

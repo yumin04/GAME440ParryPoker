@@ -23,12 +23,27 @@ public class HookCameraScript : MonoBehaviour
     [SerializeField] private Transform startPos;
     [SerializeField] private Transform endPos;
     [SerializeField] private GameObject blackScreen;
+    [SerializeField] private float catchSpeed;
     
+    /// <summary>
+    /// anim.SetTrigger("Hit");
+    /// anim.SetTrigger("Catch");
+    /// anim.SetTrigger("Grab");
+    /// anim.SetTrigger("Victory");
+    /// anim.SetTrigger("Victory");
+    /// anim.SetBool("ReadyToCatch", true);
+    /// anim.SetBool("Shoot", true);
+    /// anim.SetBool("ReadyToCatch", false);
+    /// anim.SetBool("Shoot", false);
+    /// anim.Play("Seated");
+    /// </summary>
     private void Start()
     {
-        player1Animation.SetBool("ReadytoCatchStance", true);
-        player2Animation.SetTrigger("ReadytoCatchStance");
-        // player2Animation.SetTrigger("ShootStance");
+        // player1Animation.SetTrigger("ReadytoCatchStance");
+        // player2Animation.SetTrigger("ReadytoCatchStance");
+        // player2Animation.SetTrigger("Hit");
+        player2Animation.SetTrigger("ShootStance");
+
         StartCoroutine(PlayCameraSequence());
     }
 
@@ -58,7 +73,7 @@ public class HookCameraScript : MonoBehaviour
                     // Wait하면서 움직이면서 Player은 계속 비추게끔
                     // 그러니까 원형으로 도는거지?
                     maxAngle = 7f;
-                    yield return StartCoroutine(OrbitAroundPlayer(player1.transform, 2f, maxAngle));
+                    yield return StartCoroutine(OrbitAroundPlayer(player1.transform, 0.9f, maxAngle));
                     break;
                 case HookCameraPosition.P2CloseUpShootPose:
                     // Same as above
@@ -87,6 +102,8 @@ public class HookCameraScript : MonoBehaviour
                 case HookCameraPosition.FollowCard:
                     // New Coroutine, Follow Card
                     // TODO: Second Position?
+                    player1Animation.speed = catchSpeed;
+                    player1Animation.SetTrigger("ReadyToCatchStance");
                     trailerAttackCard.Init(startPos, endPos);
                     yield return StartCoroutine(FollowCard(target, 0.7f));
                     // After the card moves towards the camera
@@ -100,11 +117,14 @@ public class HookCameraScript : MonoBehaviour
                 case HookCameraPosition.P1CatchCard:
                     // TODO: Second Position?
                     trailerAttackCard.Init(startPos, endPos);
+                    // player1Animation.SetTrigger("Catch");
+                    player1Animation.SetTrigger("Catch");
                     yield return StartCoroutine(MoveCamera(target, 0f));
                     // show Catch Animation
                     // 여기서 뭐 Animator.PlayCatchAnimation();
                     // 이런거, 그리고 나서 끝?
                     Debug.Log("[DEBUG] Animation Play: P1 Catch");
+
                     yield return new WaitForSeconds(stayDuration);
                     trailerAttackCard.gameObject.SetActive(false);
                     break;

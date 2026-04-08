@@ -18,14 +18,14 @@ EditorBuildSettings:
     path: Assets/Scenes/Trailers/Trailer 1.unity
     guid: c916a966aab3ef24d938c78509e5be57
   - enabled: 1
+    path: Assets/Scenes/Trailers/MainTrailer.unity
+    guid: 7d3f2c7a8a4b3e64884d37ef3cb3fb14
+  - enabled: 1
     path: Assets/Scenes/Trailers/Hook.unity
     guid: 69cacbab992327144a79cfd4c577990a
   - enabled: 1
     path: Assets/Scenes/Trailers/Intro.unity
     guid: f383cec416f34ee4fb7ef7d02b1821f4
-  - enabled: 1
-    path: Assets/Scenes/Trailers/MainTrailer.unity
-    guid: 7d3f2c7a8a4b3e64884d37ef3cb3fb14
   - enabled: 1
     path: Assets/Scenes/Trailers/P1AttackGrab.unity
     guid: 77f7bdfb6976e1f4bac9baa386e928cc

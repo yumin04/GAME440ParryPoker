@@ -21,18 +21,7 @@ public class P1AttackSlotMachineCameraScript : MonoBehaviour
     
     [SerializeField] private Attack attack;
 
-    /// <summary>
-    /// anim.SetTrigger("Hit");
-    /// anim.SetTrigger("Catch");
-    /// anim.SetTrigger("Grab");
-    /// anim.SetTrigger("Victory");
-    /// anim.SetTrigger("Victory");
-    /// anim.SetBool("ReadyToCatch", true);
-    /// anim.SetBool("Shoot", true);
-    /// anim.SetBool("ReadyToCatch", false);
-    /// anim.SetBool("Shoot", false);
-    /// anim.Play("Seated");
-    /// </summary>
+
     [Header("Other Objects")] 
     // [SerializeField] private TrailerAttackCard trailerAttackCard;
     [SerializeField] private TrailerObjectInstantiator trailerObjectInstantiator;
