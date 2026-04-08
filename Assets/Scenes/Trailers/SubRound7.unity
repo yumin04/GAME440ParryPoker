@@ -308,7 +308,7 @@ GameObject:
   - component: {fileID: 127048923}
   - component: {fileID: 127048924}
   m_Layer: 0
-  m_Name: 11P1CheckCard
+  m_Name: P2CheckCard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -322,8 +322,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 127048922}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.06028085, y: 0.91141284, z: -0.14435363, w: 0.3805983}
-  m_LocalPosition: {x: -10.88, y: 3.2, z: 4.8}
+  m_LocalRotation: {x: -0.053503744, y: 0.92812353, z: -0.14700036, w: -0.33780926}
+  m_LocalPosition: {x: 7.96, y: 3.2, z: 4.98}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -338,9 +338,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 127048922}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1146789c4fa8864793a279a09992e43, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d9e42076dcf43629969f50e7c1e0b83, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game::P1GrabThenAttackPositionBinder
+  m_EditorClassIdentifier: Game::P2GrabAndKeepPositionBinder
   position: 2
 --- !u!1 &156154779
 GameObject:
@@ -353,7 +353,7 @@ GameObject:
   - component: {fileID: 156154780}
   - component: {fileID: 156154781}
   m_Layer: 0
-  m_Name: 10P1Grab
+  m_Name: P2Grab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -383,9 +383,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 156154779}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1146789c4fa8864793a279a09992e43, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d9e42076dcf43629969f50e7c1e0b83, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game::P1GrabThenAttackPositionBinder
+  m_EditorClassIdentifier: Game::P2GrabAndKeepPositionBinder
   position: 1
 --- !u!1 &182896775
 GameObject:
@@ -414,7 +414,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.62082773, y: -0.33848628, z: 0.62082773, w: 0.33848628}
   m_LocalPosition: {x: -0.12, y: 0.59, z: 0.6}
-  m_LocalScale: {x: 7.11, y: 7.11, z: 7.11}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1635762726}
@@ -433,7 +433,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game::PlayerHand
   playerDisplayCardPrefab: {fileID: 1281068483681606851, guid: 37bb2f9ac9c0a2e47ba91eea34e639bd, type: 3}
   radius: 0.2
-  maxAngle: 45
+  maxAngle: 30
 --- !u!1 &189396737
 GameObject:
   m_ObjectHideFlags: 0
@@ -814,12 +814,13 @@ MonoBehaviour:
   crossHair: {fileID: 6003965321028695555, guid: b15e4e055fd06b340aae33d9e4d891e6, type: 3}
   Card: {fileID: 7651001146122000764, guid: 360a2222e0a3b024ba1e2d4b7c444c07, type: 3}
   mousePointer: {fileID: 189396737}
-  trailerUI: {fileID: 1793020512}
+  pointerPanel: {fileID: 1793020512}
   cardRepository: {fileID: 302167841}
   player1Hand: {fileID: 208258887}
   player2Hand: {fileID: 182896777}
   p1CheckCardPosition: {fileID: 1430372649}
   p2CheckCardPosition: {fileID: 2075409538}
+  slotMachinePosition: {fileID: 0}
   initialMousePointerPosition: {fileID: 189396738}
   attackMousePointerPosition: {fileID: 1699680559}
   keepMousePointerPosition: {fileID: 1880857556}
@@ -1417,7 +1418,7 @@ GameObject:
   - component: {fileID: 734888720}
   - component: {fileID: 734888721}
   m_Layer: 0
-  m_Name: 13P1ChoosingAttack
+  m_Name: P2ChoosingKeep
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1431,8 +1432,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 734888719}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.21421097, y: 0.6604087, z: -0.20506234, w: 0.6898721}
-  m_LocalPosition: {x: -9.1, y: 1.76, z: 0.87}
+  m_LocalRotation: {x: 0.21421097, y: -0.6604087, z: 0.20506234, w: 0.6898721}
+  m_LocalPosition: {x: 6.2, y: 1.76, z: -0.08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1447,9 +1448,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 734888719}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1146789c4fa8864793a279a09992e43, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d9e42076dcf43629969f50e7c1e0b83, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game::P1GrabThenAttackPositionBinder
+  m_EditorClassIdentifier: Game::P2GrabAndKeepPositionBinder
   position: 4
 --- !u!1 &854757556
 GameObject:
@@ -1463,7 +1464,7 @@ GameObject:
   - component: {fileID: 854757560}
   - component: {fileID: 854757559}
   - component: {fileID: 854757558}
-  - component: {fileID: 854757562}
+  - component: {fileID: 854757564}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -1582,14 +1583,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 854757556}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.21421097, y: 0.6604087, z: -0.20506234, w: 0.6898721}
-  m_LocalPosition: {x: -9.1, y: 1.76, z: 0.87}
+  m_LocalRotation: {x: 0.21421097, y: -0.6604087, z: 0.20506234, w: 0.6898721}
+  m_LocalPosition: {x: 6.2, y: 1.76, z: -0.08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 18, y: 134.67, z: 0}
---- !u!114 &854757562
+  m_LocalEulerAnglesHint: {x: 34.5, y: -87.5, z: 0}
+--- !u!114 &854757564
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1598,9 +1599,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 854757556}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 303d280fd2234ad1bc04b8843bc1efb5, type: 3}
+  m_Script: {fileID: 11500000, guid: 84709103152b4ac09d42d87c4ca81bbf, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game::P1GrabThenAttackCameraScript
+  m_EditorClassIdentifier: Game::P2GrabAndKeepCameraScript
   cameraTransform: {fileID: 854757561}
   moveDuration: 0.5
   stayDuration: 1
@@ -1609,7 +1610,7 @@ MonoBehaviour:
   player1Animation: {fileID: 1625144588}
   player2Animation: {fileID: 412909551}
   trailerObjectInstantiator: {fileID: 359620735}
-  subRoundNumber: 0
+  subRoundNumber: 7
 --- !u!1001 &901597928
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1894,9 +1895,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1323078726}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1146789c4fa8864793a279a09992e43, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d9e42076dcf43629969f50e7c1e0b83, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game::P1GrabThenAttackPositionBinder
+  m_EditorClassIdentifier: Game::P2GrabAndKeepPositionBinder
   position: 0
 --- !u!1 &1356746846
 GameObject:
@@ -2367,7 +2368,7 @@ Transform:
   m_GameObject: {fileID: 1635762725}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.4, y: -0.08419, z: 0.83}
+  m_LocalPosition: {x: 5.43, y: 0.02, z: 0.23}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2719,7 +2720,7 @@ GameObject:
   - component: {fileID: 1840621480}
   - component: {fileID: 1840621481}
   m_Layer: 0
-  m_Name: 12P1OptionSelection
+  m_Name: P2ShowOption
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2733,8 +2734,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1840621479}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.21421097, y: 0.6604087, z: -0.20506234, w: 0.6898721}
-  m_LocalPosition: {x: -9.1, y: 1.76, z: 0.87}
+  m_LocalRotation: {x: 0.21421097, y: -0.6604087, z: 0.20506234, w: 0.6898721}
+  m_LocalPosition: {x: 6.2, y: 1.76, z: -0.08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2749,9 +2750,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1840621479}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1146789c4fa8864793a279a09992e43, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d9e42076dcf43629969f50e7c1e0b83, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Game::P1GrabThenAttackPositionBinder
+  m_EditorClassIdentifier: Game::P2GrabAndKeepPositionBinder
   position: 3
 --- !u!1 &1880857555
 GameObject:
@@ -3035,13 +3036,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2075409537}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.579228, y: -0.4055798, z: -0.579228, w: 0.4055798}
-  m_LocalPosition: {x: -8.01, y: 0.82, z: 1.55}
+  m_LocalRotation: {x: 0.64085644, y: -0.29883623, z: 0.64085644, w: 0.29883623}
+  m_LocalPosition: {x: 4.41, y: 0.64, z: -0.74}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 130, y: -90, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

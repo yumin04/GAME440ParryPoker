@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using SOFile;
 using UnityEngine;
@@ -53,6 +54,7 @@ public class PlayerHand : MonoBehaviour
         float angleStep = count == 1 ? 0 : maxAngle / (count - 1);
         float startAngle = -maxAngle / 2f;
         float y = 0;
+
         for (int i = 0; i < count; i++)
         {
             float angle = startAngle + angleStep * i;
@@ -60,14 +62,50 @@ public class PlayerHand : MonoBehaviour
 
             float x = Mathf.Sin(rad) * radius;
             float z = -Mathf.Cos(rad) * radius + radius;
-            
-            cards[i].transform.localPosition = new Vector3(x, y, z);
-            
-            cards[i].transform.localRotation = Quaternion.Euler(0, -angle, 0);
+
+            Vector3 targetPos = new Vector3(x, y, z);
+            Quaternion targetRot = Quaternion.Euler(0, -angle, 0);
+
+            // 🔥 마지막 카드만 animate
+            if (i == count - 1)
+            {
+                StartCoroutine(AnimateCard(cards[i].transform, targetPos, targetRot));
+            }
+            else
+            {
+                cards[i].transform.localPosition = targetPos;
+                cards[i].transform.localRotation = targetRot;
+            }
+
             y += 0.001f;
         }
     }
+    private IEnumerator AnimateCard(Transform card, Vector3 targetPos, Quaternion targetRot)
+    {
+        float duration = 0.35f;
+        float t = 0f;
 
+        Vector3 startPos = targetPos + Vector3.up * 2.5f; // 위에서 시작
+        Quaternion startRot = targetRot;
+
+        card.localPosition = startPos;
+        card.localRotation = startRot;
+
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            float normalized = t / duration;
+
+            // 🔥 ease out (빠르게 시작 → 천천히 멈춤)
+            float ease = 1f - Mathf.Pow(1f - normalized, 3f);
+
+            card.localPosition = Vector3.Lerp(startPos, targetPos, ease);
+
+            yield return null;
+        }
+
+        card.localPosition = targetPos;
+    }
     public void Clear()
     {
         foreach (var card in cards)

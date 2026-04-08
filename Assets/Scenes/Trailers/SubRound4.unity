@@ -814,12 +814,13 @@ MonoBehaviour:
   crossHair: {fileID: 6003965321028695555, guid: b15e4e055fd06b340aae33d9e4d891e6, type: 3}
   Card: {fileID: 7651001146122000764, guid: 360a2222e0a3b024ba1e2d4b7c444c07, type: 3}
   mousePointer: {fileID: 189396737}
-  trailerUI: {fileID: 1793020512}
+  pointerPanel: {fileID: 1793020512}
   cardRepository: {fileID: 302167841}
   player1Hand: {fileID: 208258887}
   player2Hand: {fileID: 182896777}
   p1CheckCardPosition: {fileID: 1430372649}
   p2CheckCardPosition: {fileID: 2075409538}
+  slotMachinePosition: {fileID: 0}
   initialMousePointerPosition: {fileID: 189396738}
   attackMousePointerPosition: {fileID: 1699680559}
   keepMousePointerPosition: {fileID: 1880857556}
@@ -1609,7 +1610,7 @@ MonoBehaviour:
   player1Animation: {fileID: 1625144588}
   player2Animation: {fileID: 412909551}
   trailerObjectInstantiator: {fileID: 359620735}
-  subRoundNumber: 0
+  subRoundNumber: 4
 --- !u!1001 &901597928
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3036,7 +3037,7 @@ Transform:
   m_GameObject: {fileID: 2075409537}
   serializedVersion: 2
   m_LocalRotation: {x: 0.64085644, y: -0.29883623, z: 0.64085644, w: 0.29883623}
-  m_LocalPosition: {x: 4.52, y: 0.82, z: -0.74}
+  m_LocalPosition: {x: 4.41, y: 0.64, z: -0.74}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 1
   m_Children: []

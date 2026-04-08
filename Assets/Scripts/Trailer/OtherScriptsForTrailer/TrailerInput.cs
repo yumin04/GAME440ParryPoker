@@ -83,7 +83,7 @@ public class TrailerInput : Singleton<TrailerInput>
 
         int count = SceneManager.sceneCountInBuildSettings;
 
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < count + 1; i++)
         {
             string path = SceneUtility.GetScenePathByBuildIndex(i);
 

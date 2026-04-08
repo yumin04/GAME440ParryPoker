@@ -47,6 +47,14 @@ public class TrailerObjectInstantiator : MonoBehaviour
     
 
     # region Player Hands
+    public void AddCardToPlayer1(int cardId)
+    {
+        AddCardToPlayer1(cardRepository.GetCardByID(cardId));
+    }
+    public void AddCardToPlayer2(int cardId)
+    {
+        AddCardToPlayer2(cardRepository.GetCardByID(cardId));
+    }
     public void AddCardToPlayer1(CardDataSO cardData)
     {
         player1Hand.AddCard(cardData);
@@ -227,5 +235,11 @@ public class TrailerObjectInstantiator : MonoBehaviour
     public void DisableSlotMachine()
     {
         currentSlotMachine.SetActive(false);
+    }
+
+    public void DestroyAllPlayerHand()
+    {
+        player1Hand.Clear();
+        player2Hand.Clear();
     }
 }

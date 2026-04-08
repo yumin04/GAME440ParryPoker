@@ -72,12 +72,16 @@ public class P2GrabAndKeepCameraScript : MonoBehaviour
                     break;
                 case P2GrabAndKeepCameraPosition.P2Grab:
                     yield return StartCoroutine(MoveCamera(target, 0.3f));
+                    string stateName = "Grab";
+                    player2Animation.SetTrigger(stateName);
+                    yield return StartCoroutine(WaitUntilState(stateName, player2Animation));
+                    float duration = GetAnimationDuration(stateName, player2Animation);
+                    yield return new WaitForSeconds(duration/2);
 
-                    player2Animation.SetTrigger("Grab");
-                    yield return StartCoroutine(WaitForAnimation());
-                    trailerObjectInstantiator.MoveCardToP2CheckPosition();
                     trailerObjectInstantiator.DisableCard();
-                    yield return new WaitForSeconds(0.5f);
+                    yield return new WaitForSeconds(duration/2);
+                    trailerObjectInstantiator.MoveCardToP2CheckPosition();
+                    yield return new WaitForSeconds(0.2f);
                     break;
                 case P2GrabAndKeepCameraPosition.P2CheckCard:
                     yield return StartCoroutine(MoveCamera(target, 0.3f));
@@ -107,13 +111,20 @@ public class P2GrabAndKeepCameraScript : MonoBehaviour
          
          yield return new WaitForSeconds(stayDuration);
      }
-     private IEnumerator WaitForAnimation()
+     private IEnumerator WaitUntilState(string stateName, Animator animator)
      {
-         yield return null;
+         while (!animator.GetCurrentAnimatorStateInfo(0).IsName(stateName))
+             yield return null;
+     }
+     private float GetAnimationDuration(string stateName, Animator animator)
+     {
+         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
-         AnimatorStateInfo stateInfo = player1Animation.GetCurrentAnimatorStateInfo(0);
-         float duration = stateInfo.length;
-         yield return new WaitForSeconds(duration);
+         // 아직 해당 state 아니면 fallback
+         if (!stateInfo.IsName(stateName))
+             return 0f;
+
+         return stateInfo.length / animator.speed;
      }
      private IEnumerator OrbitAroundPlayer(Transform player, float duration, float maxAngle)
      {

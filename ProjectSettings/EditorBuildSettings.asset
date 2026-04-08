@@ -27,16 +27,49 @@ EditorBuildSettings:
     path: Assets/Scenes/Trailers/Intro.unity
     guid: f383cec416f34ee4fb7ef7d02b1821f4
   - enabled: 1
-    path: Assets/Scenes/Trailers/P1AttackGrab.unity
+    path: Assets/Scenes/Trailers/SubRound0.unity
+    guid: 8a8789eed8a5acd43b97f54df49b9ff9
+  - enabled: 1
+    path: Assets/Scenes/Trailers/SubRound1.unity
+    guid: 25c353226574da943b63b58a5750f742
+  - enabled: 1
+    path: Assets/Scenes/Trailers/SubRound2.unity
+    guid: c3aa03d6645a0614d8a2df5d284521cd
+  - enabled: 1
+    path: Assets/Scenes/Trailers/SubRound3.unity
+    guid: 193a6913625653249afc0ec52f41110b
+  - enabled: 1
+    path: Assets/Scenes/Trailers/SubRound4.unity
+    guid: c8ad1a43feca72a4e913d2d5a6a415fe
+  - enabled: 1
+    path: Assets/Scenes/Trailers/SubRound5.unity
+    guid: dac2716c3bcdbf148ba4df7f2cf4fa91
+  - enabled: 1
+    path: Assets/Scenes/Trailers/SubRound6.unity
+    guid: cf76d5ae9be28a642943a77aaf404ea5
+  - enabled: 1
+    path: Assets/Scenes/Trailers/SubRound7.unity
+    guid: 260ec2fc43eac0e46bbe01f83f01e055
+  - enabled: 1
+    path: Assets/Scenes/Trailers/SubRound8.unity
+    guid: b107653878c7fd442a1f4cfd212a4db8
+  - enabled: 1
+    path: Assets/Scenes/Trailers/SubRound9.unity
+    guid: a42a9f41035c30d4abb732cf6fb18aa3
+  - enabled: 1
+    path: Assets/Scenes/Trailers/HandScene.unity
+    guid: 07eed74346202ec4ab5c01f6f3550d07
+  - enabled: 1
+    path: Assets/Scenes/Trailers/SubRoundOptions/P1AttackGrab.unity
     guid: 77f7bdfb6976e1f4bac9baa386e928cc
-  - enabled: 1
-    path: Assets/Scenes/Trailers/P1KeepGrab.unity
+  - enabled: 0
+    path: Assets/Scenes/Trailers/SubRoundOptions/P1KeepGrab.unity
     guid: 8e5162ea184c4e54ab697691374c49be
-  - enabled: 1
-    path: Assets/Scenes/Trailers/P2AttackGrab.unity
+  - enabled: 0
+    path: Assets/Scenes/Trailers/SubRoundOptions/P2AttackGrab.unity
     guid: b4a1d562c33779e46b59b132296210a7
-  - enabled: 1
-    path: Assets/Scenes/Trailers/P2KeepGrab.unity
+  - enabled: 0
+    path: Assets/Scenes/Trailers/SubRoundOptions/P2KeepGrab.unity
     guid: 8669ce300ce6b6d439ce653c6b1f0202
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
