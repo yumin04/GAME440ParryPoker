@@ -1,4 +1,3 @@
-﻿public interface IGameState : IState
-{
-    
+﻿namespace GenericHelpers {
+	public interface IGameState : IState { }
 }

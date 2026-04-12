@@ -1,4 +1,6 @@
-﻿public class InGameState : IGameState
+﻿using GenericHelpers;
+
+public class InGameState : IGameState
 {
     public void OnEnter()
     {

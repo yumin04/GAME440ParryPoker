@@ -1,4 +1,5 @@
 ﻿
+using GenericHelpers;
 using UnityEngine;
 
 public class ResultState : IGameState

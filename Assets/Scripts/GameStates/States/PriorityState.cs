@@ -1,4 +1,6 @@
 ﻿
+using GenericHelpers;
+
 public class PriorityState : IUserState
 {
     public void OnEnter()

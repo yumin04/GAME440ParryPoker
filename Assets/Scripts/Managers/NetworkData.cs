@@ -1,4 +1,5 @@
-﻿using Unity.Netcode;
+﻿using GenericHelpers;
+using Unity.Netcode;
 
 public class NetworkData : NetworkSingleton<NetworkData>
 {

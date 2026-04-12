@@ -1,5 +1,3 @@
-﻿
-public interface IUserState : IState
-{
-    
+﻿namespace GenericHelpers {
+	public interface IUserState : IState { }
 }

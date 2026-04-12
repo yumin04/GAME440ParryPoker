@@ -1,4 +1,6 @@
-﻿public static class GameStateHandler
+﻿using GenericHelpers;
+
+public static class GameStateHandler
 {
     public static IGameState currentState;
 

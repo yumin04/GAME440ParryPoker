@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using GenericHelpers;
+using UnityEngine;
 
 public class CardPriorityPosition : MonoBehaviour
 {

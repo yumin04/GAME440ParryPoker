@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using GenericHelpers;
 using NUnit.Framework;
 using UnityEditor.VersionControl;
 using UnityEngine;

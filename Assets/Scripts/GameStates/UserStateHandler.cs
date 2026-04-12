@@ -1,4 +1,6 @@
-﻿public static class UserStateHandler
+﻿using GenericHelpers;
+
+public static class UserStateHandler
 {
     public static IUserState currentState;
 

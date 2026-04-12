@@ -1,4 +1,6 @@
-﻿public class DefaultState : IGameState, IUserState
+﻿using GenericHelpers;
+
+public class DefaultState : IGameState, IUserState
 {
     public void OnEnter()
     {

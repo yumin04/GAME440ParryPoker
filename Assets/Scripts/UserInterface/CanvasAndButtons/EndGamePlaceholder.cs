@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using GenericHelpers;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class EndGamePlaceholder : Singleton<EndGamePlaceholder>

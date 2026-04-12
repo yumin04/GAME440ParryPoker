@@ -1,4 +1,6 @@
-﻿public class LostPriorityState : IUserState
+﻿using GenericHelpers;
+
+public class LostPriorityState : IUserState
 {
     public void OnEnter()
     {

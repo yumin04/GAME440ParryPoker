@@ -1,6 +1,7 @@
-﻿public class CardData
-{
-    public int cardID;
-    public Suit cardSymbol;
-    public int cardNumber;
+﻿namespace GenericHelpers {
+	public class CardData {
+		public int cardID;
+		public Suit cardSymbol;
+		public int cardNumber;
+	}
 }

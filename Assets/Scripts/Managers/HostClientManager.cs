@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Net;
 using System.Net.Sockets;
+using GenericHelpers;
 
-	public class HostClientManager : Singleton<HostClientManager> {
+public class HostClientManager : Singleton<HostClientManager> {
 		// private bool clientConnected = false;
 		protected override void Awake() {
 			base.Awake();
