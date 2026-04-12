@@ -9,37 +9,30 @@ namespace Player {
 		[SerializeField] private float radius = 5f;
 		[SerializeField] private float maxAngle = 60f;
 
-		private readonly List<GameObject> cards = new();
+		private GameObject[] cards;
 
-		// public void Awake()
-		// {
-		//     AddCard(1);
-		//     AddCard(2);
-		//     AddCard(3);
-		//     AddCard(1);
-		//     AddCard(2);
-		//     AddCard(3);
-		//     AddCard(1);
-		//     Rearrange();
-		// }
+		private void AddCards(int[] cardIds) {
+			cards = new GameObject[cardIds.Length];
 
-		public void AddCard(int cardId) {
-			var card = Instantiate(playerDisplayCardPrefab, transform);
+			for (var i = 0; i < cardIds.Length; i++) {
+				var card = Instantiate(playerDisplayCardPrefab, transform);
 
-			card.GetComponent<PlayerCard>().Init(cardId);
+				card.GetComponent<PlayerCard>().Init(cardIds[i]);
 
-			cards.Add(card);
+				cards[i] = card;
+			}
+
 			Rearrange();
 		}
 
-		public void DisplayCards(List<int> cardIds) {
+		public void DisplayCards(int[] cardIds) {
 			Clear();
 
-			foreach (int id in cardIds) AddCard(id);
+			AddCards(cardIds);
 		}
 
 		private void Rearrange() {
-			var count = cards.Count;
+			var count = cards.Length;
 			if (count == 0) return;
 
 			var angleStep = count == 1 ? 0 : maxAngle / (count - 1);
@@ -60,9 +53,10 @@ namespace Player {
 		}
 
 		public void Clear() {
-			foreach (var card in cards) Destroy(card);
+			if (cards != null)
+				foreach (var card in cards) Destroy(card);
 
-			cards.Clear();
+			cards = null;
 		}
 	}
 }

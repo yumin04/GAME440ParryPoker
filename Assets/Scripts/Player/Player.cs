@@ -235,14 +235,8 @@ namespace Player {
 		private void DisplayCardsRPC() {
 			if (!IsOwner) return;
 
-			var copy = new List<int>();
-
-			foreach (var playerCardId in playerCardIds) {
-				copy.Add(playerCardId);
-			}
-
 			Debug.Log("[DEBUG] Display Cards");
-			playerHand.DisplayCards(copy);
+			playerHand.DisplayCards(playerCardIds.AsNativeArray().ToArray());
 		}
 
 		private void ClearHand() {
