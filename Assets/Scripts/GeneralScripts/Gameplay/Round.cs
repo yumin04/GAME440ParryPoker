@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using GeneralScripts.Card;
-using SOFile;
 using Unity.Netcode;
 using UnityEngine;
 using Random = UnityEngine.Random;

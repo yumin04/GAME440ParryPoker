@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using SOFile;
+using ScriptableObjectFile;
 using Trailer.OtherScriptsForTrailer;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -26,7 +26,7 @@ namespace Trailer {
 		[SerializeField] private CardRepository cardRepository;
 
 		public void InstantiateRoundCardsByID(int[] ids) {
-			var cards = new CardDataSO[ids.Length];
+			var cards = new CardDataScriptableObject[ids.Length];
 
 			for (var i = 0; i < ids.Length; i++) {
 				cards[i] = cardRepository.GetCardByID(ids[i]);
@@ -36,7 +36,7 @@ namespace Trailer {
 			StartCoroutine(InstantiateRoundCards(cards));
 		}
 
-		private IEnumerator InstantiateRoundCards(CardDataSO[] roundCards) {
+		private IEnumerator InstantiateRoundCards(CardDataScriptableObject[] roundCards) {
 			var index = 0;
 			foreach (var x in xPositions) {
 				foreach (var z in zPositions) {

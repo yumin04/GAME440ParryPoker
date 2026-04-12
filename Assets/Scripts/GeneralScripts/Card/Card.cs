@@ -1,7 +1,7 @@
 ﻿using System;
 using GeneralScripts;
 using GeneralScripts.Card;
-using SOFile;
+using ScriptableObjectFile;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -9,7 +9,7 @@ using UnityEngine;
 public class Card : NetworkBehaviour {
 	public NetworkVariable<int> cardId = new();
 
-	[SerializeField] private CardDataSO cardData;
+	[SerializeField] private CardDataScriptableObject cardData;
 	private static readonly int Slice = Shader.PropertyToID("_Slice");
 
 	public void Init(int id) 

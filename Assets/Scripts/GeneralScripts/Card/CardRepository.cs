@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using GeneralScripts;
-using SOFile;
+using ScriptableObjectFile;
 
 public class CardRepository : MonoBehaviour
 {
-    public List<CardDataSO> allCardData = new List<CardDataSO>();
+    public List<CardDataScriptableObject> allCardData = new List<CardDataScriptableObject>();
     
     
     private HashSet<int> usedCardIds = new HashSet<int>();
@@ -28,12 +28,12 @@ public class CardRepository : MonoBehaviour
 
         foreach (string suit in suits)
         {
-            CardDataSO[] loaded = Resources.LoadAll<CardDataSO>($"CardData/{suit}");
+            CardDataScriptableObject[] loaded = Resources.LoadAll<CardDataScriptableObject>($"CardData/{suit}");
             allCardData.AddRange(loaded);
         }
     }
     
-    public CardDataSO GetRandomCard()
+    public CardDataScriptableObject GetRandomCard()
     {
         if (allCardData.Count == 0) LoadAllCardData();
 
@@ -43,7 +43,7 @@ public class CardRepository : MonoBehaviour
             return null;
         }
 
-        CardDataSO card;
+        CardDataScriptableObject card;
 
         do
         {
@@ -60,7 +60,7 @@ public class CardRepository : MonoBehaviour
         usedCardIds.Clear();
     }
 
-    public CardDataSO GetCardByID(int id)
+    public CardDataScriptableObject GetCardByID(int id)
     {
         if (allCardData.Count == 0) LoadAllCardData();
 

@@ -1,13 +1,13 @@
-﻿using SOFile;
+﻿using ScriptableObjectFile;
 using UnityEngine;
 
 namespace Trailer.OtherScriptsForTrailer {
 	public class TrailerCard : MonoBehaviour {
-		[SerializeField] private CardDataSO cardData;
+		[SerializeField] private CardDataScriptableObject cardData;
 		private int cardId;
 		private static readonly int Slice = Shader.PropertyToID("_Slice");
 
-		public void Init(CardDataSO cardData) {
+		public void Init(CardDataScriptableObject cardData) {
 			this.cardData = cardData;
 			UpdateTexture();
 		}

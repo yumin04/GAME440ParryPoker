@@ -1,10 +1,10 @@
 ﻿using System.Collections;
-using SOFile;
+using ScriptableObjectFile;
 using UnityEngine;
 
 namespace GeneralScripts.Card {
 	public class PlayerCard : MonoBehaviour {
-		[SerializeField] private CardDataSO cardData;
+		[SerializeField] private CardDataScriptableObject cardData;
 		private int cardId;
 		private static readonly int Slice = Shader.PropertyToID("_Slice");
 

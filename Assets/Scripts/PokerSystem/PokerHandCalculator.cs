@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using GenericHelpers;
-using SOFile;
+using ScriptableObjectFile;
 
 namespace PokerSystem {
 	public class PokerHandCalculator {
@@ -11,7 +11,7 @@ namespace PokerSystem {
 		// How to sort things
 
 		// TODO: USED IN UNITY
-		public int GetPokerResult(CardDataSO[] handData) {
+		public int GetPokerResult(CardDataScriptableObject[] handData) {
 			var converted = new CardData[handData.Length];
 			for (var i = 0; i < handData.Length; i++) {
 				converted[i].cardID = handData[i].cardID;

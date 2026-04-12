@@ -1,5 +1,5 @@
 ﻿using GenericHelpers;
-using SOFile;
+using ScriptableObjectFile;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -35,8 +35,8 @@ namespace GeneralScripts.Card {
 			}
 		}
 
-		public CardDataSO[] GetCards(int numCards) {
-			var roundCards = new CardDataSO[numCards];
+		public CardDataScriptableObject[] GetCards(int numCards) {
+			var roundCards = new CardDataScriptableObject[numCards];
 
 			for (var i = 0; i < numCards; i++) {
 				roundCards[i] = cardRepository.GetRandomCard();
@@ -45,7 +45,7 @@ namespace GeneralScripts.Card {
 			return roundCards;
 		}
 
-		public CardDataSO GetCardByID(int newValue) {
+		public CardDataScriptableObject GetCardByID(int newValue) {
 			return cardRepository.GetCardByID(newValue);
 		}
 
@@ -63,7 +63,7 @@ namespace GeneralScripts.Card {
 		}
 
 		public void InstantiateRoundCardsByID(NetworkList<int> ids) {
-			var cards = new CardDataSO[ids.Count];
+			var cards = new CardDataScriptableObject[ids.Count];
 
 			for (var i = 0; i < ids.Count; i++) {
 				cards[i] = cardRepository.GetCardByID(ids[i]);
@@ -73,7 +73,7 @@ namespace GeneralScripts.Card {
 		}
 
 		public void InstantiateRoundCardsByID(int[] ids) {
-			var cards = new CardDataSO[ids.Length];
+			var cards = new CardDataScriptableObject[ids.Length];
 
 			for (var i = 0; i < ids.Length; i++) {
 				cards[i] = cardRepository.GetCardByID(ids[i]);
@@ -82,7 +82,7 @@ namespace GeneralScripts.Card {
 			InstantiateRoundCards(cards);
 		}
 
-		private void InstantiateRoundCards(CardDataSO[] roundCards) {
+		private void InstantiateRoundCards(CardDataScriptableObject[] roundCards) {
 			var index = 0;
 			foreach (var x in xPositions) {
 				foreach (var z in zPositions) {
@@ -99,7 +99,7 @@ namespace GeneralScripts.Card {
 
 		public void InstantiateSubRoundCard(int cardId) {
 			Vector3 randomPosition = GenerateRandomXZPosition();
-			CardDataSO subRoundCard = cardRepository.GetCardByID(cardId);
+			CardDataScriptableObject subRoundCard = cardRepository.GetCardByID(cardId);
 			// Generate Random Position
 			cardInstantiator.SpawnClickableCard(subRoundCard, randomPosition, cardHideInTableRotation);
 		}

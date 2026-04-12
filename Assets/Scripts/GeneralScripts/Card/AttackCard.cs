@@ -1,4 +1,4 @@
-﻿using SOFile;
+﻿using ScriptableObjectFile;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -9,7 +9,7 @@ namespace GeneralScripts.Card {
 		 * It's probably just a component or a prefab
 		 */
 
-		[SerializeField] private CardDataSO cardData;
+		[SerializeField] private CardDataScriptableObject cardData;
 
 		private int cardId;
 		private bool clickable;

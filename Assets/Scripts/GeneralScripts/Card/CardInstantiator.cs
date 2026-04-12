@@ -1,4 +1,4 @@
-using SOFile;
+using ScriptableObjectFile;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -9,7 +9,7 @@ namespace GeneralScripts.Card {
 		[SerializeField] private GameObject attackCardPrefab;
 
 		// TODO: Decide whether to get CardID instead of Card Data maybe?
-		public void SpawnCard(CardDataSO cardData, Vector3 position, Quaternion rotation) {
+		public void SpawnCard(CardDataScriptableObject cardData, Vector3 position, Quaternion rotation) {
 			var obj = Instantiate(cardPrefab, position, rotation);
 
 			var netObj = obj.GetComponent<NetworkObject>();
@@ -19,14 +19,14 @@ namespace GeneralScripts.Card {
 			card.Init(cardData.cardID);
 		}
 
-		public void InstantiateCard(CardDataSO cardData, Vector3 position, Quaternion rotation) {
+		public void InstantiateCard(CardDataScriptableObject cardData, Vector3 position, Quaternion rotation) {
 			var obj = Instantiate(cardPrefab, position, rotation);
 
 			var card = obj.GetComponent<global::Card>();
 			card.Init(cardData.cardID);
 		}
 
-		public void SpawnClickableCard(CardDataSO cardData, Vector3 position, Quaternion rotation) {
+		public void SpawnClickableCard(CardDataScriptableObject cardData, Vector3 position, Quaternion rotation) {
 			var obj = Instantiate(clickableCardPrefab, position, rotation);
 
 			var netObj = obj.GetComponent<NetworkObject>();
