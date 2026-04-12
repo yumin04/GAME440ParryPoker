@@ -1,4 +1,5 @@
-﻿using GenericHelpers;
+﻿using GeneralScripts.Gameplay;
+using GenericHelpers;
 using UnityEngine;
 using UnityEngine.UI;
 

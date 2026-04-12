@@ -1,47 +1,40 @@
-﻿using GeneralScripts;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Lever : MonoBehaviour
-{
-    [SerializeField] private Transform[] slots;
-    [SerializeField] private float rotateSpeed = 300f;
+namespace GeneralScripts.Gameplay {
+	public class Lever : MonoBehaviour {
+		[SerializeField] private Transform[] slots;
+		[SerializeField] private float rotateSpeed = 300f;
 
-    private bool[] isSpinning;
-    private int stopIndex = 0;
+		private bool[] isSpinning;
+		private int stopIndex = 0;
 
-    private void Start()
-    {
-        isSpinning = new bool[slots.Length];
+		private void Start() {
+			isSpinning = new bool[slots.Length];
 
-        for (int i = 0; i < slots.Length; i++)
-        {
-            isSpinning[i] = true;
-        }
-    }
+			for (var i = 0; i < slots.Length; i++) {
+				isSpinning[i] = true;
+			}
+		}
 
-    private void Update()
-    {
-        for (int i = 0; i < slots.Length; i++)
-        {
-            if (isSpinning[i])
-            {
-                // up and down
-                slots[i].Rotate(Vector3.left * rotateSpeed * Time.deltaTime);
-            }
-        }
-    }
+		private void Update() {
+			for (var i = 0; i < slots.Length; i++) {
+				if (isSpinning[i]) {
+					// up and down
+					slots[i].Rotate(Vector3.left * (rotateSpeed * Time.deltaTime));
+				}
+			}
+		}
 
-    private void OnMouseDown()
-    {
-        if (stopIndex >= slots.Length) return;
+		private void OnMouseDown() {
+			if (stopIndex >= slots.Length) return;
 
-        isSpinning[stopIndex] = false;
-        stopIndex++;
+			isSpinning[stopIndex] = false;
+			stopIndex++;
 
-        // if all slots stopped
-        if (stopIndex >= slots.Length)
-        {
-            GameEvents.OnAllLeversDown?.Invoke();
-        }
-    }
+			// if all slots stopped
+			if (stopIndex >= slots.Length) {
+				GameEvents.OnAllLeversDown?.Invoke();
+			}
+		}
+	}
 }

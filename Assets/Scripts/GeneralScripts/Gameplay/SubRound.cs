@@ -1,136 +1,122 @@
-﻿using System;
+﻿using System.Collections;
+using GeneralScripts.Card;
 using Unity.Netcode;
 using UnityEngine;
-using System.Collections;
-using GeneralScripts;
-using GeneralScripts.Card;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public class SubRound : NetworkBehaviour
-{
-    [SerializeField] private float minDelay = 1f;
-    [SerializeField] private float maxDelay = 3f;
+namespace GeneralScripts.Gameplay {
+	public class SubRound : NetworkBehaviour {
+		[SerializeField] private float minDelay = 1f;
+		[SerializeField] private float maxDelay = 3f;
 
-    public NetworkVariable<int> CardID = new();
+		[FormerlySerializedAs("CardID")] public NetworkVariable<int> cardID = new();
 
-    public void OnEnable()
-    {
-        GameEvents.OnAttackClicked += OnAttackClicked;
-        GameEvents.OnKeepClicked += OnKeepClicked;
-        
-        GameEvents.OnAttackEnd += KeepCard;
-    }
+		public void OnEnable() {
+			GameEvents.OnAttackClicked += OnAttackClicked;
+			GameEvents.OnKeepClicked += OnKeepClicked;
 
-    public void OnDisable()
-    {
-        GameEvents.OnAttackClicked -= OnAttackClicked;
-        GameEvents.OnKeepClicked -= OnKeepClicked;
-        GameEvents.OnAttackEnd -= KeepCard;
-    }
-    public override void OnNetworkSpawn()
-    {
-        if (IsServer)
-            StartCoroutine(SubRoundRoutine());
-    }
-    public void Initialize(int id) { if (IsServer) CardID.Value = id; }
+			GameEvents.OnAttackEnd += KeepCard;
+		}
 
-    private IEnumerator SubRoundRoutine()
-    {
-        float delay = Random.Range(minDelay, maxDelay);
-        yield return new WaitForSeconds(delay);
-        CardManager.Instance.InstantiateSubRoundCard(CardID.Value);
-    }
+		public void OnDisable() {
+			GameEvents.OnAttackClicked -= OnAttackClicked;
+			GameEvents.OnKeepClicked -= OnKeepClicked;
+			GameEvents.OnAttackEnd -= KeepCard;
+		}
 
-    #region Click Method
-    
-    private void OnAttackClicked()
-    {
-        RequestAttackRpc();
-        RequestHideWaitAndAttackPanelRPC();
-        // Hide Attack and Wait Panel in both player
-        // Move camera to attack position (this is done through Player I believe)
-        // Slot machine pop up
-        // Wait for player "1" pop up
-    }
-    
-    // 이거는 click, 패널부분
-    private void OnKeepClicked()
-    {
-        RequestHideWaitAndAttackPanelRPC();
-        KeepCard();
+		public override void OnNetworkSpawn() {
+			if (IsServer) StartCoroutine(SubRoundRoutine());
+		}
 
-    }
-    
-    // 이거는 Keep도, Attack도 결국에는 부르는 function
-    private void KeepCard()
-    {
-        RequestKeepRpc();
-    }
-    #endregion
+		public void Initialize(int id) {
+			if (IsServer) cardID.Value = id;
+		}
 
-    #region HidePanelRPC
-    
-    [Rpc(SendTo.Server)]
-    private void RequestHideWaitAndAttackPanelRPC()
-    {
-        NotifyHideWaitAndAttackPanelRPC();   
-    }
-    
-    
-    [Rpc(SendTo.ClientsAndHost)]
-    private void NotifyHideWaitAndAttackPanelRPC()
-    {
-        Debug.Log("[DEBUG] Inside NotifyHideWaitAndAttackPanelRPC");
-        GameEvents.HideWaitAndAttackPanel.Invoke();
-    }
-    #endregion
+		private IEnumerator SubRoundRoutine() {
+			var delay = Random.Range(minDelay, maxDelay);
+			yield return new WaitForSeconds(delay);
+			CardManager.Instance.InstantiateSubRoundCard(cardID.Value);
+		}
 
-    #region KeepRPC
+		#region Click Method
 
-    // Keep Card에 넣고
-    [Rpc(SendTo.Server)]
-    private void RequestKeepRpc(RpcParams rpcParams = default)
-    {
-        if (!IsServer) return;
+		private void OnAttackClicked() {
+			RequestAttackRpc();
+			RequestHideWaitAndAttackPanelRPC();
+			// Hide Attack and Wait Panel in both player
+			// Move camera to attack position (this is done through Player I believe)
+			// Slot machine pop up
+			// Wait for player "1" pop up
+		}
 
-        ulong senderId = rpcParams.Receive.SenderClientId;
-        
-        GameEvents.OnPlayerKeepCard?.Invoke(senderId, CardID.Value);
-        
-        NotifySubRoundEndClientRpc();
+		// 이거는 click, 패널부분
+		private void OnKeepClicked() {
+			RequestHideWaitAndAttackPanelRPC();
+			KeepCard();
+		}
 
-        NetworkObject.Despawn(true);
-    }
+		// 이거는 Keep도, Attack도 결국에는 부르는 function
+		private void KeepCard() {
+			RequestKeepRpc();
+		}
 
-    #endregion
+		#endregion
 
-    #region AttackRPC
+		#region HidePanelRPC
 
-    [Rpc(SendTo.Server)]
-    private void RequestAttackRpc(RpcParams rpcParams = default)
-    {
-        Debug.Log("[DEBUG] Starting Attack");
-        
-        if (!IsServer) return;
-        
-        NotifyAttackStartRpc();
-        
-    }
+		[Rpc(SendTo.Server)]
+		private void RequestHideWaitAndAttackPanelRPC() {
+			NotifyHideWaitAndAttackPanelRPC();
+		}
 
-    [Rpc(SendTo.ClientsAndHost)]
-    private void NotifyAttackStartRpc()
-    {
-        GameEvents.OnAttackStart.Invoke();
-    }
+		[Rpc(SendTo.ClientsAndHost)]
+		private void NotifyHideWaitAndAttackPanelRPC() {
+			Debug.Log("[DEBUG] Inside NotifyHideWaitAndAttackPanelRPC");
+			GameEvents.HideWaitAndAttackPanel.Invoke();
+		}
 
+		#endregion
 
-    #endregion
+		#region KeepRPC
 
-    [Rpc(SendTo.ClientsAndHost)]
-    private void NotifySubRoundEndClientRpc()
-    {
-        GameEvents.OnSubRoundEnd?.Invoke();
-    }
+		// Keep Card에 넣고
+		[Rpc(SendTo.Server)]
+		private void RequestKeepRpc(RpcParams rpcParams = default) {
+			if (!IsServer) return;
 
+			var senderId = rpcParams.Receive.SenderClientId;
 
+			GameEvents.OnPlayerKeepCard?.Invoke(senderId, cardID.Value);
+
+			NotifySubRoundEndClientRpc();
+
+			NetworkObject.Despawn();
+		}
+
+		#endregion
+
+		#region AttackRPC
+
+		[Rpc(SendTo.Server)]
+		private void RequestAttackRpc(RpcParams rpcParams = default) {
+			Debug.Log("[DEBUG] Starting Attack");
+
+			if (!IsServer) return;
+
+			NotifyAttackStartRpc();
+		}
+
+		[Rpc(SendTo.ClientsAndHost)]
+		private void NotifyAttackStartRpc() {
+			GameEvents.OnAttackStart.Invoke();
+		}
+
+		#endregion
+
+		[Rpc(SendTo.ClientsAndHost)]
+		private void NotifySubRoundEndClientRpc() {
+			GameEvents.OnSubRoundEnd?.Invoke();
+		}
+	}
 }

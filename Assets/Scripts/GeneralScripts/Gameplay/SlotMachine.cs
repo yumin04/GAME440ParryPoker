@@ -1,47 +1,41 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-using System.Collections.Generic;
-using GeneralScripts;
-using UnityEngine;
+namespace GeneralScripts.Gameplay {
+	public class SlotMachine : MonoBehaviour {
+		[SerializeField] private Transform[] slots;
 
-public class SlotMachine : MonoBehaviour
-{
-    [SerializeField] private Transform[] slots;
+		private void OnEnable() {
+			GameEvents.OnAllLeversDown += EvaluateSlots;
+		}
 
-    private void OnEnable()
-    {
-        GameEvents.OnAllLeversDown += EvaluateSlots;
-    }
-    private void OnDisable()
-    {
-        GameEvents.OnAllLeversDown -= EvaluateSlots;
-    }
-    // Function 1: Get slot value
-    // x-rotation 80 ~ 260 : Blue (1)
-    // else : Red (0)
-    public List<int> GetSlotValues()
-    {
-        List<int> values = new List<int>();
+		private void OnDisable() {
+			GameEvents.OnAllLeversDown -= EvaluateSlots;
+		}
 
-        foreach (Transform slot in slots)
-        {
-            float xRotation = slot.eulerAngles.x;
+		// Function 1: Get slot value
+		// x-rotation 80 ~ 260 : Blue (1)
+		// else : Red (0)
+		public List<int> GetSlotValues() {
+			var values = new List<int>();
 
-            if (xRotation >= 80f && xRotation <= 260f)
-                values.Add(1); // Blue
-            else
-                values.Add(0); // Red
-        }
+			foreach (var slot in slots) {
+				var xRotation = slot.eulerAngles.x;
 
-        return values;
-    }
+				if (xRotation >= 80f && xRotation <= 260f)
+					values.Add(1); // Blue
+				else
+					values.Add(0); // Red
+			}
 
-    // Function 2: Evaluate slots and trigger event
-    public void EvaluateSlots()
-    {
-        List<int> values = GetSlotValues();
+			return values;
+		}
 
-        GameEvents.OnSlotMachineFinished?.Invoke();
-    }
+		// Function 2: Evaluate slots and trigger event
+		public void EvaluateSlots() {
+			var values = GetSlotValues();
+
+			GameEvents.OnSlotMachineFinished?.Invoke();
+		}
+	}
 }

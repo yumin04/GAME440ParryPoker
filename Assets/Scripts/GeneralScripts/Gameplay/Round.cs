@@ -1,196 +1,153 @@
-﻿using System;
-using System.Collections;
-using SOFile;
-using UnityEngine;
-using UnityEngine.InputSystem;
-using Unity.Netcode;
-using System.Linq;
-using GeneralScripts;
+﻿using System.Collections;
 using GeneralScripts.Card;
+using SOFile;
+using Unity.Netcode;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Round : NetworkBehaviour
-{
+namespace GeneralScripts.Gameplay {
+	public class Round : NetworkBehaviour {
+		private readonly NetworkList<int> roundCardIDs = new();
 
-    private NetworkList<int> roundCardIDs = new NetworkList<int>();
-    
-    // TODO: make sure we are having correct seconds
-    private float memorizationSeconds = 12f;
+		// TODO: make sure we are having correct seconds
+		private const float MEMORIZATION_SECONDS = 12f;
 
-    public void OnEnable()
-    {
-        GameEvents.OnSubRoundEnd += CheckSubRoundRemaining;
-    }
+		public void OnEnable() {
+			GameEvents.OnSubRoundEnd += CheckSubRoundRemaining;
+		}
 
-    public void OnDisable()
-    {
-        GameEvents.OnSubRoundEnd -= CheckSubRoundRemaining;
-    }
+		public void OnDisable() {
+			GameEvents.OnSubRoundEnd -= CheckSubRoundRemaining;
+		}
 
-    private void CheckSubRoundRemaining()
-    {
-        if (!IsServer) return;
+		private void CheckSubRoundRemaining() {
+			if (!IsServer) return;
 
-        if (roundCardIDs.Count == 0)
-        {
-            Debug.Log("No more cards. Ending round.");
-            
+			if (roundCardIDs.Count == 0) {
+				Debug.Log("No more cards. Ending round.");
 
-            ulong loserID = CalculateRoundWinner();
+				var loserID = CalculateRoundWinner();
 
-            // TODO:
-            // instead of 10, have a round damage
-            // or damage by hand rank?
-            
-            Game.Instance.DecreasePlayerHealth(loserID, 10);    
-            
+				// TODO:
+				// instead of 10, have a round damage
+				// or damage by hand rank?
 
-            EndRound();
-        }
-        else
-        {
-            Debug.Log("Cards remaining. Starting next subround.");
-            StartSubRound();
-        }
-    }
+				Game.Instance.DecreasePlayerHealth(loserID, 10);
 
-    private ulong CalculateRoundWinner()
-    {
-        // Stub 
-        Debug.LogWarning("[STUB] No Winner Calculation Implemented, player 2 lose");
-        // TODO: 
-        // 서버가 각각의 player에게 hand calculation 요청
-        // 그다음 hand 반환
-        return 1;
-    }
+				EndRound();
+			}
+			else {
+				Debug.Log("Cards remaining. Starting next subround.");
+				StartSubRound();
+			}
+		}
 
-    private void EndRound()
-    {
-        Debug.Log("[DEBUG] EndRound");
-        GameEvents.OnRoundEnd?.Invoke();
-        
-    }
+		private ulong CalculateRoundWinner() {
+			// Stub 
+			Debug.LogWarning("[STUB] No Winner Calculation Implemented, player 2 lose");
+			// TODO: 
+			// 서버가 각각의 player에게 hand calculation 요청
+			// 그다음 hand 반환
+			return 1;
+		}
 
+		private static void EndRound() {
+			Debug.Log("[DEBUG] EndRound");
+			GameEvents.OnRoundEnd?.Invoke();
+		}
 
-    public override void OnNetworkSpawn()
-    {
-        base.OnNetworkSpawn();
-        roundCardIDs.OnListChanged += OnRoundCardsChanged;
+		public override void OnNetworkSpawn() {
+			base.OnNetworkSpawn();
+			roundCardIDs.OnListChanged += OnRoundCardsChanged;
 
-        if (IsServer)
-        {
-            StartRound();
-        }
-    }
+			if (IsServer) {
+				StartRound();
+			}
+		}
 
-    private void OnRoundCardsChanged(NetworkListEvent<int> changeEvent)
-    {
-        UserInterface.Instance.ChangeSubRoundNumber(roundCardIDs.Count);
-    }
+		private void OnRoundCardsChanged(NetworkListEvent<int> changeEvent) {
+			UserInterface.Instance.ChangeSubRoundNumber(roundCardIDs.Count);
+		}
 
-    
-    private void StartRound()
-    {
-        // Reset();
-        Debug.Log("[DEBUG] Choosing 10 Cards");
-        
-        // Give 2 cards to each player
-        Give2CardsToEachPlayer();
-        
-        Choose10RoundCards();
-        Debug.Log("[DEBUG] Chose 10 Cards: " + roundCardIDs.Count);
-        
-        // Wait 10 seconds
-        WaitForMemorization();
-    }
+		private void StartRound() {
+			// Reset();
+			Debug.Log("[DEBUG] Choosing 10 Cards");
 
+			// Give 2 cards to each player
+			Give2CardsToEachPlayer();
 
-    private void WaitForMemorization()
-    {
-        StartCoroutine(MemorizationCoroutine());
-    }
+			Choose10RoundCards();
+			Debug.Log("[DEBUG] Chose 10 Cards: " + roundCardIDs.Count);
 
-    private IEnumerator MemorizationCoroutine()
-    {
-        if (!IsServer) yield break;
-        
-        
-        yield return new WaitForSeconds(memorizationSeconds);
-        RunAfterMemorizationRPC();
-    }
+			// Wait 10 seconds
+			WaitForMemorization();
+		}
 
-    
-    [Rpc(SendTo.ClientsAndHost)]
-    private void RunAfterMemorizationRPC()
-    {
-        CardManager.HideAllRoundCards();
-        UserInterface.Instance.EnableSubRoundNumber();
-        StartSubRound();
-    }
-    
-    private void StartSubRound()
-    {
-        if (!IsServer) return;
+		private void WaitForMemorization() {
+			StartCoroutine(MemorizationCoroutine());
+		}
 
-        if (roundCardIDs.Count == 0) return;
-        
-        // TODO: UserInterface.Instance.
-        int randomIndex = Random.Range(0, roundCardIDs.Count);
-        int chosenCardID = roundCardIDs[randomIndex];
-        
-        roundCardIDs.RemoveAt(randomIndex);
-        NetworkObject subRoundObj = GameInitializer.Instance.SpawnSubRound();
+		private IEnumerator MemorizationCoroutine() {
+			if (!IsServer) yield break;
 
-        SubRound subRound = subRoundObj.GetComponent<SubRound>();
-        subRound.Initialize(chosenCardID);
-    }
+			yield return new WaitForSeconds(MEMORIZATION_SECONDS);
+			RunAfterMemorizationRPC();
+		}
 
-    private void Give2CardsToEachPlayer()
-    {
-        if (!IsServer) return;
-        
-        // Refactor?
-        foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
-        {
-            ulong clientId = client.ClientId;
+		[Rpc(SendTo.ClientsAndHost)]
+		private void RunAfterMemorizationRPC() {
+			CardManager.HideAllRoundCards();
+			UserInterface.Instance.EnableSubRoundNumber();
+			StartSubRound();
+		}
 
-            var cards = CardManager.Instance.GetCards(2);
+		private void StartSubRound() {
+			if (!IsServer) return;
 
-            foreach (var card in cards)
-            {
-                GameEvents.OnPlayerKeepCard?.Invoke(clientId, card.cardID);
-            }
-        }
-    }
-    
-    private void Choose10RoundCards()
-    {
-        if (!IsServer) return;
+			if (roundCardIDs.Count == 0) return;
 
-        roundCardIDs.Clear();
+			// TODO: UserInterface.Instance.
+			var randomIndex = Random.Range(0, roundCardIDs.Count);
+			var chosenCardID = roundCardIDs[randomIndex];
 
-        CardDataSO[] roundCardData = CardManager.Instance.GetCards(10);
+			roundCardIDs.RemoveAt(randomIndex);
+			var subRoundObj = GameInitializer.Instance.SpawnSubRound();
 
-        foreach (var card in roundCardData)
-        {
-            roundCardIDs.Add(card.cardID);
-        }
-        
-        CardManager.Instance.InstantiateRoundCardsByID(roundCardIDs);
-        
+			var subRound = subRoundObj.GetComponent<SubRound>();
+			subRound.Initialize(chosenCardID);
+		}
 
-    }
+		private void Give2CardsToEachPlayer() {
+			if (!IsServer) return;
 
-    private int[] ToArray(NetworkList<int> list)
-    {
-        int[] ids = new int[list.Count];
+			// Refactor?
+			foreach (var client in NetworkManager.Singleton.ConnectedClientsList) {
+				var clientId = client.ClientId;
 
-        for (int i = 0; i < list.Count; i++)
-        {
-            ids[i] = list[i];
-        }
-        return ids;
-    }
-    
+				var cards = CardManager.Instance.GetCards(2);
 
+				foreach (var card in cards) {
+					GameEvents.OnPlayerKeepCard?.Invoke(clientId, card.cardID);
+				}
+			}
+		}
+
+		private void Choose10RoundCards() {
+			if (!IsServer) return;
+
+			roundCardIDs.Clear();
+
+			var roundCardData = CardManager.Instance.GetCards(10);
+
+			foreach (var card in roundCardData) {
+				roundCardIDs.Add(card.cardID);
+			}
+
+			CardManager.Instance.InstantiateRoundCardsByID(roundCardIDs);
+		}
+
+		private int[] ToArray(NetworkList<int> list) {
+			return list.AsNativeArray().ToArray();
+		}
+	}
 }
