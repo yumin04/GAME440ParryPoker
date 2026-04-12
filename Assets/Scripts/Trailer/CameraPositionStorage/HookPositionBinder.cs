@@ -1,8 +1,3 @@
-﻿using System;
-using UnityEngine;
-
-
-public class HookPositionBinder: EnumPositionBinder<HookCameraPosition>
-{
-
+﻿namespace Trailer.CameraPositionStorage {
+	public class HookPositionBinder : EnumPositionBinder<HookCameraPosition> { }
 }

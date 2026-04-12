@@ -1,161 +1,146 @@
+using System;
 using System.Collections;
+using Trailer.OtherScriptsForTrailer;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class CameraScripts : MonoBehaviour
-{
-    [Header("Main Camera")]
-    [SerializeField] private Transform cameraTransform;
-    
-    [Header("Timing")]
-    [SerializeField] private float moveDuration = 0.5f;
-    [SerializeField] private float stayDuration = 1.0f;
-    
-    [Header("Player Positions")]
-    [SerializeField] private GameObject player1;
-    [SerializeField] private GameObject player2;
-    
-    [FormerlySerializedAs("trailerCard")]
-    [Header("Other Objects")]
-    [SerializeField] private TrailerAttackCard trailerAttackCard;
-    [SerializeField] private Transform startPos;
-    [SerializeField] private Transform endPos;
-    [SerializeField] private GameObject blackScreen;
-    
-         private void Start()
-     {
-         StartCoroutine(PlayCameraSequence());
-     }
+namespace Trailer {
+	public class CameraScripts : MonoBehaviour {
+		[Header("Main Camera")]
+		[SerializeField] private Transform cameraTransform;
 
-     private IEnumerator PlayCameraSequence()
-     {
-         foreach (HookCameraPosition pos in System.Enum.GetValues(typeof(IntroCameraPosition)))
-         {
-            Debug.Log("[DEBUG] Position: " + pos);
+		[Header("Timing")]
+		[SerializeField] private float moveDuration = 0.5f;
+		[SerializeField] private float stayDuration = 1.0f;
 
-            Transform target = EnumPositionStorage<IntroCameraPosition>.Positions[(int)pos];
+		[Header("Player Positions")]
+		[SerializeField] private GameObject player1;
+		[SerializeField] private GameObject player2;
 
-            if (target == null) continue;
-            float maxAngle;
-            switch (pos)
-            {
-                // TODO: This can go after hook and start with the close up
-                case HookCameraPosition.PlayerStareAtEachOther:
-                    yield return StartCoroutine(MoveCamera(target, moveDuration));
-                    yield return new WaitForSeconds(stayDuration);
-                    break;
-                case HookCameraPosition.P1CloseUpGrabPose:
-                    yield return StartCoroutine(MoveCamera(target, 0.3f));
-                    break;
-                case HookCameraPosition.P2CloseUpShootPose:
-                    yield return StartCoroutine(MoveCamera(target, 0.3f));
-                    break;
-                
-                case HookCameraPosition.P2ShootCard:
-                    yield return StartCoroutine(MoveCamera(target, 0.3f));
-                    yield return new WaitForSeconds(0.5f);
-                    break;
-                case HookCameraPosition.FollowCard:
-                    yield return StartCoroutine(MoveCamera(target, 0.7f));
-                    yield return new WaitForSeconds(0.5f);
-                    blackScreen.SetActive(false);
-                    break;
-                case HookCameraPosition.P1CatchCard:
-                    trailerAttackCard.Init(startPos, endPos);
-                    yield return StartCoroutine(MoveCamera(target, 0f));
-                    yield return new WaitForSeconds(stayDuration);
-                    trailerAttackCard.gameObject.SetActive(false);
-                    break;
+		[Header("Other Objects")]
+		[FormerlySerializedAs("trailerCard")]
+		[SerializeField] private TrailerAttackCard trailerAttackCard;
+		[SerializeField] private Transform startPos;
+		[SerializeField] private Transform endPos;
+		[SerializeField] private GameObject blackScreen;
 
-                case HookCameraPosition.P1ShowHand:
-                    yield return StartCoroutine(MoveCamera(target, moveDuration));
-                    yield return new WaitForSeconds(stayDuration);
-                    break;
-                case HookCameraPosition.P2ShowHand:
-                    yield return StartCoroutine(MoveCamera(target, moveDuration));
-                    yield return new WaitForSeconds(stayDuration);
-                    break;
-                case HookCameraPosition.Pose:
-                    yield return StartCoroutine(MoveCamera(target, moveDuration));
-                    yield return new WaitForSeconds(stayDuration);
-                    break;
-            }
-            
-         }
-         
-         
-         yield return new WaitForSeconds(stayDuration);
-     }
+		private void Start() {
+			StartCoroutine(PlayCameraSequence());
+		}
 
-     private IEnumerator OrbitAroundPlayer(Transform player, float duration, float maxAngle)
-     {
-         float timer = 0f;
+		private IEnumerator PlayCameraSequence() {
+			foreach (HookCameraPosition pos in System.Enum.GetValues(typeof(IntroCameraPosition))) {
+				Debug.Log("[DEBUG] Position: " + pos);
 
-         Vector3 startOffset = transform.position - player.position;
-         
-         Vector3 flatOffset = new Vector3(startOffset.x, 0f, startOffset.z);
-         
-         float radius = flatOffset.magnitude;
-         
-         flatOffset = flatOffset.normalized;
+				var target = EnumPositionStorage<IntroCameraPosition>.Positions[(int)pos];
 
-         // Y 고정
-         float fixedY = transform.position.y;
+				if (!target) continue;
+				switch (pos) {
+					// TODO: This can go after hook and start with the close up
+					case HookCameraPosition.PlayerStareAtEachOther:
+						yield return StartCoroutine(MoveCamera(target, moveDuration));
+						yield return new WaitForSeconds(stayDuration);
+						break;
+					case HookCameraPosition.P1CloseUpGrabPose:
+					case HookCameraPosition.P2CloseUpShootPose:
+						yield return StartCoroutine(MoveCamera(target, 0.3f));
+						break;
 
-         Vector3 initialEuler = transform.eulerAngles;
+					case HookCameraPosition.P2ShootCard:
+						yield return StartCoroutine(MoveCamera(target, 0.3f));
+						yield return new WaitForSeconds(0.5f);
+						break;
+					case HookCameraPosition.FollowCard:
+						yield return StartCoroutine(MoveCamera(target, 0.7f));
+						yield return new WaitForSeconds(0.5f);
+						blackScreen.SetActive(false);
+						break;
+					case HookCameraPosition.P1CatchCard:
+						trailerAttackCard.Init(startPos, endPos);
+						yield return StartCoroutine(MoveCamera(target, 0f));
+						yield return new WaitForSeconds(stayDuration);
+						trailerAttackCard.gameObject.SetActive(false);
+						break;
 
-         while (timer < duration)
-         {
-             float t = timer / duration;
-             t = Mathf.SmoothStep(0f, 1f, t);
+					case HookCameraPosition.P1ShowHand:
+					case HookCameraPosition.P2ShowHand:
+					case HookCameraPosition.Pose:
+						yield return StartCoroutine(MoveCamera(target, moveDuration));
+						yield return new WaitForSeconds(stayDuration);
+						break;
+					default:
+						throw new ArgumentOutOfRangeException();
+				}
+			}
 
-             float moveAngle = Mathf.Lerp(0f, maxAngle, t);
+			yield return new WaitForSeconds(stayDuration);
+		}
 
-             // 👉 시작 방향 기준으로 회전
-             Quaternion rot = Quaternion.AngleAxis(moveAngle, Vector3.up);
-             Vector3 dir = rot * flatOffset;
+		private IEnumerator OrbitAroundPlayer(Transform player, float duration, float maxAngle) {
+			var timer = 0f;
 
-             Vector3 newPos = player.position + dir * radius;
-             newPos.y = fixedY; // Y 유지
+			var startOffset = transform.position - player.position;
 
-             transform.position = newPos;
+			var flatOffset = new Vector3(startOffset.x, 0f, startOffset.z);
 
-             // 👉 Y rotation만 맞추기
-             Vector3 lookDir = player.position - transform.position;
-             lookDir.y = 0f;
+			var radius = flatOffset.magnitude;
 
-             float yAngle = Mathf.Atan2(lookDir.x, lookDir.z) * Mathf.Rad2Deg;
-             transform.rotation = Quaternion.Euler(initialEuler.x, yAngle, initialEuler.z);
+			flatOffset = flatOffset.normalized;
 
-             timer += Time.deltaTime;
-             yield return null;
-         }
-     }
-     private IEnumerator MoveCamera(Transform target, float duration)
-     {
-         Vector3 startPos = cameraTransform.position;
-         Quaternion startRot = cameraTransform.rotation;
+			// Y 고정
+			var fixedY = transform.position.y;
 
-         Vector3 endPos = target.position;
-         Quaternion endRot = target.rotation;
+			Vector3 initialEuler = transform.eulerAngles;
 
-         float time = 0f;
+			while (timer < duration) {
+				var t = timer / duration;
+				t = Mathf.SmoothStep(0f, 1f, t);
 
-         while (time < duration)
-         {
-             float t = time / duration;
+				var moveAngle = Mathf.Lerp(0f, maxAngle, t);
 
-             cameraTransform.position = Vector3.Lerp(startPos, endPos, t);
-             cameraTransform.rotation = Quaternion.Slerp(startRot, endRot, t);
+				// 👉 시작 방향 기준으로 회전
+				var rot = Quaternion.AngleAxis(moveAngle, Vector3.up);
+				var dir = rot * flatOffset;
 
-             time += Time.deltaTime;
-             yield return null;
-         }
+				var newPos = player.position + dir * radius;
+				newPos.y = fixedY; // Y 유지
 
-         // 마지막 보정
-         cameraTransform.position = endPos;
-         cameraTransform.rotation = endRot;
-     }
-     
+				transform.position = newPos;
 
+				// 👉 Y rotation만 맞추기
+				var lookDir = player.position - transform.position;
+				lookDir.y = 0f;
+
+				var yAngle = Mathf.Atan2(lookDir.x, lookDir.z) * Mathf.Rad2Deg;
+				transform.rotation = Quaternion.Euler(initialEuler.x, yAngle, initialEuler.z);
+
+				timer += Time.deltaTime;
+				yield return null;
+			}
+		}
+
+		private IEnumerator MoveCamera(Transform target, float duration) {
+			var startPos = cameraTransform.position;
+			var startRot = cameraTransform.rotation;
+
+			var endPos = target.position;
+			var endRot = target.rotation;
+
+			var time = 0f;
+
+			while (time < duration) {
+				var t = time / duration;
+
+				cameraTransform.position = Vector3.Lerp(startPos, endPos, t);
+				cameraTransform.rotation = Quaternion.Slerp(startRot, endRot, t);
+
+				time += Time.deltaTime;
+				yield return null;
+			}
+
+			// 마지막 보정
+			cameraTransform.position = endPos;
+			cameraTransform.rotation = endRot;
+		}
+	}
 }

@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using Trailer;
+using Trailer.OtherScriptsForTrailer;
 using UnityEngine;
 using UnityEngine.Serialization;
 

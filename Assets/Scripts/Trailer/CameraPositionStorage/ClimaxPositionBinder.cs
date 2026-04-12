@@ -1,8 +1,3 @@
-﻿using System;
-using UnityEngine;
-
-
-public class ClimaxPositionBinder: EnumPositionBinder<ClimaxCameraPosition>
-{
-
+﻿namespace Trailer.CameraPositionStorage {
+	public class ClimaxPositionBinder : EnumPositionBinder<ClimaxCameraPosition> { }
 }

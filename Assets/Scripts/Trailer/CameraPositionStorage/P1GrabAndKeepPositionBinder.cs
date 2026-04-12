@@ -1,8 +1,3 @@
-﻿using System;
-using UnityEngine;
-
-
-public class P1GrabAndKeepPositionBinder: EnumPositionBinder<P1GrabAndKeepCameraPosition>
-{
-
+﻿namespace Trailer.CameraPositionStorage {
+	public class P1GrabAndKeepPositionBinder : EnumPositionBinder<P1GrabAndKeepCameraPosition> { }
 }

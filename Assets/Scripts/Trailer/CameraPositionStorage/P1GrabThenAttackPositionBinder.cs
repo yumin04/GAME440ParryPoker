@@ -1,8 +1,3 @@
-﻿using System;
-using UnityEngine;
-
-
-public class P1GrabThenAttackPositionBinder: EnumPositionBinder<P1GrabThenAttackCameraPosition>
-{
-
+﻿namespace Trailer.CameraPositionStorage {
+	public class P1GrabThenAttackPositionBinder : EnumPositionBinder<P1GrabThenAttackCameraPosition> { }
 }

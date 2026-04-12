@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Trailer;
 using UnityEngine;
 
 public class IntroCameraScript : MonoBehaviour

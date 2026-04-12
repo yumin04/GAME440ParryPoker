@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 
-public class PlayerForTrailer : MonoBehaviour
-{
-    Animator anim;
+namespace Trailer.OtherScriptsForTrailer {
+	public class PlayerForTrailer : MonoBehaviour {
+		private Animator anim;
 
-    void Start()
-    {
-        anim = GetComponent<Animator>();
-        // anim.SetTrigger("Hit");
-    }
+		private void Start() {
+			anim = GetComponent<Animator>();
+			// anim.SetTrigger("Hit");
+		}
+	}
 }

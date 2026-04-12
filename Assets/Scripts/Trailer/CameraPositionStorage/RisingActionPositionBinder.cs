@@ -1,8 +1,3 @@
-﻿using System;
-using UnityEngine;
-
-
-public class RisingActionPositionBinder: EnumPositionBinder<RisingActionCameraPosition>
-{
-
+﻿namespace Trailer.CameraPositionStorage {
+	public class RisingActionPositionBinder : EnumPositionBinder<RisingActionCameraPosition> { }
 }
