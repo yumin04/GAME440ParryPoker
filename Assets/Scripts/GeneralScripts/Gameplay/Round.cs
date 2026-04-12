@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Netcode;
 using System.Linq;
+using GeneralScripts;
 using GeneralScripts.Card;
 using Random = UnityEngine.Random;
 

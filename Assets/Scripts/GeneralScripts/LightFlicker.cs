@@ -1,25 +1,24 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Light))]
-public class LightFlicker : MonoBehaviour
-{
-    Light _light;
-    float _baseIntensity;
-    float _phase;
+namespace GeneralScripts {
+	[RequireComponent(typeof(Light))]
+	public class LightFlicker : MonoBehaviour {
+		private Light lightFlicker;
+		private float baseIntensity;
+		private float phase;
 
-    void Awake()
-    {
-        _light = GetComponent<Light>();
-        _baseIntensity = _light.intensity;
-        _phase = Random.Range(0f, 6.28f);
-    }
+		private void Awake() {
+			lightFlicker = GetComponent<Light>();
+			baseIntensity = lightFlicker.intensity;
+			phase = Random.Range(0f, 6.28f);
+		}
 
-    void Update()
-    {
-        float t = Time.time + _phase;
-        float wobble = Mathf.Sin(t * 5.7f) * 0.05f + Mathf.Sin(t * 11.3f) * 0.035f;
-        float noise = (Mathf.PerlinNoise(t * 0.8f, _phase) - 0.5f) * 0.12f;
-        float m = 1f + wobble + noise;
-        _light.intensity = _baseIntensity * Mathf.Clamp(m, 0.82f, 1.12f);
-    }
+		private void Update() {
+			var t = Time.time + phase;
+			var wobble = Mathf.Sin(t * 5.7f) * 0.05f + Mathf.Sin(t * 11.3f) * 0.035f;
+			var noise = (Mathf.PerlinNoise(t * 0.8f, phase) - 0.5f) * 0.12f;
+			var m = 1f + wobble + noise;
+			lightFlicker.intensity = baseIntensity * Mathf.Clamp(m, 0.82f, 1.12f);
+		}
+	}
 }

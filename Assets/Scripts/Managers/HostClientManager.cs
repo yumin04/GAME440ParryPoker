@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Net;
 using System.Net.Sockets;
+using GeneralScripts;
 using GenericHelpers;
 
 public class HostClientManager : Singleton<HostClientManager> {

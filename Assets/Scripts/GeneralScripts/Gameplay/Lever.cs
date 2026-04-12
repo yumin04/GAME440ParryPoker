@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using GeneralScripts;
+using UnityEngine;
 
 public class Lever : MonoBehaviour
 {

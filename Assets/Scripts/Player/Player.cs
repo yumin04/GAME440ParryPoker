@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using GeneralScripts;
 using GeneralScripts.Card;
 using GenericHelpers;
 using Unity.Netcode;

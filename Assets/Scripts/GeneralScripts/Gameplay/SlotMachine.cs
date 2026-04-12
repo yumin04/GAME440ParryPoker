@@ -2,6 +2,7 @@
 using UnityEngine;
 
 using System.Collections.Generic;
+using GeneralScripts;
 using UnityEngine;
 
 public class SlotMachine : MonoBehaviour

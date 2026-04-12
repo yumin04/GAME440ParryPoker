@@ -1,4 +1,5 @@
-﻿using GeneralScripts.Card;
+﻿using GeneralScripts;
+using GeneralScripts.Card;
 using Unity.Netcode;
 using UnityEngine;
 

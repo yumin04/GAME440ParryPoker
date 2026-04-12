@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using GeneralScripts;
 using SOFile;
 
 public class CardRepository : MonoBehaviour
