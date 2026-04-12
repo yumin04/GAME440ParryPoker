@@ -2,6 +2,7 @@
 using System.Collections;
 using GenericHelpers;
 using NUnit.Framework;
+using PokerSystem;
 using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.TestTools;

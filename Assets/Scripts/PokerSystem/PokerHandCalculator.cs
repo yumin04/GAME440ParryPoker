@@ -4,250 +4,200 @@ using System.Linq;
 using GenericHelpers;
 using SOFile;
 
-public class PokerHandCalculator
-{
-    private List<CardData> currentHandData;
-    // Array.Sort(handData, (a, b) => a.cardNumber.CompareTo(b.cardNumber));
-    // How to sort things
-    public PokerHandCalculator()
-    {
-        currentHandData = new List<CardData>();
-    }
-    
-    // TODO: USED IN UNITY
-    public int GetPokerResult(CardDataSO[] handData)
-    {
-        CardData[] converted = new CardData[handData.Length];
-        for (int i = 0; i < handData.Length; i++)
-        {
-            converted[i].cardID = handData[i].cardID;
-            converted[i].cardNumber = handData[i].cardNumber;
-            converted[i].cardSymbol = handData[i].cardSymbol;
-        }
-        return GetPokerResult(converted);
-    }
-    
-    public int GetPokerResult(CardData[] handData)
-    {
-        HandRank rank = CalculatePokerHand(handData);
-        FindBestHand(rank, handData);
-        return 1;
-    }
+namespace PokerSystem {
+	public class PokerHandCalculator {
+		private List<CardData> currentHandData = new();
+		// Array.Sort(handData, (a, b) => a.cardNumber.CompareTo(b.cardNumber));
+		// How to sort things
 
-    private void FindBestHand(HandRank rank, CardData[] handData)
-    {
-        
-        switch (rank)
-        {
-            case HandRank.StraightFlush:
-                break;
-            case HandRank.FourOfAKind:
-                break;
-            case HandRank.FullHouse:
-                break;
-            case HandRank.Flush:
-                break;
-            case HandRank.Straight:
-                break;
-            case HandRank.ThreeOfAKind:
-                break;
-            case HandRank.TwoPair:
-                break;
-            case HandRank.OnePair:
-                break;
-            case HandRank.HighCard:
-                break;
-            
-        }
-        
-    }
+		// TODO: USED IN UNITY
+		public int GetPokerResult(CardDataSO[] handData) {
+			var converted = new CardData[handData.Length];
+			for (var i = 0; i < handData.Length; i++) {
+				converted[i].cardID = handData[i].cardID;
+				converted[i].cardNumber = handData[i].cardNumber;
+				converted[i].cardSymbol = handData[i].cardSymbol;
+			}
 
+			return GetPokerResult(converted);
+		}
 
-    public HandRank CalculatePokerHand(CardData[] handData)
-    {
-        if (CheckStraightFlush(handData))
-            return HandRank.StraightFlush;
-        
-        if(CheckFourOfAKind(handData))
-            return HandRank.FourOfAKind;
-        
-        if(CheckFullHouse(handData))
-            return HandRank.FullHouse;
-        
-        if (CheckFlush(handData))
-            return HandRank.Flush;
-        
-        if(CheckStraight(handData))
-            return HandRank.Straight;
-        
-        if(CheckThreeOfAKind(handData))
-            return HandRank.ThreeOfAKind;
-        
-        if (CheckTwoPair(handData))
-            return HandRank.TwoPair;
-        
-        if(CheckOnePair(handData))
-            return HandRank.OnePair;
-        
-        return HandRank.HighCard;
-    }
+		public int GetPokerResult(CardData[] handData) {
+			var rank = CalculatePokerHand(handData);
+			FindBestHand(rank, handData);
+			return 1;
+		}
 
-    public bool CheckStraightFlush(CardData[] handData)
-    {
-        var suitGroups = new Dictionary<Suit, List<CardData>>();
+		private static void FindBestHand(HandRank rank, CardData[] handData) {
+			switch (rank) {
+				case HandRank.StraightFlush:
+				case HandRank.FourOfAKind:
+				case HandRank.FullHouse:
+				case HandRank.Flush:
+				case HandRank.Straight:
+				case HandRank.ThreeOfAKind:
+				case HandRank.TwoPair:
+				case HandRank.OnePair:
+				case HandRank.HighCard:
+					break;
+				default:
+					throw new ArgumentOutOfRangeException(nameof(rank), rank, null);
+			}
+		}
 
-        foreach (var card in handData)
-        {
-            if (!suitGroups.ContainsKey(card.cardSymbol))
-                suitGroups[card.cardSymbol] = new List<CardData>();
+		public HandRank CalculatePokerHand(CardData[] handData) {
+			if (CheckStraightFlush(handData)) return HandRank.StraightFlush;
 
-            suitGroups[card.cardSymbol].Add(card);
-        }
+			if (CheckFourOfAKind(handData)) return HandRank.FourOfAKind;
 
-        foreach (var group in suitGroups.Values)
-        {
-            if (group.Count >= 5 && CheckStraight(group.ToArray()))
-                return true;
-        }
+			if (CheckFullHouse(handData)) return HandRank.FullHouse;
 
-        return false;
-    }
+			if (CheckFlush(handData)) return HandRank.Flush;
 
-    public bool CheckFourOfAKind(CardData[] handData)
-    {
-        var count = new Dictionary<int, int>();
+			if (CheckStraight(handData)) return HandRank.Straight;
 
-        foreach (var card in handData)
-        {
-            if (!count.ContainsKey(card.cardNumber))
-                count[card.cardNumber] = 0;
+			if (CheckThreeOfAKind(handData)) return HandRank.ThreeOfAKind;
 
-            count[card.cardNumber]++;
+			if (CheckTwoPair(handData)) return HandRank.TwoPair;
 
-            if (count[card.cardNumber] >= 4)
-                return true;
-        }
+			if (CheckOnePair(handData)) return HandRank.OnePair;
 
-        return false;
-    }
-    public bool CheckFullHouse(CardData[] handData)
-    {
-        var count = new Dictionary<int, int>();
+			return HandRank.HighCard;
+		}
 
-        foreach (var card in handData)
-        {
-            if (!count.ContainsKey(card.cardNumber))
-                count[card.cardNumber] = 0;
+		public bool CheckStraightFlush(CardData[] handData) {
+			var suitGroups = new Dictionary<Suit, List<CardData>>();
 
-            count[card.cardNumber]++;
-        }
+			foreach (var card in handData) {
+				if (!suitGroups.ContainsKey(card.cardSymbol)) suitGroups[card.cardSymbol] = new List<CardData>();
 
-        bool hasThree = false;
-        bool hasTwo = false;
+				suitGroups[card.cardSymbol].Add(card);
+			}
 
-        foreach (var kvp in count)
-        {
-            if (kvp.Value >= 3)
-                hasThree = true;
-            else if (kvp.Value >= 2)
-                hasTwo = true;
-        }
+			foreach (var group in suitGroups.Values) {
+				if (group.Count >= 5 && CheckStraight(group.ToArray())) return true;
+			}
 
-        return hasThree && hasTwo;
-    }
-    public bool CheckFlush(CardData[] handData)
-    {
-        var suitCount = new Dictionary<Suit, int>();
+			return false;
+		}
 
-        foreach (var card in handData)
-        {
-            if (!suitCount.ContainsKey(card.cardSymbol))
-                suitCount[card.cardSymbol] = 0;
+		public bool CheckFourOfAKind(CardData[] handData) {
+			var count = new Dictionary<int, int>();
 
-            suitCount[card.cardSymbol]++;
+			foreach (var card in handData) {
+				count.TryAdd(card.cardNumber, 0);
 
-            if (suitCount[card.cardSymbol] >= 5)
-                return true;
-        }
-        return false;
-    }
-    public bool CheckStraight(CardData[] handData)
-    {
-        var numbers = new HashSet<int>();
+				count[card.cardNumber]++;
 
-        foreach (var card in handData)
-        {
-            numbers.Add(card.cardNumber);
-        }
+				if (count[card.cardNumber] >= 4) return true;
+			}
 
-        var sorted = numbers.OrderByDescending(n => n).ToList();
-        
-        for (int i = 0; i <= sorted.Count - 5; i++)
-        {
-            if (sorted[i] - sorted[i + 4] == 4)
-                return true;
-        }
-        return false;
-    }
-    public bool CheckThreeOfAKind(CardData[] handData)
-    {
-        var count = new Dictionary<int, int>();
+			return false;
+		}
 
-        foreach (var card in handData)
-        {
-            if (!count.ContainsKey(card.cardNumber))
-                count[card.cardNumber] = 0;
+		public bool CheckFullHouse(CardData[] handData) {
+			var count = new Dictionary<int, int>();
 
-            count[card.cardNumber]++;
+			foreach (var card in handData) {
+				count.TryAdd(card.cardNumber, 0);
 
-            if (count[card.cardNumber] >= 3)
-                return true;
-        }
+				count[card.cardNumber]++;
+			}
 
-        return false;
-    }
-    public bool CheckTwoPair(CardData[] handData)
-    {
-        var count = new Dictionary<int, int>();
-        int pairCount = 0;
+			var hasThree = false;
+			var hasTwo = false;
 
-        foreach (var card in handData)
-        {
-            if (!count.ContainsKey(card.cardNumber))
-                count[card.cardNumber] = 0;
+			foreach (var kvp in count) {
+				switch (kvp.Value) {
+					case >= 3:
+						hasThree = true;
+						break;
+					case >= 2:
+						hasTwo = true;
+						break;
+				}
+			}
 
-            count[card.cardNumber]++;
-        }
+			return hasThree && hasTwo;
+		}
 
-        foreach (var kvp in count)
-        {
-            if (kvp.Value >= 2)
-                pairCount++;
-        }
+		public bool CheckFlush(CardData[] handData) {
+			var suitCount = new Dictionary<Suit, int>();
 
-        return pairCount >= 2;
-    }
-    public bool CheckOnePair(CardData[] handData)
-    {
-        var count = new Dictionary<int, int>();
+			foreach (var card in handData) {
+				suitCount.TryAdd(card.cardSymbol, 0);
 
-        foreach (var card in handData)
-        {
-            if (!count.ContainsKey(card.cardNumber))
-                count[card.cardNumber] = 0;
+				suitCount[card.cardSymbol]++;
 
-            count[card.cardNumber]++;
+				if (suitCount[card.cardSymbol] >= 5) return true;
+			}
 
-            if (count[card.cardNumber] >= 2)
-                return true;
-        }
+			return false;
+		}
 
-        return false;
-    }
-    public bool CheckHighCard(CardData[] handData)
-    {
-        return !CheckOnePair(handData)
-               && !CheckTwoPair(handData)
-               && !CheckThreeOfAKind(handData);
-    }
+		public bool CheckStraight(CardData[] handData) {
+			var numbers = new HashSet<int>();
+
+			foreach (var card in handData) {
+				numbers.Add(card.cardNumber);
+			}
+
+			var sorted = numbers.OrderByDescending(n => n).ToList();
+
+			for (var i = 0; i <= sorted.Count - 5; i++) {
+				if (sorted[i] - sorted[i + 4] == 4) return true;
+			}
+
+			return false;
+		}
+
+		public bool CheckThreeOfAKind(CardData[] handData) {
+			var count = new Dictionary<int, int>();
+
+			foreach (var card in handData) {
+				count.TryAdd(card.cardNumber, 0);
+
+				count[card.cardNumber]++;
+
+				if (count[card.cardNumber] >= 3) return true;
+			}
+
+			return false;
+		}
+
+		public bool CheckTwoPair(CardData[] handData) {
+			var count = new Dictionary<int, int>();
+			var pairCount = 0;
+
+			foreach (var card in handData) {
+				count.TryAdd(card.cardNumber, 0);
+
+				count[card.cardNumber]++;
+			}
+
+			foreach (var kvp in count) {
+				if (kvp.Value >= 2) pairCount++;
+			}
+
+			return pairCount >= 2;
+		}
+
+		public bool CheckOnePair(CardData[] handData) {
+			var count = new Dictionary<int, int>();
+
+			foreach (var card in handData) {
+				count.TryAdd(card.cardNumber, 0);
+
+				count[card.cardNumber]++;
+
+				if (count[card.cardNumber] >= 2) return true;
+			}
+
+			return false;
+		}
+
+		public bool CheckHighCard(CardData[] handData) {
+			return !CheckOnePair(handData) && !CheckTwoPair(handData) && !CheckThreeOfAKind(handData);
+		}
+	}
 }
