@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using GeneralScripts;
 using GeneralScripts.Card;
 using GenericHelpers;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 namespace Player {
 	public class Player : NetworkBehaviour {
@@ -22,14 +20,15 @@ namespace Player {
 		[SerializeField] private Defend defendObject;
 		[SerializeField] private CardCollider cardCollider;
 
-		[Header("Parameters")] private const float CAMERA_TRANSITION_TIME = 1f;
+		[Header("Parameters")]
+		private const float CAMERA_TRANSITION_TIME = 1f;
 
 		[Header("Player Data")]
 		private readonly NetworkList<int> playerCardIds = new();
 		private bool isAttacking;
 
-		[Header("Debug Only")] [SerializeField]
-		private List<int> debugPlayerCardIds = new();
+		[Header("Debug Only")]
+		[SerializeField] private List<int> debugPlayerCardIds = new();
 
 		// TODO: This happens when "start client" and "start host" has been called.
 		// Some parts of the logic needs to be changed
