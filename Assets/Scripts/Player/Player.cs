@@ -1,364 +1,310 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using GeneralScripts.Card;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class Player : NetworkBehaviour
-{
-    [Header("Game Objects")]
-    [SerializeField] Camera playerCamera;
-    [SerializeField] private GameObject priorityPanel;
-    [SerializeField] private GameObject waitPanel;
-    [SerializeField] private PlayerHand playerHand;
-    [SerializeField] private SlotMachineInstantiator slotMachineSpawner;
+namespace Player {
+	public class Player : NetworkBehaviour {
+		[Header("Game Objects")]
+		[SerializeField] private Camera playerCamera;
 
-    [SerializeField] private Attack attackObject;
-    [SerializeField] private Defend defendObject;
-    [SerializeField] private CardCollider cardCollider;
+		[SerializeField] private GameObject priorityPanel;
+		[SerializeField] private GameObject waitPanel;
+		[SerializeField] private PlayerHand playerHand;
+		[SerializeField] private SlotMachineInstantiator slotMachineSpawner;
 
-    
-    [Header("Parameters")]
-    private float cameraTransitionTime = 1f;
-    
-    [Header("Player Data")]
-    private NetworkList<int> playerCardIds = new();
+		[SerializeField] private Attack attackObject;
+		[SerializeField] private Defend defendObject;
+		[SerializeField] private CardCollider cardCollider;
 
+		[Header("Parameters")] private const float CAMERA_TRANSITION_TIME = 1f;
 
-    private bool isAttacking;
-    
+		[Header("Player Data")]
+		private readonly NetworkList<int> playerCardIds = new();
+		private bool isAttacking;
 
-    [Header("Debug Only")]
-    [SerializeField] private List<int> debugPlayerCardIds = new();
-    
+		[Header("Debug Only")] [SerializeField]
+		private List<int> debugPlayerCardIds = new();
 
-    // TODO: This happens when "start client" and "start host" has been called.
-    // Some parts of the logic needs to be changed
-    public override void OnNetworkSpawn()
-    {
-        playerCardIds.OnListChanged += OnCardsChanged;
-        
-        isAttacking = false;
-        
-        playerCamera.gameObject.SetActive(IsOwner);
-        // position and rotation determined by the server
-        SetPlayerPosition();
-    }    
+		// TODO: This happens when "start client" and "start host" has been called.
+		// Some parts of the logic needs to be changed
+		public override void OnNetworkSpawn() {
+			playerCardIds.OnListChanged += OnCardsChanged;
 
-    public void OnEnable()
-    {
-        GameEvents.OnRoundStart += MoveCameraToFullView;
-        GameEvents.OnRoundStart += ResetPlayer;
-        GameEvents.OnHavingPriority += HavePriority;
-        GameEvents.OnLosingPriority += LosePriority;
+			isAttacking = false;
 
-        GameEvents.OnPlayerKeepCard += OnPlayerKeepCard;
-        
-        GameEvents.OnAttackStart += MoveCameraToOriginal;
-        GameEvents.OnAttackStart += StartAttackOrDefend;
-        GameEvents.OnAttackStart += ClearHand;
-        GameEvents.OnSlotMachineFinished += TriggerAfterSlotMachineRpc;
-    
-        GameEvents.OnAttackEnd += MoveCameraToFullViewAfterAttack;
-        GameEvents.OnAttackEnd += DisplayCards;
-    }
+			playerCamera.gameObject.SetActive(IsOwner);
+			// position and rotation determined by the server
+			SetPlayerPosition();
+		}
 
+		public void OnEnable() {
+			GameEvents.OnRoundStart += MoveCameraToFullView;
+			GameEvents.OnRoundStart += ResetPlayer;
+			GameEvents.OnHavingPriority += HavePriority;
+			GameEvents.OnLosingPriority += LosePriority;
 
+			GameEvents.OnPlayerKeepCard += OnPlayerKeepCard;
 
-    public void OnDisable()
-    {
-        GameEvents.OnRoundStart -= MoveCameraToFullView;
-        GameEvents.OnRoundStart -= ResetPlayer;
-        GameEvents.OnHavingPriority -= HavePriority;
-        GameEvents.OnLosingPriority -= LosePriority;
+			GameEvents.OnAttackStart += MoveCameraToOriginal;
+			GameEvents.OnAttackStart += StartAttackOrDefend;
+			GameEvents.OnAttackStart += ClearHand;
+			GameEvents.OnSlotMachineFinished += TriggerAfterSlotMachineRpc;
 
-        GameEvents.OnPlayerKeepCard -= OnPlayerKeepCard;
-        
-        GameEvents.OnAttackStart -= MoveCameraToOriginal;
-        GameEvents.OnAttackStart -= StartAttackOrDefend;
-        GameEvents.OnAttackStart -= ClearHand;
-        
-        GameEvents.OnSlotMachineFinished -= TriggerAfterSlotMachineRpc;
-        GameEvents.OnAttackEnd -= MoveCameraToFullViewAfterAttack;
-        GameEvents.OnAttackEnd -= DisplayCards;
-    }
+			GameEvents.OnAttackEnd += MoveCameraToFullViewAfterAttack;
+			GameEvents.OnAttackEnd += DisplayCards;
+		}
 
-    private void ResetPlayer()
-    {
-        if (!IsServer) return;
-        // Reset Card
-        playerCardIds.Clear();
-    }
+		public void OnDisable() {
+			GameEvents.OnRoundStart -= MoveCameraToFullView;
+			GameEvents.OnRoundStart -= ResetPlayer;
+			GameEvents.OnHavingPriority -= HavePriority;
+			GameEvents.OnLosingPriority -= LosePriority;
 
-    // RPC로 보내야 하는듯?
-    private void MoveCameraToOriginal()
-    {
-        MoveCameraToOriginalRPC();
-    }
-    
-    [Rpc(SendTo.ClientsAndHost)]
-    private void MoveCameraToOriginalRPC()
-    {
-        // TODO: instead of this, 포지션 다시 static variable + class 로 마무리
-        Vector3 originalPosition = transform.position;
-        
-        // Current Camera position (x,y) = (+-8,7)
-        originalPosition.x = originalPosition.x * 0.8f;
-        originalPosition.y += 8.5f;
-        
-        playerCamera.transform.position = originalPosition;
-        playerCamera.transform.rotation = transform.rotation;
-    }
-    
-    #region PrivateMethods
-    private void SetPlayerPosition()
-    {
-        if (!IsServer) return;
-        
-        if (OwnerClientId == 0)
-        {
-            transform.position = new Vector3(-10, -2, 1);
-            transform.rotation = Quaternion.Euler(0, 90, 0);
-        }
-        else
-        {
-            transform.position = new Vector3(10, -2, 1);
-            transform.rotation = Quaternion.Euler(0, -90, 0);
-        }
-    }
-    
-    #endregion
-    
-    # region CameraMovement
-    
-    private void MoveCameraToFullView()
-    {
-        playerCamera.transform.SetParent(null);
-        StartCoroutine(MoveCameraCoroutine(cameraTransitionTime));
-    }
-    
-    
-    
-    private void MoveCameraToFullViewAfterAttack()
-    {
-        MoveCameraToFullViewAfterAttackRPC();
+			GameEvents.OnPlayerKeepCard -= OnPlayerKeepCard;
 
-    }
-    
-    [Rpc(SendTo.ClientsAndHost)]
-    private void MoveCameraToFullViewAfterAttackRPC()
-    {
-        StartCoroutine(MoveCameraCoroutine(2f));        
-    }
+			GameEvents.OnAttackStart -= MoveCameraToOriginal;
+			GameEvents.OnAttackStart -= StartAttackOrDefend;
+			GameEvents.OnAttackStart -= ClearHand;
 
-    private IEnumerator MoveCameraCoroutine(float duration)
-    {
-        Transform cam = playerCamera.transform;
-        Transform target = GameParameters.FullViewCameraPoint;
+			GameEvents.OnSlotMachineFinished -= TriggerAfterSlotMachineRpc;
+			GameEvents.OnAttackEnd -= MoveCameraToFullViewAfterAttack;
+			GameEvents.OnAttackEnd -= DisplayCards;
+		}
 
-        Vector3 startPos = cam.position;
-        Quaternion startRot = cam.rotation;
+		private void ResetPlayer() {
+			if (!IsServer) return;
+			// Reset Card
+			playerCardIds.Clear();
+		}
 
-        float elapsed = 0f;
+		// RPC로 보내야 하는듯?
+		private void MoveCameraToOriginal() {
+			MoveCameraToOriginalRPC();
+		}
 
-        while (elapsed < duration)
-        {
-            float t = elapsed / duration;
+		[Rpc(SendTo.ClientsAndHost)]
+		private void MoveCameraToOriginalRPC() {
+			// TODO: instead of this, finalize the position using static variables and classes
+			var originalPosition = transform.position;
 
-            cam.position = Vector3.Lerp(startPos, target.position, t);
-            cam.rotation = Quaternion.Slerp(startRot, target.rotation, t);
+			// Current Camera position (x,y) = (+-8,7)
+			originalPosition.x = originalPosition.x * 0.8f;
+			originalPosition.y += 8.5f;
 
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-        
-        cam.position = target.position;
-        cam.rotation = target.rotation;
-    }
+			playerCamera.transform.position = originalPosition;
+			playerCamera.transform.rotation = transform.rotation;
+		}
 
-    #endregion
+		#region PrivateMethods
 
+		private void SetPlayerPosition() {
+			if (!IsServer) return;
 
-    private void StartAttackOrDefend()
-    {
-        if (!IsOwner) return;
-        
-        Debug.Log("[DEBUG] Start Attack Or Defend");
-        Debug.Log("[DEBUG] Inside StartAttackOrDefend isAttacking: "+ isAttacking.ToString());
-        if (isAttacking)
-        {
-            Debug.Log("[DEBUG] Instantiating Slot Machine");
-            // Spawn Slot Machine
-            slotMachineSpawner.InstantiateSlotMachine();
-        }
-        else
-        {
-            // Waiting for slot machine...
-            Debug.Log("[DEBUG] Waiting for Slot Machine");
-        }
-    }
+			if (OwnerClientId == 0) {
+				transform.position = new Vector3(-10, -2, 1);
+				transform.rotation = Quaternion.Euler(0, 90, 0);
+			}
+			else {
+				transform.position = new Vector3(10, -2, 1);
+				transform.rotation = Quaternion.Euler(0, -90, 0);
+			}
+		}
 
-    [Rpc(SendTo.ClientsAndHost)]
-    private void TriggerAfterSlotMachineRpc()
-    {
-        TriggerAfterSlotMachine();
-    }
-    
-    private void TriggerAfterSlotMachine()
-    {
-        if (!IsOwner) return;
-        
-        if (isAttacking)
-        {
-            slotMachineSpawner.DestroySlotMachine();
-            ActivateAttack();
-        }
-        else
-        {
-            ActivateDefend();
-            EnableCardCollider();
-        }
-    }
+		#endregion
 
-    private void EnableCardCollider()
-    {
-        if (cardCollider != null)
-        {
-            cardCollider.EnableCollider();
-        }
-    }
+		# region CameraMovement
 
-    private void ActivateAttack()
-    {
-        if (attackObject == null) return;
-        
-        attackObject.StartAttack(-1 * (transform.position.x / 2));
-    }
+		private void MoveCameraToFullView() {
+			playerCamera.transform.SetParent(null);
+			StartCoroutine(MoveCameraCoroutine(CAMERA_TRANSITION_TIME));
+		}
 
-    private void ActivateDefend()
-    {
-        // nothing here yet?
-        if (defendObject == null) return;
-        // TODO:
-        // SlotMachine Instantiate해서 그거 하고 있다는거 indicate해주고
-        // Card Dispenser Instantiate해서 곧 쏠거라는거 알려주고 해야함
-        
-        // defendObject.gameObject.SetActive(true);
-        // defendObject.PlayDefendAnimation();
-    }
-    
-    private void OnCardsChanged(NetworkListEvent<int> changeEvent)
-    {
-        // TODO: [DEBUG] Delete
-        SyncDebugList();
+		private void MoveCameraToFullViewAfterAttack() {
+			MoveCameraToFullViewAfterAttackRPC();
+		}
 
-        DisplayCards();
+		[Rpc(SendTo.ClientsAndHost)]
+		private void MoveCameraToFullViewAfterAttackRPC() {
+			StartCoroutine(MoveCameraCoroutine(2f));
+		}
 
-    }
-    private void SyncDebugList()
-    {
-        debugPlayerCardIds.Clear();
+		private IEnumerator MoveCameraCoroutine(float duration) {
+			var cam = playerCamera.transform;
+			var target = GameParameters.FullViewCameraPoint;
 
-        foreach (var id in playerCardIds)
-            debugPlayerCardIds.Add(id);
-    }
-    private void DisplayCards()
-    {
-        DisplayCardsRPC();
-    }
-    
-    [Rpc(SendTo.ClientsAndHost)]
-    private void DisplayCardsRPC()
-    {
-        if (!IsOwner) return;
-        
-        List<int> copy = new List<int>();
+			var startPos = cam.position;
+			var startRot = cam.rotation;
 
-        for (int i = 0; i < playerCardIds.Count; i++)
-        {
-            copy.Add(playerCardIds[i]);
-        }
+			var elapsed = 0f;
 
-        Debug.Log("[DEBUG] Display Cards");
-        playerHand.DisplayCards(copy);   
-    }
+			var delta = elapsed / duration;
+			while (elapsed < duration) {
+				cam.position = Vector3.Lerp(startPos, target.position, delta);
+				cam.rotation = Quaternion.Slerp(startRot, target.rotation, delta);
 
-    private void ClearHand()
-    {
-        playerHand.Clear();
-    }
-    
+				elapsed += Time.deltaTime;
+				yield return null;
+			}
 
-    
-    private void OnPlayerKeepCard(ulong clientId, int cardId)
-    {
-        if (OwnerClientId != clientId) return;
+			cam.position = target.position;
+			cam.rotation = target.rotation;
+		}
 
-        Debug.Log($"Player {clientId} received card {cardId}");
+		#endregion
 
-        playerCardIds.Add(cardId);
-        
-    }
-    
-    // DONE
-    #region Priority Panel
+		private void StartAttackOrDefend() {
+			if (!IsOwner) return;
 
-    private void HavePriority()
-    {
-        if (!IsOwner) return;
-        
-        isAttacking = true;
-        
-        Debug.Log("Have Priority");
+			Debug.Log("[DEBUG] Start Attack Or Defend");
+			Debug.Log("[DEBUG] Inside StartAttackOrDefend isAttacking: " + isAttacking.ToString());
+			if (isAttacking) {
+				Debug.Log("[DEBUG] Instantiating Slot Machine");
+				// Spawn Slot Machine
+				slotMachineSpawner.InstantiateSlotMachine();
+			}
+			else {
+				// Waiting for slot machine...
+				Debug.Log("[DEBUG] Waiting for Slot Machine");
+			}
+		}
 
-        ShowPriorityUI();
-        Debug.Log("isAttacking: "+ isAttacking.ToString());
-    }
+		[Rpc(SendTo.ClientsAndHost)]
+		private void TriggerAfterSlotMachineRpc() {
+			TriggerAfterSlotMachine();
+		}
 
+		private void TriggerAfterSlotMachine() {
+			if (!IsOwner) return;
 
-    private void LosePriority()
-    {
-        if (!IsOwner) return;
-        
-        isAttacking = false;
-        
-        Debug.Log("Lost Priority");
-        
-        ShowWaitingUI();
-        // TODO: maybe "waiting for opponent" or smth like this
-        Debug.Log("isAttacking: "+ isAttacking.ToString());
-    }
+			if (isAttacking) {
+				slotMachineSpawner.DestroySlotMachine();
+				ActivateAttack();
+			}
+			else {
+				ActivateDefend();
+				EnableCardCollider();
+			}
+		}
 
-    private void ShowWaitingUI()
-    {
-        waitPanel.SetActive(true);
-    }
+		private void EnableCardCollider() {
+			if (cardCollider != null) {
+				cardCollider.EnableCollider();
+			}
+		}
 
-    private void ShowPriorityUI()
-    { 
-        priorityPanel.SetActive(true);
-    }
-    
+		private void ActivateAttack() {
+			if (attackObject == null) return;
 
-    #endregion
+			attackObject.StartAttack(-1 * (transform.position.x / 2));
+		}
 
-    public void SpawnAttackCard(Vector3 startPos, Vector3 endPos)
-    {
-        if (IsServer)
-        {
-            CardManager.Instance.InstantiateAttackCard(startPos, endPos);
-        }
-        else
-        {
-            SpawnAttackCardRPC(startPos, endPos);
-        }
-    }
-    
-    
-    [Rpc(SendTo.Server)]
-    private void SpawnAttackCardRPC(Vector3 startPos, Vector3 endPos)
-    {
-        CardManager.Instance.InstantiateAttackCard(startPos, endPos);
-    }
+		private void ActivateDefend() {
+			// nothing here yet?
+			// if (defendObject == null) return;
+			// TODO:
+			// Instantiate SlotMachine to indicate that it is running
+			// Instantiate Card Dispenser to let them know you're about to shoot
+
+			// defendObject.gameObject.SetActive(true);
+			// defendObject.PlayDefendAnimation();
+		}
+
+		private void OnCardsChanged(NetworkListEvent<int> changeEvent) {
+			// TODO: [DEBUG] Delete
+			SyncDebugList();
+
+			DisplayCards();
+		}
+
+		private void SyncDebugList() {
+			debugPlayerCardIds.Clear();
+
+			foreach (var id in playerCardIds) debugPlayerCardIds.Add(id);
+		}
+
+		private void DisplayCards() {
+			DisplayCardsRPC();
+		}
+
+		[Rpc(SendTo.ClientsAndHost)]
+		private void DisplayCardsRPC() {
+			if (!IsOwner) return;
+
+			var copy = new List<int>();
+
+			foreach (var playerCardId in playerCardIds) {
+				copy.Add(playerCardId);
+			}
+
+			Debug.Log("[DEBUG] Display Cards");
+			playerHand.DisplayCards(copy);
+		}
+
+		private void ClearHand() {
+			playerHand.Clear();
+		}
+
+		private void OnPlayerKeepCard(ulong clientId, int cardId) {
+			if (OwnerClientId != clientId) return;
+
+			Debug.Log($"Player {clientId} received card {cardId}");
+
+			playerCardIds.Add(cardId);
+		}
+
+		// DONE
+
+		#region Priority Panel
+
+		private void HavePriority() {
+			if (!IsOwner) return;
+
+			isAttacking = true;
+
+			Debug.Log("Have Priority");
+
+			ShowPriorityUI();
+			Debug.Log("isAttacking: " + isAttacking.ToString());
+		}
+
+		private void LosePriority() {
+			if (!IsOwner) return;
+
+			isAttacking = false;
+
+			Debug.Log("Lost Priority");
+
+			ShowWaitingUI();
+			// TODO: maybe "waiting for opponent" or smth like this
+			Debug.Log("isAttacking: " + isAttacking.ToString());
+		}
+
+		private void ShowWaitingUI() {
+			waitPanel.SetActive(true);
+		}
+
+		private void ShowPriorityUI() {
+			priorityPanel.SetActive(true);
+		}
+
+		#endregion
+
+		public void SpawnAttackCard(Vector3 startPos, Vector3 endPos) {
+			if (IsServer) {
+				CardManager.Instance.InstantiateAttackCard(startPos, endPos);
+			}
+			else {
+				SpawnAttackCardRPC(startPos, endPos);
+			}
+		}
+
+		[Rpc(SendTo.Server)]
+		private void SpawnAttackCardRPC(Vector3 startPos, Vector3 endPos) {
+			CardManager.Instance.InstantiateAttackCard(startPos, endPos);
+		}
+	}
 }

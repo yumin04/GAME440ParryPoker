@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Netcode;
 using System.Linq;
+using GeneralScripts.Card;
 using Random = UnityEngine.Random;
 
 public class Round : NetworkBehaviour
@@ -121,7 +122,7 @@ public class Round : NetworkBehaviour
     [Rpc(SendTo.ClientsAndHost)]
     private void RunAfterMemorizationRPC()
     {
-        CardManager.Instance.HideAllRoundCards();
+        CardManager.HideAllRoundCards();
         UserInterface.Instance.EnableSubRoundNumber();
         StartSubRound();
     }

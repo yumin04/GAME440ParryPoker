@@ -1,77 +1,68 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using GeneralScripts.Card;
 using UnityEngine;
 
-public class PlayerHand : MonoBehaviour
-{
-    [SerializeField] private GameObject playerDisplayCardPrefab;
+namespace Player {
+	public class PlayerHand : MonoBehaviour {
+		[SerializeField] private GameObject playerDisplayCardPrefab;
 
-    [SerializeField] private float radius = 5f;
-    [SerializeField] private float maxAngle = 60f;
+		[SerializeField] private float radius = 5f;
+		[SerializeField] private float maxAngle = 60f;
 
-    private List<GameObject> cards = new();
-    
-    // public void Awake()
-    // {
-    //     AddCard(1);
-    //     AddCard(2);
-    //     AddCard(3);
-    //     AddCard(1);
-    //     AddCard(2);
-    //     AddCard(3);
-    //     AddCard(1);
-    //     Rearrange();
-    // }
-    
+		private readonly List<GameObject> cards = new();
 
-    
+		// public void Awake()
+		// {
+		//     AddCard(1);
+		//     AddCard(2);
+		//     AddCard(3);
+		//     AddCard(1);
+		//     AddCard(2);
+		//     AddCard(3);
+		//     AddCard(1);
+		//     Rearrange();
+		// }
 
-    public void AddCard(int cardId)
-    {
-        GameObject card = Instantiate(playerDisplayCardPrefab, transform);
-        
-        card.GetComponent<PlayerCard>().Init(cardId);
+		public void AddCard(int cardId) {
+			var card = Instantiate(playerDisplayCardPrefab, transform);
 
-        cards.Add(card);
-        Rearrange();
-    }
+			card.GetComponent<PlayerCard>().Init(cardId);
 
-    public void DisplayCards(List<int> cardIds)
-    {
-        Clear();
+			cards.Add(card);
+			Rearrange();
+		}
 
-        foreach (int id in cardIds)
-            AddCard(id);
-    }
+		public void DisplayCards(List<int> cardIds) {
+			Clear();
 
-    private void Rearrange()
-    {
-        int count = cards.Count;
-        if (count == 0) return;
+			foreach (int id in cardIds) AddCard(id);
+		}
 
-        float angleStep = count == 1 ? 0 : maxAngle / (count - 1);
-        float startAngle = -maxAngle / 2f;
-        float y = 0;
-        for (int i = 0; i < count; i++)
-        {
-            float angle = startAngle + angleStep * i;
-            float rad = angle * Mathf.Deg2Rad;
+		private void Rearrange() {
+			var count = cards.Count;
+			if (count == 0) return;
 
-            float x = Mathf.Sin(rad) * radius;
-            float z = -Mathf.Cos(rad) * radius + radius;
-            
-            cards[i].transform.localPosition = new Vector3(x, y, z);
-            
-            cards[i].transform.localRotation = Quaternion.Euler(0, -angle, 0);
-            y += 0.001f;
-        }
-    }
+			var angleStep = count == 1 ? 0 : maxAngle / (count - 1);
+			var startAngle = -maxAngle / 2f;
+			float y = 0;
+			for (var i = 0; i < count; i++) {
+				var angle = startAngle + angleStep * i;
+				var rad = angle * Mathf.Deg2Rad;
 
-    public void Clear()
-    {
-        foreach (var card in cards)
-            Destroy(card);
+				var x = Mathf.Sin(rad) * radius;
+				var z = -Mathf.Cos(rad) * radius + radius;
 
-        cards.Clear();
-    }
+				cards[i].transform.localPosition = new Vector3(x, y, z);
+
+				cards[i].transform.localRotation = Quaternion.Euler(0, -angle, 0);
+				y += 0.001f;
+			}
+		}
+
+		public void Clear() {
+			foreach (var card in cards) Destroy(card);
+
+			cards.Clear();
+		}
+	}
 }

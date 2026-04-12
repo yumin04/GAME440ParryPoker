@@ -1,157 +1,138 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Attack : MonoBehaviour
-{
-    // TODO: Refactor
-    [SerializeField] private Player player;
-    
-    [Header("Shoot Plane")]
-    [SerializeField] private float fixedX = 8f;
+namespace Player {
+	public class Attack : MonoBehaviour {
+		// TODO: Refactor
+		[SerializeField] private Player player;
 
-    [Header("Crosshair")]
-    [SerializeField] private GameObject crosshair;
-    [SerializeField] private Camera cam;
-    [SerializeField] private float shootCooldown = 0.2f;
-    private SpriteRenderer crosshairRenderer;
-    
-    
-    // left, right, up, down에 대한 restriction이 필요하고
-    [Header("Bounds (YZ Plane)")]
-    [SerializeField] private float minY;
-    [SerializeField] private float maxY;
-    [SerializeField] private float minZ;
-    [SerializeField] private float maxZ;
-    
-    private GameObject currentCrossHair;
-    
-    private bool canShoot = false;
+		[Header("Shoot Plane")]
+		[SerializeField] private float fixedX = 8f;
 
-    // [SerializeField] bool isDebugging = false;
-    // For DEBUG, can erase later
-    // private void Start()
-    // {
-    //     StartAttack(-5f);
-    // }
+		[Header("Crosshair")]
+		[SerializeField] private GameObject crosshair;
+		[SerializeField] private Camera cam;
+		[SerializeField] private float shootCooldown = 0.2f;
+		private SpriteRenderer crosshairRenderer;
 
-    private void OnEnable()
-    {
-        GameEvents.OnSubRoundEnd += OnAttackEnd;
-    }
-    private void OnDisable()
-    {
-        GameEvents.OnSubRoundEnd -= OnAttackEnd;
-    }
+		// restrict left, right, up, down
+		[Header("Bounds (YZ Plane)")] [SerializeField]
+		private float minY;
 
-    public void StartAttack(float fixedX)
-    {
-        this.fixedX = fixedX;
-        gameObject.SetActive(true);
+		[SerializeField] private float maxY;
+		[SerializeField] private float minZ;
+		[SerializeField] private float maxZ;
 
-        currentCrossHair = Instantiate(crosshair, transform);
-        crosshairRenderer = currentCrossHair.GetComponent<SpriteRenderer>();
-        canShoot = false;
-        StartShootCooldown();
-    }
+		private GameObject currentCrossHair;
 
+		private bool canShoot = false;
 
-    
-    private Coroutine cooldownRoutine;
+		// [SerializeField] bool isDebugging = false;
+		// For DEBUG, can erase later
+		// private void Start()
+		// {
+		//     StartAttack(-5f);
+		// }
 
-    private void Update()
-    {
-        if (canShoot)
-        {
-            UpdateCrosshair();
-            
-            if (Input.GetMouseButtonDown(0))
-            {
-                TryShoot();
-            }
-        }
+		private void OnEnable() {
+			GameEvents.OnSubRoundEnd += OnAttackEnd;
+		}
 
+		private void OnDisable() {
+			GameEvents.OnSubRoundEnd -= OnAttackEnd;
+		}
 
-    }
-    private void StartShootCooldown()
-    {
-        if (cooldownRoutine != null)
-            StopCoroutine(cooldownRoutine);
+		public void StartAttack(float fixedX) {
+			this.fixedX = fixedX;
+			gameObject.SetActive(true);
 
-        cooldownRoutine = StartCoroutine(ShootCooldownRoutine());
-    }
-    
-    private IEnumerator ShootCooldownRoutine()
-    {
+			currentCrossHair = Instantiate(crosshair, transform);
+			crosshairRenderer = currentCrossHair.GetComponent<SpriteRenderer>();
+			canShoot = false;
+			StartShootCooldown();
+		}
 
-        SetCrosshairOpacity(0.7f);
+		private Coroutine cooldownRoutine;
 
-        yield return new WaitForSeconds(shootCooldown);
+		private void Update() {
+			if (!canShoot) return;
+			UpdateCrosshair();
 
-        SetCrosshairOpacity(1f);
+			if (Input.GetMouseButtonDown(0)) {
+				TryShoot();
+			}
+		}
 
-        canShoot = true;
-    }
-    
-    private void SetCrosshairOpacity(float alpha)
-    {
-        Color c = crosshairRenderer.color;
-        c.a = alpha;
-        crosshairRenderer.color = c;
-    }
-    
-    public void TryShoot()
-    {
-        canShoot = false;
+		private void StartShootCooldown() {
+			if (cooldownRoutine != null) StopCoroutine(cooldownRoutine);
 
-        Vector3 startPos = transform.position;        // shooter (world)
-        Vector3 endPos = GetShootPosition();          // crosshair (world)
+			cooldownRoutine = StartCoroutine(ShootCooldownRoutine());
+		}
 
-        Debug.Log($"[DEBUG] start: {startPos}, end: {endPos}");
+		private IEnumerator ShootCooldownRoutine() {
+			SetCrosshairOpacity(0.7f);
 
-        player.SpawnAttackCard(startPos, endPos);
-    }
-    
-    private void OnAttackEnd()
-    {
-        DisableAttack();
-        DestroyCrosshair();
-    }
+			yield return new WaitForSeconds(shootCooldown);
 
-    private void DestroyCrosshair()
-    {
-        Destroy(currentCrossHair);
-        currentCrossHair = null;
-    }
+			SetCrosshairOpacity(1f);
 
-    private void DisableAttack()
-    {
-        gameObject.SetActive(false);
-    }
-    private void UpdateCrosshair()
-    {
-        Vector3 mouse = Input.mousePosition;
+			canShoot = true;
+		}
 
-        float distance = Mathf.Abs(cam.transform.position.x - fixedX);
-        mouse.z = distance;
+		private void SetCrosshairOpacity(float alpha) {
+			var c = crosshairRenderer.color;
+			c.a = alpha;
+			crosshairRenderer.color = c;
+		}
 
-        Vector3 worldPos = cam.ScreenToWorldPoint(mouse);
+		public void TryShoot() {
+			canShoot = false;
 
-        worldPos.x = fixedX;
-        
-        worldPos.y = Mathf.Clamp(worldPos.y, minY, maxY);
-        worldPos.z = Mathf.Clamp(worldPos.z, minZ, maxZ);
+			var startPos = transform.position; // shooter (world)
+			var endPos = GetShootPosition(); // crosshair (world)
 
-        // ✅ world → local
-        Vector3 localPos = transform.InverseTransformPoint(worldPos);
-        currentCrossHair.transform.localPosition = localPos;
-    }
+			Debug.Log($"[DEBUG] start: {startPos}, end: {endPos}");
 
-    private Vector3 GetShootPosition()
-    {
-        Vector3 targetPos = currentCrossHair.transform.position;
-        Debug.Log("[DEBUG]  targetPos: " + targetPos);
-        targetPos.x *= 2f;
-        return targetPos;
-    }
-    
+			player.SpawnAttackCard(startPos, endPos);
+		}
+
+		private void OnAttackEnd() {
+			DisableAttack();
+			DestroyCrosshair();
+		}
+
+		private void DestroyCrosshair() {
+			Destroy(currentCrossHair);
+			currentCrossHair = null;
+		}
+
+		private void DisableAttack() {
+			gameObject.SetActive(false);
+		}
+
+		private void UpdateCrosshair() {
+			var mouse = Input.mousePosition;
+
+			var distance = Mathf.Abs(cam.transform.position.x - fixedX);
+			mouse.z = distance;
+
+			var worldPos = cam.ScreenToWorldPoint(mouse);
+
+			worldPos.x = fixedX;
+
+			worldPos.y = Mathf.Clamp(worldPos.y, minY, maxY);
+			worldPos.z = Mathf.Clamp(worldPos.z, minZ, maxZ);
+
+			// world -> local
+			var localPos = transform.InverseTransformPoint(worldPos);
+			currentCrossHair.transform.localPosition = localPos;
+		}
+
+		private Vector3 GetShootPosition() {
+			var targetPos = currentCrossHair.transform.position;
+			Debug.Log("[DEBUG]  targetPos: " + targetPos);
+			targetPos.x *= 2f;
+			return targetPos;
+		}
+	}
 }

@@ -2,6 +2,7 @@
 using Unity.Netcode;
 using UnityEngine;
 using System.Collections;
+using GeneralScripts.Card;
 using Random = UnityEngine.Random;
 
 public class SubRound : NetworkBehaviour
