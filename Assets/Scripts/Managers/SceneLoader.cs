@@ -1,46 +1,36 @@
 using GenericHelpers;
-using UnityEngine;
-using UnityEngine.SceneManagement;
 using Unity.Netcode;
+using UnityEngine.SceneManagement;
 
-public class SceneLoader : Singleton<SceneLoader>
-{
-    private enum SceneType
-    {
-        MainMenuScene,
-        RoundScene,
-        ResultScene,
-    }
+namespace Managers {
+	public class SceneLoader : Singleton<SceneLoader> {
+		private enum SceneType {
+			MainMenuScene,
+			RoundScene,
+			ResultScene,
+		}
 
-    public void LoadMainMenuScene()
-    {
-        Load(SceneType.MainMenuScene);
-    }
+		public void LoadMainMenuScene() {
+			Load(SceneType.MainMenuScene);
+		}
 
-    public void LoadResultScene()
-    {
-        Load(SceneType.ResultScene);
-    }
+		public void LoadResultScene() {
+			Load(SceneType.ResultScene);
+		}
 
-    public void LoadRoundScene()
-    {
-        Load(SceneType.RoundScene);
-    }
+		public void LoadRoundScene() {
+			Load(SceneType.RoundScene);
+		}
 
-    private void Load(SceneType sceneType)
-    {
-        string sceneName = sceneType.ToString();
+		private void Load(SceneType sceneType) {
+			var sceneName = sceneType.ToString();
 
-        if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsListening)
-        {
-            NetworkManager.Singleton.SceneManager.LoadScene(
-                sceneName,
-                LoadSceneMode.Single
-            );
-        }
-        else
-        {
-            SceneManager.LoadScene(sceneName);
-        }
-    }
+			if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsListening) {
+				NetworkManager.Singleton.SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+			}
+			else {
+				SceneManager.LoadScene(sceneName);
+			}
+		}
+	}
 }

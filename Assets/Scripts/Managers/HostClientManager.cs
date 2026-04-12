@@ -1,13 +1,15 @@
-﻿using Unity.Netcode;
-using Unity.Netcode.Transports.UTP;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using System.Net;
+﻿using System.Net;
 using System.Net.Sockets;
 using GeneralScripts;
 using GenericHelpers;
+using Managers.GameEssentials;
+using Unity.Netcode;
+using Unity.Netcode.Transports.UTP;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class HostClientManager : Singleton<HostClientManager> {
+namespace Managers {
+	public class HostClientManager : Singleton<HostClientManager> {
 		// private bool clientConnected = false;
 		protected override void Awake() {
 			base.Awake();
@@ -28,18 +30,14 @@ public class HostClientManager : Singleton<HostClientManager> {
 			NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
 		}
 
-		
-		public string GetLocalIP()
-		{
+		public static string GetLocalIPAddress() {
 			var host = Dns.GetHostEntry(Dns.GetHostName());
-			foreach (var ip in host.AddressList)
-			{
-				if (ip.AddressFamily == AddressFamily.InterNetwork)
-					return ip.ToString();
+			foreach (var ip in host.AddressList) {
+				if (ip.AddressFamily == AddressFamily.InterNetwork) return ip.ToString();
 			}
+
 			return "No IPv4";
 		}
-
 
 		public void StartClient(string ipAddress = "127.0.0.1") {
 			SetIPAddress(ipAddress);
@@ -81,14 +79,10 @@ public class HostClientManager : Singleton<HostClientManager> {
 			}
 		}
 
-		private void OnSceneLoaded(
-			ulong clientId,
-			string sceneName,
-			LoadSceneMode mode) {
+		private void OnSceneLoaded(ulong clientId, string sceneName, LoadSceneMode mode) {
 			if (!NetworkManager.Singleton.IsServer) return;
 
-			if (sceneName == "RoundScene" &&
-			    clientId == NetworkManager.Singleton.LocalClientId)
+			if (sceneName == "RoundScene" && clientId == NetworkManager.Singleton.LocalClientId)
 				GameInitializer.Instance.SpawnGame();
 		}
 
@@ -100,3 +94,4 @@ public class HostClientManager : Singleton<HostClientManager> {
 
 		#endregion
 	}
+}

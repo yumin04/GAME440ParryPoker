@@ -1,45 +1,33 @@
-﻿using System;
-using GenericHelpers;
+﻿using GenericHelpers;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class GameInitializer : Singleton<GameInitializer>
-{
-    [SerializeField] private GameObject gamePrefab;
-    [SerializeField] private GameObject roundPrefab;
-    [SerializeField] private GameObject subRoundPrefab;
+namespace Managers.GameEssentials {
+	public class GameInitializer : Singleton<GameInitializer> {
+		[SerializeField] private GameObject gamePrefab;
+		[SerializeField] private GameObject roundPrefab;
+		[SerializeField] private GameObject subRoundPrefab;
 
+		// TODO: IsServer여기서 체크 하지 않아도 괜찮아
+		// TODO: 죽이기
+		public NetworkObject SpawnGame() {
+			return !NetworkManager.Singleton.IsServer ? null : SpawnNetworkObject(gamePrefab);
+		}
 
-    // TODO: IsServer여기서 체크 하지 않아도 괜찮아
-    // TODO: 죽이기
-    public NetworkObject SpawnGame()
-    {
-        if (!NetworkManager.Singleton.IsServer) return null;
+		public NetworkObject SpawnRound() {
+			return !NetworkManager.Singleton.IsServer ? null : SpawnNetworkObject(roundPrefab);
+		}
 
-        GameObject instance = Instantiate(gamePrefab);
-        NetworkObject nObj = instance.GetComponent<NetworkObject>();
-        nObj.Spawn();
-        return nObj;
-    }
+		public NetworkObject SpawnSubRound() {
+			return !NetworkManager.Singleton.IsServer ? null : SpawnNetworkObject(subRoundPrefab);
+		}
 
-    public NetworkObject SpawnRound()
-    {
-        if (!NetworkManager.Singleton.IsServer) return null;
-
-        GameObject instance = Instantiate(roundPrefab);
-        NetworkObject nObj = instance.GetComponent<NetworkObject>();
-        nObj.Spawn();
-        return nObj;
-    }
-    public NetworkObject SpawnSubRound()
-    {
-        if (!NetworkManager.Singleton.IsServer) return null;
-
-        GameObject instance = Instantiate(subRoundPrefab);
-        
-        NetworkObject nObj = instance.GetComponent<NetworkObject>();
-        nObj.Spawn();
-        return nObj;
-    }
+		private static NetworkObject SpawnNetworkObject(GameObject prefab) {
+			var instance = Instantiate(prefab);
+			
+			var networkObject = instance.GetComponent<NetworkObject>();
+			networkObject.Spawn();
+			return networkObject;
+		}
+	}
 }

@@ -1,14 +1,14 @@
 ﻿using GenericHelpers;
 using Unity.Netcode;
+using UnityEngine.Serialization;
 
-public class NetworkData : NetworkSingleton<NetworkData>
-{
-    public NetworkList<int> RoundCardIDs;
-    public NetworkVariable<bool> RoundReady = new();
+namespace Managers {
+	public class NetworkData : NetworkSingleton<NetworkData> {
+		public NetworkList<int> roundCardIDs;
+		[FormerlySerializedAs("RoundReady")] public NetworkVariable<bool> roundReady = new();
 
-    public override void OnNetworkSpawn()
-    {
-        if (IsServer)
-            RoundCardIDs = new NetworkList<int>();
-    }
+		public override void OnNetworkSpawn() {
+			if (IsServer) roundCardIDs = new NetworkList<int>();
+		}
+	}
 }

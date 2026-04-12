@@ -1,4 +1,6 @@
 using System;
+using Managers;
+using Managers.ApplicationEssentials;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
@@ -142,7 +144,7 @@ public class MainMenuCanvas : MonoBehaviour {
 		Debug.Log("StartHost");
 		hostClientPanel.SetActive(false);
 		hostAddressPanel.SetActive(true);
-		string ip = HostClientManager.Instance.GetLocalIP();
+		var ip = HostClientManager.GetLocalIPAddress();
 		hostAddressText.text = $"IP: {ip}";
 	}
 

@@ -1,13 +1,13 @@
 ﻿using UnityEditor;
-using UnityEngine;
 
-public static class EndApplication {
-	// Already Declared as Singleton from "GenericHelpers"
-	public static void QuitApplication() {
-		#if UNITY_EDITOR
-				EditorApplication.isPlaying = false;
-		#else
+namespace Managers.ApplicationEssentials {
+	public static class EndApplication {
+		public static void QuitApplication() {
+#if UNITY_EDITOR
+			EditorApplication.isPlaying = false;
+#else
 				Application.Quit();
-		#endif
+#endif
+		}
 	}
 }
