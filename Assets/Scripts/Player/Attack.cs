@@ -26,7 +26,7 @@ namespace Player {
 
 		private GameObject currentCrossHair;
 
-		private bool canShoot = false;
+		private bool canShoot;
 
 		// [SerializeField] bool isDebugging = false;
 		// For DEBUG, can erase later
