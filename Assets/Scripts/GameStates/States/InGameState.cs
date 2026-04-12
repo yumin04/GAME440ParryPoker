@@ -1,14 +1,9 @@
 ﻿using GenericHelpers;
 
-public class InGameState : IGameState
-{
-    public void OnEnter()
-    {
-        
-    }
+namespace GameStates.States {
+	public class InGameState : IGameState {
+		public void OnEnter() { }
 
-    public void OnExit()
-    {
-        
-    }
+		public void OnExit() { }
+	}
 }

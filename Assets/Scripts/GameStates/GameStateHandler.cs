@@ -1,17 +1,18 @@
-﻿using GenericHelpers;
+﻿using GameStates.States;
+using GenericHelpers;
 
-public static class GameStateHandler
-{
-    public static IGameState currentState;
+namespace GameStates {
+	public static class GameStateHandler {
+		public static IGameState CurrentState;
 
-    static GameStateHandler()
-    {
-        currentState = new DefaultState();
-    }
-    public static void ChangeState(IGameState newState)
-    {
-        currentState.OnExit();
-        currentState = newState;
-        currentState.OnEnter();
-    }
+		static GameStateHandler() {
+			CurrentState = new DefaultState();
+		}
+
+		public static void ChangeState(IGameState newState) {
+			CurrentState.OnExit();
+			CurrentState = newState;
+			CurrentState.OnEnter();
+		}
+	}
 }

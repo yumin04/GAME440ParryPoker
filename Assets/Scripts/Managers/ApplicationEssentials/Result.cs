@@ -1,4 +1,6 @@
-﻿using Unity.Netcode;
+﻿using GameStates;
+using GameStates.States;
+using Unity.Netcode;
 using UnityEngine;
 
 public class Result : MonoBehaviour

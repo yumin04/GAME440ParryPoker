@@ -1,12 +1,9 @@
 ﻿using GenericHelpers;
 
-public class LostPriorityState : IUserState
-{
-    public void OnEnter()
-    {
-    }
+namespace GameStates.States {
+	public class LostPriorityState : IUserState {
+		public void OnEnter() { }
 
-    public void OnExit()
-    {
-    }
+		public void OnExit() { }
+	}
 }

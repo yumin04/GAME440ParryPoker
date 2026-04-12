@@ -1,14 +1,13 @@
 ﻿using GenericHelpers;
 
-public class DefaultState : IGameState, IUserState
-{
-    public void OnEnter()
-    {
-        // Disable all interaction from the player
-    }
+namespace GameStates.States {
+	public class DefaultState : IGameState, IUserState {
+		public void OnEnter() {
+			// Disable all interaction from the player
+		}
 
-    public void OnExit()
-    {
-        // Not there yet
-    }
+		public void OnExit() {
+			// Not there yet
+		}
+	}
 }
