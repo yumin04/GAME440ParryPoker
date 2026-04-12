@@ -69,13 +69,12 @@ namespace Managers {
 
 		private void OnClientConnected(ulong clientId) {
 			if (NetworkManager.Singleton.IsHost) {
-				if (clientId != NetworkManager.Singleton.LocalClientId) {
-					Debug.Log("Host: Client connected");
-					SceneLoader.Instance.LoadRoundScene();
-				}
+				if (clientId == NetworkManager.Singleton.LocalClientId) return;
+				Debug.Log("Host: Client connected");
+				SceneLoader.Instance.LoadRoundScene();
 			}
-			else if (NetworkManager.Singleton.IsClient) {
-				if (clientId == NetworkManager.Singleton.LocalClientId) Debug.Log("Client: Connected to host");
+			else if (NetworkManager.Singleton.IsClient && clientId == NetworkManager.Singleton.LocalClientId) {
+				Debug.Log("Client: Connected to host");
 			}
 		}
 
