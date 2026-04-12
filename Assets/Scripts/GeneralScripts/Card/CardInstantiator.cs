@@ -15,14 +15,14 @@ namespace GeneralScripts.Card {
 			var netObj = obj.GetComponent<NetworkObject>();
 			netObj.Spawn(true);
 
-			var card = obj.GetComponent<global::Card>();
+			var card = obj.GetComponent<global::GeneralScripts.Card.Card>();
 			card.Init(cardData.cardID);
 		}
 
 		public void InstantiateCard(CardDataScriptableObject cardData, Vector3 position, Quaternion rotation) {
 			var obj = Instantiate(cardPrefab, position, rotation);
 
-			var card = obj.GetComponent<global::Card>();
+			var card = obj.GetComponent<global::GeneralScripts.Card.Card>();
 			card.Init(cardData.cardID);
 		}
 

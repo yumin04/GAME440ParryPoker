@@ -16,23 +16,23 @@ namespace GeneralScripts.Gameplay {
 		// Function 1: Get slot value
 		// x-rotation 80 ~ 260 : Blue (1)
 		// else : Red (0)
-		public List<int> GetSlotValues() {
-			var values = new List<int>();
+		private int[] GetSlotValues() {
+			var values = new int[slots.Length];
 
-			foreach (var slot in slots) {
-				var xRotation = slot.eulerAngles.x;
+			for (var i = 0; i < slots.Length; ++i) {
+				var xRotation = slots[i].eulerAngles.x;
 
-				if (xRotation >= 80f && xRotation <= 260f)
-					values.Add(1); // Blue
+				if (xRotation is >= 80f and <= 260f)
+					values[i] = 1; // Blue
 				else
-					values.Add(0); // Red
+					values[i] = 0; // Red
 			}
 
 			return values;
 		}
 
 		// Function 2: Evaluate slots and trigger event
-		public void EvaluateSlots() {
+		private void EvaluateSlots() {
 			var values = GetSlotValues();
 
 			GameEvents.OnSlotMachineFinished?.Invoke();
