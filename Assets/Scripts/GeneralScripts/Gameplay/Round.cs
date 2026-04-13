@@ -66,7 +66,7 @@ namespace GeneralScripts.Gameplay {
 		}
 
 		private void OnRoundCardsChanged(NetworkListEvent<int> changeEvent) {
-			UserInterface.Instance.ChangeSubRoundNumber(roundCardIDs.Count);
+			UserInterface.UserInterface.Instance.ChangeSubRoundNumber(roundCardIDs.Count);
 		}
 
 		private void StartRound() {
@@ -97,7 +97,7 @@ namespace GeneralScripts.Gameplay {
 		[Rpc(SendTo.ClientsAndHost)]
 		private void RunAfterMemorizationRPC() {
 			CardManager.HideAllRoundCards();
-			UserInterface.Instance.EnableSubRoundNumber();
+			UserInterface.UserInterface.Instance.EnableSubRoundNumber();
 			StartSubRound();
 		}
 

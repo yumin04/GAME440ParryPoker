@@ -1,19 +1,20 @@
 ﻿using GeneralScripts.Gameplay;
 using GenericHelpers;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class EndGamePlaceholder : Singleton<EndGamePlaceholder>
-{
-    [SerializeField] private Button EndGameButton;
+namespace UserInterface.CanvasAndButtons {
+	public class EndGamePlaceholder : Singleton<EndGamePlaceholder> {
+		[FormerlySerializedAs("EndGameButton")]
+		[SerializeField] private Button endGameButton;
 
-    public void Start()
-    {
-        EndGameButton.onClick.AddListener(EndGame);
-    }
+		public void Start() {
+			endGameButton.onClick.AddListener(EndGame);
+		}
 
-    private void EndGame()
-    {
-        Game.Instance.EndGame();
-    }
+		private static void EndGame() {
+			Game.Instance.EndGame();
+		}
+	}
 }

@@ -1,23 +1,22 @@
-﻿
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class RoundIndicator : MonoBehaviour
-{
-    [SerializeField] private TextMeshProUGUI RoundIndicatorText;
-    
-    public void EnableRoundNumber()
-    {
-        gameObject.SetActive(true);
-    }
+namespace UserInterface {
+	public class RoundIndicator : MonoBehaviour {
+		[FormerlySerializedAs("RoundIndicatorText")]
+		[SerializeField] private TextMeshProUGUI roundIndicatorText;
 
-    public void DisableRoundNumber()
-    {
-        gameObject.SetActive(false);
-    }
+		public void EnableRoundNumber() {
+			gameObject.SetActive(true);
+		}
 
-    public void ChangeRoundText(int roundNumber)
-    {
-        RoundIndicatorText.text = "ROUND " + roundNumber.ToString();
-    }
+		public void DisableRoundNumber() {
+			gameObject.SetActive(false);
+		}
+
+		public void ChangeRoundText(int roundNumber) {
+			roundIndicatorText.text = "ROUND " + roundNumber;
+		}
+	}
 }

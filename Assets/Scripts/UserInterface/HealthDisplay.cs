@@ -1,55 +1,55 @@
-﻿
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class HealthDisplay : MonoBehaviour
-{
-    [SerializeField] protected TextMeshProUGUI Player1HealthText;
-    [SerializeField] protected TextMeshProUGUI Player2HealthText;
-    [SerializeField] protected GameObject Player1HealthBar;
-    [SerializeField] protected GameObject Player2HealthBar;
-    [SerializeField] protected Sprite redHealthBar;
-    [SerializeField] protected Sprite greenHealthBar;
-    protected Image Player1HealthBarImage;
-    protected Image Player2HealthBarImage;
-    
-    public virtual void Init(bool isPlayer1)
-    {
+namespace UserInterface {
+	public class HealthDisplay : MonoBehaviour {
+		[FormerlySerializedAs("Player1HealthText")]
+		[SerializeField] protected TextMeshProUGUI player1HealthText;
+		[FormerlySerializedAs("Player2HealthText")]
+		[SerializeField] protected TextMeshProUGUI player2HealthText;
 
-        Player1HealthBarImage = Player1HealthBar.GetComponent<Image>();
-        Player2HealthBarImage = Player2HealthBar.GetComponent<Image>();
-        gameObject.SetActive(true);
-        if (isPlayer1)
-        {
-            Player1HealthText.color = Color.black;
-            Player1HealthBarImage.sprite = greenHealthBar;
-            Player2HealthText.color = new Color32(0xFF, 0x31, 0x31, 255);
-            Player2HealthBarImage.sprite = redHealthBar;
-        }
-        else
-        {
+		[FormerlySerializedAs("Player1HealthBar")]
+		[SerializeField] protected GameObject player1HealthBar;
+		[FormerlySerializedAs("Player2HealthBar")]
+		[SerializeField] protected GameObject player2HealthBar;
 
-            Player1HealthText.color = new Color32(0xFF, 0x31, 0x31, 255);
-            Player1HealthBarImage.sprite = redHealthBar;
-            Player2HealthText.color = Color.black;
-            Player2HealthBarImage.sprite = greenHealthBar;
-        }
-    }
+		[SerializeField] protected Sprite redHealthBar;
+		[SerializeField] protected Sprite greenHealthBar;
+		protected Image player1HealthBarImage;
+		protected Image player2HealthBarImage;
 
-    public void HideHealthDisplay()
-    {
-        gameObject.SetActive(false);
-    }
-    public void SetPlayer1Health(int player1Health)
-    {
-        Player1HealthText.text = player1Health.ToString() +" / 100 HP";
-        Player1HealthBar.transform.localScale = new Vector3(player1Health / 100f, 1, 1);
-    }
+		public virtual void Init(bool isPlayer1) {
+			player1HealthBarImage = player1HealthBar.GetComponent<Image>();
+			player2HealthBarImage = player2HealthBar.GetComponent<Image>();
+			gameObject.SetActive(true);
+			if (isPlayer1) {
+				player1HealthText.color = Color.black;
+				player1HealthBarImage.sprite = greenHealthBar;
+				player2HealthText.color = new Color32(0xFF, 0x31, 0x31, 255);
+				player2HealthBarImage.sprite = redHealthBar;
+			}
+			else {
+				player1HealthText.color = new Color32(0xFF, 0x31, 0x31, 255);
+				player1HealthBarImage.sprite = redHealthBar;
+				player2HealthText.color = Color.black;
+				player2HealthBarImage.sprite = greenHealthBar;
+			}
+		}
 
-    public void SetPlayer2Health(int player2Health)
-    {
-        Player2HealthText.text = player2Health.ToString() +" / 100 HP";
-        Player2HealthBar.transform.localScale = new Vector3(player2Health / 100f, 1, 1);
-    }
+		public void HideHealthDisplay() {
+			gameObject.SetActive(false);
+		}
+
+		public void SetPlayer1Health(int player1Health) {
+			player1HealthText.text = player1Health.ToString() + " / 100 HP";
+			player1HealthBar.transform.localScale = new Vector3(player1Health / 100f, 1, 1);
+		}
+
+		public void SetPlayer2Health(int player2Health) {
+			player2HealthText.text = player2Health.ToString() + " / 100 HP";
+			player2HealthBar.transform.localScale = new Vector3(player2Health / 100f, 1, 1);
+		}
+	}
 }

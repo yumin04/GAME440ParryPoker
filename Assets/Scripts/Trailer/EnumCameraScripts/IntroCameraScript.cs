@@ -22,7 +22,7 @@ namespace Trailer.EnumCameraScripts {
 		private readonly int[] roundCards = new[] { 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
 
 		private void Start() {
-			UserInterface.Instance.Init(true);
+			UserInterface.UserInterface.Instance.Init(true);
 			StartCoroutine(PlayCameraSequence());
 		}
 
@@ -34,13 +34,13 @@ namespace Trailer.EnumCameraScripts {
 				switch (pos) {
 					case IntroCameraPosition.VsScreenPopUp:
 						yield return StartCoroutine(MoveCamera(target, moveDuration));
-						UserInterface.Instance.DisplayVS();
+						UserInterface.UserInterface.Instance.DisplayVS();
 						// Can this be done during the Move?
 						yield return new WaitForSeconds(2f);
-						UserInterface.Instance.DisableDisplayVS();
+						UserInterface.UserInterface.Instance.DisableDisplayVS();
 						break;
 					case IntroCameraPosition.HealthBarPopUp:
-						UserInterface.Instance.DisplayHealth();
+						UserInterface.UserInterface.Instance.DisplayHealth();
 						// yield return StartCoroutine(MoveCamera(target, moveDuration));
 						yield return new WaitForSeconds(1.5f);
 						break;

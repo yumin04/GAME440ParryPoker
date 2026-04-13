@@ -40,10 +40,10 @@ namespace GeneralScripts.Gameplay {
 			// Host is always 0
 			// Refactor Later
 			var isPlayer1 = (NetworkManager.Singleton.LocalClientId == 0);
-			UserInterface.Instance.Init(isPlayer1);
+			UserInterface.UserInterface.Instance.Init(isPlayer1);
 
-			UserInterface.Instance.DisplayVS();
-			UserInterface.Instance.EnableRoundNumber();
+			UserInterface.UserInterface.Instance.DisplayVS();
+			UserInterface.UserInterface.Instance.EnableRoundNumber();
 			if (!IsServer) return;
 			player1Health.Value = 100;
 			player2Health.Value = 100;
@@ -85,13 +85,13 @@ namespace GeneralScripts.Gameplay {
 			// Hit Animation Play하고
 			//
 
-			UserInterface.Instance.ChangePlayer1Health(newValue);
+			UserInterface.UserInterface.Instance.ChangePlayer1Health(newValue);
 			// 
 			if (newValue > 0 || !IsServer) return;
 			// TODO: This must be sent to each client via RPC
 			// This isn't RPC.
-			UserInterface.Instance.ChangePlayer1Health(0);
-			UserInterface.Instance.Player2Win();
+			UserInterface.UserInterface.Instance.ChangePlayer1Health(0);
+			UserInterface.UserInterface.Instance.Player2Win();
 			// This *is* RPC
 			EndGame();
 		}
@@ -104,12 +104,12 @@ namespace GeneralScripts.Gameplay {
 			// TODO:
 			// Hit Animation play하고
 
-			UserInterface.Instance.ChangePlayer2Health(newValue);
+			UserInterface.UserInterface.Instance.ChangePlayer2Health(newValue);
 			// 
 			if (newValue > 0 || !IsServer) return;
 			// 이거는 RPC가 아니야
-			UserInterface.Instance.ChangePlayer2Health(0);
-			UserInterface.Instance.Player1Win();
+			UserInterface.UserInterface.Instance.ChangePlayer2Health(0);
+			UserInterface.UserInterface.Instance.Player1Win();
 			// 이거는 RPC인데
 			EndGame();
 		}
@@ -120,9 +120,9 @@ namespace GeneralScripts.Gameplay {
 			// TODO: 이거 맞는지 확인
 			// 어차피 둘다 돌려지는건 사실이라
 			// 이건 둘다 해야하는거고
-			UserInterface.Instance.DisplayHealth();
-			UserInterface.Instance.ChangePlayer1Health(player1Health.Value);
-			UserInterface.Instance.ChangePlayer2Health(player2Health.Value);
+			UserInterface.UserInterface.Instance.DisplayHealth();
+			UserInterface.UserInterface.Instance.ChangePlayer1Health(player1Health.Value);
+			UserInterface.UserInterface.Instance.ChangePlayer2Health(player2Health.Value);
 
 			if (!IsServer) return;
 			// CheckForHealth부분을 통한 StartRound를 시작하면 되지 않을까?
@@ -136,7 +136,7 @@ namespace GeneralScripts.Gameplay {
 		public void StartRound(int previousValue, int newValue) {
 			// Slowly change camera position of each player
 			GameEvents.OnRoundStart.Invoke();
-			UserInterface.Instance.ChangeRoundNumber(newValue);
+			UserInterface.UserInterface.Instance.ChangeRoundNumber(newValue);
 			if (!IsServer) return;
 			if (roundObject) roundObject.Despawn();
 
@@ -154,9 +154,9 @@ namespace GeneralScripts.Gameplay {
 		}
 
 		public void EndGame() {
-			UserInterface.Instance.HideHealthDisplay();
-			UserInterface.Instance.DisableRoundNumber();
-			UserInterface.Instance.DisableSubRoundNumber();
+			UserInterface.UserInterface.Instance.HideHealthDisplay();
+			UserInterface.UserInterface.Instance.DisableRoundNumber();
+			UserInterface.UserInterface.Instance.DisableSubRoundNumber();
 			// TODO: Display Winner Here?
 			if (IsServer) {
 				EndGame_Server();
