@@ -1,148 +1,140 @@
-﻿using System.Collections;
-using Trailer;
+﻿using System;
+using System.Collections;
 using Trailer.OtherScriptsForTrailer;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-public class P1GrabThenAttackCameraScript : MonoBehaviour
-{
-    [Header("Main Camera")]
-    [SerializeField] private Transform cameraTransform;
-    
-    [Header("Timing")]
-    [SerializeField] private float moveDuration = 0.5f;
-    [SerializeField] private float stayDuration = 1.0f;
-    
-    [Header("Player Positions")]
-    [SerializeField] private GameObject player1;
-    [SerializeField] private GameObject player2;
-    
-    [Header("Other Objects")]
-    [SerializeField] private TrailerAttackCard trailerAttackCard;
-    [SerializeField] private Transform startPos;
-    [SerializeField] private Transform endPos;
-    [SerializeField] private GameObject blackScreen;
-    
-     private void Start()
-     {
-         StartCoroutine(PlayCameraSequence());
-     }
+namespace Trailer.EnumCameraScripts {
+	public class P1GrabThenAttackCameraScript : MonoBehaviour {
+		[Header("Main Camera")]
+		[SerializeField] private Transform cameraTransform;
 
-     private IEnumerator PlayCameraSequence()
-     {
-         foreach (P1GrabThenAttackCameraPosition pos in System.Enum.GetValues(typeof(P1GrabThenAttackCameraPosition)))
-         {
-            Debug.Log("[DEBUG] Position: " + pos);
+		[Header("Timing")]
+		[SerializeField] private float moveDuration = 0.5f;
+		[SerializeField] private float stayDuration = 1.0f;
 
-            Transform target = EnumPositionStorage<P1GrabThenAttackCameraPosition>.Positions[(int)pos];
+		[Header("Player Positions")]
+		[SerializeField] private GameObject player1;
+		[SerializeField] private GameObject player2;
 
-            if (target == null) continue;
-            switch (pos)
-            {
-                case P1GrabThenAttackCameraPosition.InitializeCard:
-                    yield return StartCoroutine(MoveCamera(target, moveDuration));
-                    // Initialize SubRound Card
-                    yield return new WaitForSeconds(stayDuration);
-                    break;
-                case P1GrabThenAttackCameraPosition.P1Grab:
-                    yield return StartCoroutine(MoveCamera(target, 0.3f));
-                    // No Need to Move Camera
-                    // Initialize Animation
-                    break;
-                case P1GrabThenAttackCameraPosition.P1CheckCard:
-                    yield return StartCoroutine(MoveCamera(target, 0.3f));
-                    // follow Card movement, then go to Player 1's perspective
-                    break;
-                
-                case P1GrabThenAttackCameraPosition.P1OptionSelection:
-                    yield return StartCoroutine(MoveCamera(target, 0.3f));
-                    // Option Pops Up
-                    // Mouse starts in between the options
-                    yield return new WaitForSeconds(0.5f);
-                    break;
-                case P1GrabThenAttackCameraPosition.P1ChoosingAttack:
-                    yield return StartCoroutine(MoveCamera(target, 0.7f));
-                    // move the mouse toward Attack, and click
-                    yield return new WaitForSeconds(0.5f);
-                    blackScreen.SetActive(false);
-                    break;
-            }
-            
-         }
-         
-         
-         yield return new WaitForSeconds(stayDuration);
-     }
+		[Header("Other Objects")]
+		[SerializeField] private TrailerAttackCard trailerAttackCard;
+		[SerializeField] private Transform startPos;
+		[SerializeField] private Transform endPos;
+		[SerializeField] private GameObject blackScreen;
 
-     private IEnumerator OrbitAroundPlayer(Transform player, float duration, float maxAngle)
-     {
-         float timer = 0f;
+		private void Start() {
+			StartCoroutine(PlayCameraSequence());
+		}
 
-         Vector3 startOffset = transform.position - player.position;
-         
-         Vector3 flatOffset = new Vector3(startOffset.x, 0f, startOffset.z);
-         
-         float radius = flatOffset.magnitude;
-         
-         flatOffset = flatOffset.normalized;
+		private IEnumerator PlayCameraSequence() {
+			foreach (P1GrabThenAttackCameraPosition pos in
+			         System.Enum.GetValues(typeof(P1GrabThenAttackCameraPosition))) {
+				Debug.Log("[DEBUG] Position: " + pos);
 
-         // Y 고정
-         float fixedY = transform.position.y;
+				var target = EnumPositionStorage<P1GrabThenAttackCameraPosition>.Positions[(int)pos];
 
-         Vector3 initialEuler = transform.eulerAngles;
+				if (!target) continue;
+				switch (pos) {
+					case P1GrabThenAttackCameraPosition.InitializeCard:
+						yield return StartCoroutine(MoveCamera(target, moveDuration));
+						// Initialize SubRound Card
+						yield return new WaitForSeconds(stayDuration);
+						break;
+					case P1GrabThenAttackCameraPosition.P1Grab:
+						yield return StartCoroutine(MoveCamera(target, 0.3f));
+						// No Need to Move Camera
+						// Initialize Animation
+						break;
+					case P1GrabThenAttackCameraPosition.P1CheckCard:
+						yield return StartCoroutine(MoveCamera(target, 0.3f));
+						// follow Card movement, then go to Player 1's perspective
+						break;
 
-         while (timer < duration)
-         {
-             float t = timer / duration;
-             t = Mathf.SmoothStep(0f, 1f, t);
+					case P1GrabThenAttackCameraPosition.P1OptionSelection:
+						yield return StartCoroutine(MoveCamera(target, 0.3f));
+						// Option Pops Up
+						// Mouse starts in between the options
+						yield return new WaitForSeconds(0.5f);
+						break;
+					case P1GrabThenAttackCameraPosition.P1ChoosingAttack:
+						yield return StartCoroutine(MoveCamera(target, 0.7f));
+						// move the mouse toward Attack, and click
+						yield return new WaitForSeconds(0.5f);
+						blackScreen.SetActive(false);
+						break;
+					default:
+						throw new ArgumentOutOfRangeException();
+				}
+			}
 
-             float moveAngle = Mathf.Lerp(0f, maxAngle, t);
+			yield return new WaitForSeconds(stayDuration);
+		}
 
-             // 👉 시작 방향 기준으로 회전
-             Quaternion rot = Quaternion.AngleAxis(moveAngle, Vector3.up);
-             Vector3 dir = rot * flatOffset;
+		private IEnumerator OrbitAroundPlayer(Transform player, float duration, float maxAngle) {
+			var timer = 0f;
 
-             Vector3 newPos = player.position + dir * radius;
-             newPos.y = fixedY; // Y 유지
+			var startOffset = transform.position - player.position;
 
-             transform.position = newPos;
+			var flatOffset = new Vector3(startOffset.x, 0f, startOffset.z);
 
-             // 👉 Y rotation만 맞추기
-             Vector3 lookDir = player.position - transform.position;
-             lookDir.y = 0f;
+			var radius = flatOffset.magnitude;
 
-             float yAngle = Mathf.Atan2(lookDir.x, lookDir.z) * Mathf.Rad2Deg;
-             transform.rotation = Quaternion.Euler(initialEuler.x, yAngle, initialEuler.z);
+			flatOffset = flatOffset.normalized;
 
-             timer += Time.deltaTime;
-             yield return null;
-         }
-     }
-     private IEnumerator MoveCamera(Transform target, float duration)
-     {
-         Vector3 startPos = cameraTransform.position;
-         Quaternion startRot = cameraTransform.rotation;
+			// Y 고정
+			var fixedY = transform.position.y;
 
-         Vector3 endPos = target.position;
-         Quaternion endRot = target.rotation;
+			var initialEuler = transform.eulerAngles;
 
-         float time = 0f;
+			while (timer < duration) {
+				var t = timer / duration;
+				t = Mathf.SmoothStep(0f, 1f, t);
 
-         while (time < duration)
-         {
-             float t = time / duration;
+				var moveAngle = Mathf.Lerp(0f, maxAngle, t);
 
-             cameraTransform.position = Vector3.Lerp(startPos, endPos, t);
-             cameraTransform.rotation = Quaternion.Slerp(startRot, endRot, t);
+				// 👉 시작 방향 기준으로 회전
+				var rot = Quaternion.AngleAxis(moveAngle, Vector3.up);
+				var dir = rot * flatOffset;
 
-             time += Time.deltaTime;
-             yield return null;
-         }
+				var newPos = player.position + dir * radius;
+				newPos.y = fixedY; // Y 유지
 
-         // 마지막 보정
-         cameraTransform.position = endPos;
-         cameraTransform.rotation = endRot;
-     }
-     
+				transform.position = newPos;
 
+				// 👉 Y rotation만 맞추기
+				var lookDir = player.position - transform.position;
+				lookDir.y = 0f;
+
+				var yAngle = Mathf.Atan2(lookDir.x, lookDir.z) * Mathf.Rad2Deg;
+				transform.rotation = Quaternion.Euler(initialEuler.x, yAngle, initialEuler.z);
+
+				timer += Time.deltaTime;
+				yield return null;
+			}
+		}
+
+		private IEnumerator MoveCamera(Transform target, float duration) {
+			var startPos = cameraTransform.position;
+			var startRot = cameraTransform.rotation;
+
+			var endPos = target.position;
+			var endRot = target.rotation;
+
+			var time = 0f;
+
+			while (time < duration) {
+				var t = time / duration;
+
+				cameraTransform.position = Vector3.Lerp(startPos, endPos, t);
+				cameraTransform.rotation = Quaternion.Slerp(startRot, endRot, t);
+
+				time += Time.deltaTime;
+				yield return null;
+			}
+
+			// 마지막 보정
+			cameraTransform.position = endPos;
+			cameraTransform.rotation = endRot;
+		}
+	}
 }
