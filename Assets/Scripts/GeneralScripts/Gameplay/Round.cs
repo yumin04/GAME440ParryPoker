@@ -145,9 +145,5 @@ namespace GeneralScripts.Gameplay {
 
 			CardManager.Instance.InstantiateRoundCardsByID(roundCardIDs);
 		}
-
-		private int[] ToArray(NetworkList<int> list) {
-			return list.AsNativeArray().ToArray();
-		}
 	}
 }
