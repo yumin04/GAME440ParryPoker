@@ -73,6 +73,8 @@ public class P1GrabThenAttackCameraScript : MonoBehaviour
 
                     string stateName = "Grab";
                     player1Animation.SetTrigger(stateName);
+                    yield return new WaitForSeconds(0.3f);
+                    player2Animation.SetTrigger(stateName);
                     yield return StartCoroutine(WaitUntilState(stateName, player1Animation));
                     float duration = GetAnimationDuration(stateName, player1Animation);
                     yield return new WaitForSeconds(duration/2);

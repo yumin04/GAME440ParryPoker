@@ -73,7 +73,10 @@ public class P2GrabAndKeepCameraScript : MonoBehaviour
                 case P2GrabAndKeepCameraPosition.P2Grab:
                     yield return StartCoroutine(MoveCamera(target, 0.3f));
                     string stateName = "Grab";
+
                     player2Animation.SetTrigger(stateName);
+                    yield return new WaitForSeconds(0.3f);
+                    player1Animation.SetTrigger(stateName);
                     yield return StartCoroutine(WaitUntilState(stateName, player2Animation));
                     float duration = GetAnimationDuration(stateName, player2Animation);
                     yield return new WaitForSeconds(duration/2);
