@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using GeneralScripts.Card;
 using ScriptableObjectFile;
 using Trailer.OtherScriptsForTrailer;
 using UnityEngine;

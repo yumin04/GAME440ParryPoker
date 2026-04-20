@@ -1,76 +1,65 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
-using GeneralScripts;
+﻿using System.Collections.Generic;
 using ScriptableObjectFile;
+using UnityEngine;
 
-public class CardRepository : MonoBehaviour
-{
-    public List<CardDataScriptableObject> allCardData = new List<CardDataScriptableObject>();
-    
-    
-    private HashSet<int> usedCardIds = new HashSet<int>();
-    [SerializeField] private List<int> debugUsedCardIds;
-    public void OnEnable()
-    {
-        GameEvents.OnRoundEnd += Reset;
-    }
-    public void OnDisable()
-    {
-        GameEvents.OnRoundEnd -= Reset;
-    }
-    
-    
-    private void LoadAllCardData()
-    {
-        allCardData.Clear();
+namespace GeneralScripts.Card {
+	public class CardRepository : MonoBehaviour {
+		public List<CardDataScriptableObject> allCardData = new ();
 
-        string[] suits = { "Clubs", "Diamonds", "Hearts", "Spades" };
+		private readonly HashSet<int> usedCardIds = new();
+		[SerializeField] private List<int> debugUsedCardIds;
 
-        foreach (string suit in suits)
-        {
-            CardDataScriptableObject[] loaded = Resources.LoadAll<CardDataScriptableObject>($"CardData/{suit}");
-            allCardData.AddRange(loaded);
-        }
-    }
-    
-    public CardDataScriptableObject GetRandomCard()
-    {
-        if (allCardData.Count == 0) LoadAllCardData();
+		public void OnEnable() {
+			GameEvents.OnRoundEnd += Reset;
+		}
 
-        if (usedCardIds.Count >= allCardData.Count)
-        {
-            Debug.LogWarning("All cards have been used.");
-            return null;
-        }
+		public void OnDisable() {
+			GameEvents.OnRoundEnd -= Reset;
+		}
 
-        CardDataScriptableObject card;
+		private void LoadAllCardData() {
+			allCardData.Clear();
 
-        do
-        {
-            card = allCardData[Random.Range(0, allCardData.Count)];
-        }
-        while (usedCardIds.Contains(card.cardID));
+			string[] suits = { "Clubs", "Diamonds", "Hearts", "Spades" };
 
-        usedCardIds.Add(card.cardID);
-        debugUsedCardIds = new List<int>(usedCardIds);
-        return card;
-    }
-    public void Reset()
-    {
-        usedCardIds.Clear();
-    }
+			foreach (var suit in suits) {
+				var loaded = Resources.LoadAll<CardDataScriptableObject>($"CardData/{suit}");
+				allCardData.AddRange(loaded);
+			}
+		}
 
-    public CardDataScriptableObject GetCardByID(int id)
-    {
-        if (allCardData.Count == 0) LoadAllCardData();
+		public CardDataScriptableObject GetRandomCard() {
+			if (allCardData.Count == 0) LoadAllCardData();
 
-        foreach (var card in allCardData)
-        {
-            if (card.cardID == id)
-                return card;
-        }
+			if (usedCardIds.Count >= allCardData.Count) {
+				Debug.LogWarning("All cards have been used.");
+				return null;
+			}
 
-        Debug.LogError($"Card with ID {id} not found.");
-        return null;
-    }
+			CardDataScriptableObject card;
+
+			do {
+				card = allCardData[Random.Range(0, allCardData.Count)];
+			} while (usedCardIds.Contains(card.cardID));
+
+			usedCardIds.Add(card.cardID);
+			debugUsedCardIds = new List<int>(usedCardIds);
+			return card;
+		}
+
+		public void Reset() {
+			usedCardIds.Clear();
+		}
+
+		public CardDataScriptableObject GetCardByID(int id) {
+			if (allCardData.Count == 0) LoadAllCardData();
+
+			foreach (var card in allCardData) {
+				if (card.cardID == id) return card;
+			}
+
+			Debug.LogError($"Card with ID {id} not found.");
+			return null;
+		}
+	}
 }

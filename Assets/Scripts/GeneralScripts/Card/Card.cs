@@ -11,7 +11,6 @@ namespace GeneralScripts.Card {
 
 		public void Init(int id) {
 			cardId.Value = id;
-			// UpdateTexture();
 		}
 
 		public void OnEnable() {
@@ -41,12 +40,11 @@ namespace GeneralScripts.Card {
 		}
 
 		private void TryDespawn() {
-			// if (!IsOwner) return;
 			DespawnCardRPC();
 		}
 
 		[Rpc(SendTo.Server)]
-		private void DespawnCardRPC(RpcParams rpcParams = default) {
+		private void DespawnCardRPC() {
 			NetworkObject.Despawn();
 		}
 

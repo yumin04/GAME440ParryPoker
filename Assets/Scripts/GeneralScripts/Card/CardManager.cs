@@ -22,10 +22,10 @@ namespace GeneralScripts.Card {
 		[SerializeField] private CardInstantiator cardInstantiator;
 		[SerializeField] private CardRepository cardRepository;
 
-		// public void Start()
-		// {
-		//     // DebuggingCardTextures();
-		// }
+		/*public void Start() {
+			DebuggingCardTextures();
+		}*/
+
 		private void DebuggingCardTextures() {
 			var position = new Vector3();
 			for (var i = 1; i <= 52; i++) {
@@ -98,8 +98,8 @@ namespace GeneralScripts.Card {
 		#region SubRoundCardOnTable
 
 		public void InstantiateSubRoundCard(int cardId) {
-			Vector3 randomPosition = GenerateRandomXZPosition();
-			CardDataScriptableObject subRoundCard = cardRepository.GetCardByID(cardId);
+			var randomPosition = GenerateRandomXZPosition();
+			var subRoundCard = cardRepository.GetCardByID(cardId);
 			// Generate Random Position
 			cardInstantiator.SpawnClickableCard(subRoundCard, randomPosition, cardHideInTableRotation);
 		}
