@@ -5,13 +5,12 @@ using GenericHelpers;
 using ScriptableObjectFile;
 
 namespace PokerSystem {
-	public class PokerHandCalculator {
-		private List<CardData> currentHandData = new();
+	public static class PokerHandCalculator {
 		// Array.Sort(handData, (a, b) => a.cardNumber.CompareTo(b.cardNumber));
 		// How to sort things
 
 		// TODO: USED IN UNITY
-		public int GetPokerResult(CardDataScriptableObject[] handData) {
+		public static int GetPokerResult(CardDataScriptableObject[] handData) {
 			var converted = new CardData[handData.Length];
 			for (var i = 0; i < handData.Length; i++) {
 				converted[i].cardID = handData[i].cardID;
@@ -22,7 +21,7 @@ namespace PokerSystem {
 			return GetPokerResult(converted);
 		}
 
-		public int GetPokerResult(CardData[] handData) {
+		public static int GetPokerResult(CardData[] handData) {
 			var rank = CalculatePokerHand(handData);
 			FindBestHand(rank, handData);
 			return 1;
@@ -45,7 +44,7 @@ namespace PokerSystem {
 			}
 		}
 
-		public HandRank CalculatePokerHand(CardData[] handData) {
+		public static HandRank CalculatePokerHand(CardData[] handData) {
 			if (CheckStraightFlush(handData)) return HandRank.StraightFlush;
 
 			if (CheckFourOfAKind(handData)) return HandRank.FourOfAKind;
@@ -60,12 +59,10 @@ namespace PokerSystem {
 
 			if (CheckTwoPair(handData)) return HandRank.TwoPair;
 
-			if (CheckOnePair(handData)) return HandRank.OnePair;
-
-			return HandRank.HighCard;
+			return CheckOnePair(handData) ? HandRank.OnePair : HandRank.HighCard;
 		}
 
-		public bool CheckStraightFlush(CardData[] handData) {
+		public static bool CheckStraightFlush(CardData[] handData) {
 			var suitGroups = new Dictionary<Suit, List<CardData>>();
 
 			foreach (var card in handData) {
@@ -74,14 +71,10 @@ namespace PokerSystem {
 				suitGroups[card.cardSymbol].Add(card);
 			}
 
-			foreach (var group in suitGroups.Values) {
-				if (group.Count >= 5 && CheckStraight(group.ToArray())) return true;
-			}
-
-			return false;
+			return suitGroups.Values.Any(group => group.Count >= 5 && CheckStraight(group.ToArray()));
 		}
 
-		public bool CheckFourOfAKind(CardData[] handData) {
+		public static bool CheckFourOfAKind(CardData[] handData) {
 			var count = new Dictionary<int, int>();
 
 			foreach (var card in handData) {
@@ -95,7 +88,7 @@ namespace PokerSystem {
 			return false;
 		}
 
-		public bool CheckFullHouse(CardData[] handData) {
+		public static bool CheckFullHouse(CardData[] handData) {
 			var count = new Dictionary<int, int>();
 
 			foreach (var card in handData) {
@@ -121,7 +114,7 @@ namespace PokerSystem {
 			return hasThree && hasTwo;
 		}
 
-		public bool CheckFlush(CardData[] handData) {
+		public static bool CheckFlush(CardData[] handData) {
 			var suitCount = new Dictionary<Suit, int>();
 
 			foreach (var card in handData) {
@@ -135,7 +128,7 @@ namespace PokerSystem {
 			return false;
 		}
 
-		public bool CheckStraight(CardData[] handData) {
+		public static bool CheckStraight(CardData[] handData) {
 			var numbers = new HashSet<int>();
 
 			foreach (var card in handData) {
@@ -151,7 +144,7 @@ namespace PokerSystem {
 			return false;
 		}
 
-		public bool CheckThreeOfAKind(CardData[] handData) {
+		public static bool CheckThreeOfAKind(CardData[] handData) {
 			var count = new Dictionary<int, int>();
 
 			foreach (var card in handData) {
@@ -165,9 +158,8 @@ namespace PokerSystem {
 			return false;
 		}
 
-		public bool CheckTwoPair(CardData[] handData) {
+		public static bool CheckTwoPair(CardData[] handData) {
 			var count = new Dictionary<int, int>();
-			var pairCount = 0;
 
 			foreach (var card in handData) {
 				count.TryAdd(card.cardNumber, 0);
@@ -175,14 +167,12 @@ namespace PokerSystem {
 				count[card.cardNumber]++;
 			}
 
-			foreach (var kvp in count) {
-				if (kvp.Value >= 2) pairCount++;
-			}
+			var pairCount = count.Count(kvp => kvp.Value >= 2);
 
 			return pairCount >= 2;
 		}
 
-		public bool CheckOnePair(CardData[] handData) {
+		public static bool CheckOnePair(CardData[] handData) {
 			var count = new Dictionary<int, int>();
 
 			foreach (var card in handData) {
@@ -196,7 +186,7 @@ namespace PokerSystem {
 			return false;
 		}
 
-		public bool CheckHighCard(CardData[] handData) {
+		public static bool CheckHighCard(CardData[] handData) {
 			return !CheckOnePair(handData) && !CheckTwoPair(handData) && !CheckThreeOfAKind(handData);
 		}
 	}

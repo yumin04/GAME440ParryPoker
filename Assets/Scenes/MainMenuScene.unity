@@ -7643,10 +7643,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4390a6fea58143f7aff4d3108581cf36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthDisplay
-  Player1HealthText: {fileID: 854619553}
-  Player2HealthText: {fileID: 2058899935}
-  Player1HealthBar: {fileID: 967043441}
-  Player2HealthBar: {fileID: 1812614604}
+  player1HealthText: {fileID: 854619553}
+  player2HealthText: {fileID: 2058899935}
+  player1HealthBar: {fileID: 967043441}
+  player2HealthBar: {fileID: 1812614604}
   redHealthBar: {fileID: -1104689315, guid: afea7f9745c1f744c8428f7d53770f6a, type: 3}
   greenHealthBar: {fileID: -1169698048, guid: b840cf86e86c5f14fb43c2b37e2c8bfa, type: 3}
 --- !u!1 &758320126
@@ -9263,7 +9263,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d4341074bcf494a8e9d7cd5d5498ffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::RoundIndicator
-  RoundIndicatorText: {fileID: 1126465507}
+  roundIndicatorText: {fileID: 1126465507}
 --- !u!1 &1151063785
 GameObject:
   m_ObjectHideFlags: 0
@@ -10074,7 +10074,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1717845639}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1340463609
@@ -16767,12 +16768,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1717845636}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -10.6, y: 7.599, z: -11.767}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1337712731}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1735080258
 GameObject:
@@ -18521,6 +18522,5 @@ SceneRoots:
   - {fileID: 785281973}
   - {fileID: 1858974392}
   - {fileID: 623825970}
-  - {fileID: 1717845639}
   - {fileID: 413214}
   - {fileID: 2120638477}
