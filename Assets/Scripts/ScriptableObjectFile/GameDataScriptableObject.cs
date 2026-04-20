@@ -16,7 +16,7 @@ namespace ScriptableObjectFile {
 		public void ResetDataForGame() {
 			cards.Clear();
 			roundRemaining = maxRound;
-			Debug.Log("[" + this.name + "] Reset complete");
+			Debug.Log("[" + name + "] Reset complete");
 		}
 	}
 }
